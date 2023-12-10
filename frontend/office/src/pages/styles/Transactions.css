@@ -1,0 +1,137 @@
+.new-transaction-title {
+  background-color: #d7ebff;
+  border-bottom: 2.5px solid #779dae;
+  padding: 3px 0px 1px 4px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.new-transaction-form {
+  margin-left: 10px;
+}
+
+.new-transaction-box {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 20px 10px;
+  padding-left: 3px;
+}
+
+.new-transaction-border-title {
+  position: absolute;
+  margin-top: -32px;
+  margin-left: 10px;
+  color: black;
+  background: white;
+  border-radius: 10px;
+  padding: 0px 10px;
+  font-weight: 500;
+}
+
+.transactions-nav-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.transactions-nav {
+  background-color: #1a538c;
+  padding: 5px 8px;
+  color: white;
+}
+
+.transaction-nav-item {
+  font-weight: bold;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.logo {
+  padding: 5px 0px;
+  /* min-width: 80px; */
+}
+
+.language-dropdown {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  max-width: 190px;
+}
+
+.language-dropdown-choice {
+  color: black;
+  font-weight: 600;
+}
+
+.language-dropdown-icon-container {
+  background-color: #c1deeb;
+  color: #1a538c;
+  font-size: 13px;
+  width: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info {
+  background-color: black;
+  padding: 8px;
+}
+
+.user-info-key {
+  color: yellow;
+  border: 1px solid yellow;
+  padding: 3px;
+}
+
+.user-info-value {
+  background-color: yellow;
+  border: 1px solid yellow;
+  padding: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.result-title {
+  background-color: black;
+  color: white;
+  padding: 6px 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.result-customers {
+  min-height: 400px;
+}
+
+.results-footer {
+  padding: 3px 15px;
+  background-color: yellow;
+  border: 1.2px solid black;
+  display: flex;
+  align-items: center;
+}
+
+.results-page-input {
+  background-color: white;
+  width: 80px;
+  margin: 0px 5px;
+}
+
+.page-arrow:hover {
+  cursor: pointer;
+}
+
+.results-total-pages {
+  margin: 0px 6px;
+}
+
+.footer {
+  background-color: black;
+  color: white;
+  margin-top: 7px;
+  padding: 3px 15px;
+  font-weight: 200;
+  font-size: 15px;
+}

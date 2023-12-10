@@ -9,7 +9,7 @@
   border: 0.8px solid #888;
   height: 26px;
   color: #1c96c5;
-  background-color: #f5f4f4;
+  background-color: transparent;
 }
 
 .ant-input:focus,

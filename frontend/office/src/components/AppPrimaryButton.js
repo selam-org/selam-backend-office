@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import "./AppPrimaryButton.css";
+import "./styles/AppPrimaryButton.css";
 
 const AppPrimaryButton = ({ label, icon, outlined = false, ...otherProps }) => {
   return (
@@ -10,7 +10,7 @@ const AppPrimaryButton = ({ label, icon, outlined = false, ...otherProps }) => {
       className={`app-btn ${outlined ? "outlined" : "primary"}`}
       {...otherProps}
     >
-      <p>{label}</p>
+      <p className="app-btn-label">{label}</p>
     </Button>
   );
 };

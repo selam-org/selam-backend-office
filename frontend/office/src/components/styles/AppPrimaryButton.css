@@ -1,11 +1,15 @@
 .app-btn {
-  width: 70px;
+  min-width: 70px;
   box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 24px;
   font-size: 14px;
+}
+
+.app-btn-label {
+  font-weight: bold;
 }
 
 .primary {

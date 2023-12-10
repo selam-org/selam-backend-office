@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Form } from "antd";
-import "./FormTextArea.css";
+import "./styles/FormTextArea.css";
 
 const { TextArea } = Input;
 

@@ -1,4 +1,4 @@
-import "../Order.css";
+import "../../../pages/styles/Order.css";
 import { Form, Row, Col, Button } from "antd";
 import FormHeader from "../../Form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";

@@ -3,7 +3,7 @@ import Order from "./pages/Order";
 import Transctions from "./pages/Transactions";
 
 function App() {
-  return <Order />;
+  return <Transctions />;
 }
 
 export default App;

@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import "./FormHeader.css";
+import "./styles/FormHeader.css";
 
 const FormHeader = ({ label, children, titleSpan = 8, ...otherProps }) => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Select } from "antd";
-import "./FormDropdown.css";
+import "./styles/FormDropdown.css";
 
 const { Option } = Select;
 const FormDropdown = ({ label, ...rest }) => {

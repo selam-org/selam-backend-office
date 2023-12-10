@@ -1,15 +1,16 @@
 import { Row, Col } from "antd";
 import FormHeader from "../components/Form/FormHeader";
-import Page from "../components/Page";
 
 import SenderInformationForm from "../components/Order/Forms/SenderInformationForm";
 import ReceiverInformationForm from "../components/Order/Forms/ReceiverInformationForm";
 import PaymentInformationForm from "../components/Order/Forms/PaymentInformationForm";
 import TransactionInformationForm from "../components/Order/Forms/TransactionInformation";
+import OrderHeader from "../components/Order/OrderHeader";
 
 const Order = () => {
   return (
-    <Page title={"Order"}>
+    <div className="order-page">
+      <OrderHeader />
       <SenderInformationForm />
       <ReceiverInformationForm />
       <Row gutter={5}>
@@ -27,7 +28,7 @@ const Order = () => {
         }
         style={{ marginTop: 30 }}
       ></FormHeader>
-    </Page>
+    </div>
   );
 };
 

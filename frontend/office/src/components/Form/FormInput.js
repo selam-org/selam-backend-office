@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input } from "antd";
-import "./FormInput.css";
+import "./styles/FormInput.css";
 
 const FormInput = ({ name, rules, className, ...rest }) => {
   return (

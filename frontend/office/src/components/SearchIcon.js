@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import "./SearchIcon.css";
+import "./styles/SearchIcon.css";
 
 const SearchIcon = () => {
   return (
