@@ -1,0 +1,24 @@
+.app-text {
+  font-size: 14px;
+  letter-spacing: 100;
+  margin: 0;
+  padding: 0;
+  color: #5b5858;
+}
+
+.success-text {
+  color: rgb(13, 154, 13);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.red-highlight {
+  color: red;
+  font-weight: 700;
+}
+
+.bold-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: black;
+}

@@ -1,0 +1,7 @@
+.form-item textarea {
+  border-radius: 0;
+  border: 0.8px solid #888;
+  color: #1c96c5;
+  background-color: #f5f4f4;
+  padding: 0 3px;
+}

@@ -1,0 +1,23 @@
+.form-select {
+  border-radius: 0;
+  border: 0.8px solid #888;
+  height: 27px !important;
+}
+
+.form-select .ant-select-arrow {
+  color: #1c96c5;
+}
+
+.form-select .ant-select-selector {
+  border-radius: 0;
+  border: 0.8px solid #888;
+  height: 24px;
+  color: #1c96c5;
+  background-color: #f5f4f4 !important;
+}
+
+.ant-select-selector:focus,
+.ant-select-selector:hover {
+  border-color: #888 !important;
+  box-shadow: none;
+}

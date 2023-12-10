@@ -1,0 +1,19 @@
+.form-item {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.form-item input {
+  border-radius: 0;
+  border: 0.8px solid #888;
+  height: 26px;
+  color: #1c96c5;
+  background-color: #f5f4f4;
+}
+
+.ant-input:focus,
+.ant-input:hover {
+  border-color: #888;
+  box-shadow: none;
+}

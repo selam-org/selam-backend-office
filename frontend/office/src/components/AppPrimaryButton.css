@@ -1,0 +1,21 @@
+.app-btn {
+  width: 70px;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  font-size: 14px;
+}
+
+.primary {
+  border: none;
+  font-weight: 500;
+  color: black;
+  background-color: #f9f104;
+}
+
+.outlined {
+  background-color: black;
+  color: white;
+}
