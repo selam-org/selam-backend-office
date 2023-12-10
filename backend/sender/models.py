@@ -13,7 +13,7 @@ class Sender(models.Model):
         max_length=100)
     sender_city = models.CharField(max_length=100)
     sender_state = models.CharField(max_length=100)
-    sender_phone = models.CharField(max_length=100)
+    sender_phone = models.CharField(max_length=100, unique=True)
     sender_address = models.CharField(max_length=100)
     sender_mother_maiden = models.CharField(max_length=100)
     sender_birth_date = models.DateField()

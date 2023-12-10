@@ -30,6 +30,7 @@ from agency.views import AgencyViewSet
 from sender.views import SenderViewSet
 from receiver.views import ReceiverViewSet
 from payment_info.views import PaymentInfoViewSet
+from order.views import OrderViewSet
 schema_view = get_schema_view(
     openapi.Info(
         title="SELAM OFFICE API Docs",
@@ -44,6 +45,7 @@ router.register(r'cashiers', CashierCreateViewSet, basename='cashiers')
 router.register(r'senders', SenderViewSet, basename='senders')
 router.register(r'receivers', ReceiverViewSet, basename='receivers')
 router.register(r'payment_infos', PaymentInfoViewSet, basename='payment_infos')
+router.register(r'orders', OrderViewSet, basename='orders')
 
 urlpatterns = router.urls
 urlpatterns += [

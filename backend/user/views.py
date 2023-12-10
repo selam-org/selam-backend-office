@@ -28,7 +28,7 @@ class CustomAuthTokenView(ObtainAuthToken):
             token = Token.objects.get(key=response.data['token'])
             response.data['user_id'] = user.id
             response.data['user_type'] = user.user_type
-            response.data['username'] = user.phone_number
+            response.data['username'] = user.email
             response.data['full_name'] = user.full_name
         return response
 
