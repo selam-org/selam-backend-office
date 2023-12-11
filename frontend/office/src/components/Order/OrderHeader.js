@@ -8,7 +8,7 @@ const OrderHeader = () => {
     <div className="order-header" style={{ marginBottom: 5 }}>
       <Row align={"middle"} style={{ marginBottom: 12 }}>
         <Col span={12}>
-          <Image src="/images/logo.png" width={100} alt="logo" />
+          <img src="/images/logo.png" width={100} alt="logo" />
         </Col>
         <Col span={12} align={"right"}>
           <OrderHeaderInfo title="User" value="Fereja Mohammed" />

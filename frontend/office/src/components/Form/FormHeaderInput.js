@@ -13,7 +13,7 @@ const FormHeaderInput = ({ label, inputSpan = 10, name, rules }) => {
             rules={rules}
             className="form-item form-header-input"
           >
-            <Input />
+            <Input style={{ backgroundColor: "white" }} />
           </Form.Item>
         </Col>
       </Row>

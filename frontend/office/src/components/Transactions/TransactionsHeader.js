@@ -27,7 +27,7 @@ const TransactionsHeader = () => {
         </Row>
       </Col>
       <Col span={2} align="center" className="logo">
-        <Image src="/images/logo.png" width={80} alt="logo" />
+        <img src="/images/logo.png" width={80} alt="logo" />
       </Col>
       <UserInfo />
     </Row>
