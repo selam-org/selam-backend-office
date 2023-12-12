@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'receiver',
     'payment_info',
     'order',
+    'commission',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
