@@ -1,5 +1,5 @@
 import { Row, Image } from "antd";
-import FormInput from "../Form/FormInput";
+import FormInput from "../form/FormInput";
 
 const TransactionResult = () => {
   return (

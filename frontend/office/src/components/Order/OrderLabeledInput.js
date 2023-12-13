@@ -1,7 +1,7 @@
 import { Row, Col } from "antd";
 import "../../pages/styles/Order.css";
-import FormInput from "../Form/FormInput";
-import FormLabel from "../Form/FormLabel";
+import FormInput from "../form/FormInput";
+import FormLabel from "../form/FormLabel";
 
 const OrderLabeledInput = ({
   label,

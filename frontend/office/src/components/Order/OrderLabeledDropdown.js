@@ -1,8 +1,8 @@
 import { Row, Col } from "antd";
 import "../../pages/styles/Order.css";
 
-import FormLabel from "../Form/FormLabel";
-import FormDropdown from "../Form/FormDropdown";
+import FormLabel from "../form/FormLabel";
+import FormDropdown from "../form/FormDropdown";
 
 const OrderLabeledDropdown = ({
   label,

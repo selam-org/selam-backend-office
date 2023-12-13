@@ -1,8 +1,8 @@
 import "../../../pages/styles/Order.css";
 import { Form, Row, Col, Button } from "antd";
-import FormHeader from "../../Form/FormHeader";
+import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
-import FormRadioButton from "../../Form/FormRadioButton";
+import FormRadioButton from "../../form/FormRadioButton";
 import AppPrimaryButton from "../../AppPrimaryButton";
 
 const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {

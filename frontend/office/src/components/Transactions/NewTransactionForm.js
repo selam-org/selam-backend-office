@@ -1,5 +1,5 @@
 import { Form, Row, Col, Image } from "antd";
-import FormInput from "../Form/FormInput";
+import FormInput from "../form/FormInput";
 
 const onFinish = (values) => {
   console.log("Received values:", values);

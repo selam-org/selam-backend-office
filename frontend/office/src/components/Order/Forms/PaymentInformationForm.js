@@ -1,13 +1,13 @@
 import "../../../pages/styles/Order.css";
 import { Form, Row, Col, Button } from "antd";
-import FormHeader from "../../Form/FormHeader";
+import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
 import SearchIcon from "../../SearchIcon";
-import FormTextArea from "../../Form/FormTextArea";
-import FormHeaderInput from "../../Form/FormHeaderInput";
-import FormDropDown from "../../Form/FormDropdown";
+import FormTextArea from "../../form/FormTextArea";
+import FormHeaderInput from "../../form/FormHeaderInput";
+import FormDropDown from "../../form/FormDropdown";
 import { Checkbox } from "antd";
-import FormRadioButton from "../../Form/FormRadioButton";
+import FormRadioButton from "../../form/FormRadioButton";
 
 const PaymentInformationForm = () => {
   return (

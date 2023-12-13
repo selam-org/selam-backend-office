@@ -1,4 +1,4 @@
-import FormInput from "../components/Form/FormInput";
+import FormInput from "../components/form/FormInput";
 import "./styles/Login.css";
 import { Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";

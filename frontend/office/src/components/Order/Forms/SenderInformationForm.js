@@ -1,11 +1,11 @@
 import "../../../pages/styles/Order.css";
 import { Form, Row, Col } from "antd";
-import FormHeader from "../../Form/FormHeader";
+import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
 import OrderLabeledDropdown from "../OrderLabeledDropdown";
 import SearchIcon from "../../SearchIcon";
 import AppPrimaryButton from "../../AppPrimaryButton";
-import FormHeaderInput from "../../Form/FormHeaderInput";
+import FormHeaderInput from "../../form/FormHeaderInput";
 
 const SenderInformationForm = () => {
   return (
