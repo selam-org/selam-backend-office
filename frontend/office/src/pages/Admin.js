@@ -98,10 +98,10 @@ const Admin = () => {
           }}
         >
           <Routes>
-            <Route path="/admin" element={<Agencies />} />
-            <Route path="/admin/agencies/:agencyId" element={<Commission />} />
-            <Route path="/admin/cashiers" element={<Cashiers />} />
-            <Route path="/admin/reports" element={<Reports />} />
+            <Route path="/" element={<Agencies />} />
+            <Route path="/agencies/:agencyId" element={<Commission />} />
+            <Route path="/cashiers" element={<Cashiers />} />
+            <Route path="/reports" element={<Reports />} />
           </Routes>
         </Content>
       </Layout>

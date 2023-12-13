@@ -16,3 +16,11 @@
   margin: 8px;
   min-height: 40px;
 }
+
+.modal-title {
+  margin: 20px 0px;
+}
+
+.modal-input {
+  margin: 10px 0px;
+}

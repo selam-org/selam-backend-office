@@ -1,4 +1,5 @@
-import { Table, Space } from "antd";
+import React, { useState } from "react";
+import { Table, Space, Modal, Input } from "antd";
 import { Link } from "react-router-dom";
 import AdminButton from "../../components/admin/AdminButton";
 import "../styles/Admin.css";
@@ -13,6 +14,44 @@ const agencies = [
 ];
 
 const Agencies = () => {
+  const [editModalOpen, seteditModalOpen] = useState();
+  const [confirmEditLoading, setconfirmEditLoading] = useState(false);
+
+  const [activateModalOpen, setactivateModalOpen] = useState();
+  const [confirmActivateLoading, setconfirmActivateLoading] = useState(false);
+
+  const showEditModal = () => {
+    seteditModalOpen(true);
+  };
+
+  const showActivateModal = () => {
+    setactivateModalOpen(true);
+  };
+
+  const handleEditModalOk = () => {
+    setconfirmEditLoading(true);
+    setTimeout(() => {
+      seteditModalOpen(false);
+      setconfirmEditLoading(false);
+    }, 2000);
+  };
+
+  const handleActivateModalOk = () => {
+    setconfirmActivateLoading(true);
+    setTimeout(() => {
+      setactivateModalOpen(false);
+      setconfirmActivateLoading(false);
+    }, 2000);
+  };
+
+  const handleEditModalCancel = () => {
+    seteditModalOpen(false);
+  };
+
+  const handleActivateModalCancel = () => {
+    setactivateModalOpen(false);
+  };
+
   return (
     <>
       <div className="page-title">Manage Agencies</div>
@@ -23,14 +62,42 @@ const Agencies = () => {
           key="action"
           render={(_, record) => (
             <Space size="middle">
-              <AdminButton style={AdminButtonStyle} label={"Edit"} />
               <Link to={`/admin/agencies/${record.id}`}>
                 <AdminButton
                   style={AdminButtonStyle}
                   label={"Rate / Commission"}
                 />
               </Link>
-              <AdminButton style={AdminButtonStyle} label={"Delete"} />
+              <AdminButton
+                style={AdminButtonStyle}
+                label={"Edit"}
+                onClick={showEditModal}
+              />
+              <Modal
+                title="Edit agency name"
+                open={editModalOpen}
+                onOk={handleEditModalOk}
+                confirmLoading={confirmEditLoading}
+                onCancel={handleEditModalCancel}
+              >
+                <div className="modal-title "></div>
+                <Input />
+              </Modal>
+              <AdminButton
+                style={AdminButtonStyle}
+                label={"Activate"}
+                onClick={showActivateModal}
+              />
+              <Modal
+                title="Are you sure you want to activate the agency?"
+                open={activateModalOpen}
+                onOk={handleActivateModalOk}
+                confirmLoading={confirmActivateLoading}
+                onCancel={handleActivateModalCancel}
+                okText="Yes"
+              >
+                <div className="modal-title "></div>
+              </Modal>
             </Space>
           )}
         />
