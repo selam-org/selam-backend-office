@@ -1,5 +1,4 @@
 import { Table, Space } from "antd";
-import PageTitle from "../../components/admin/PageTitle";
 import AdminButton from "../../components/admin/AdminButton";
 import "../styles/Admin.css";
 
@@ -39,7 +38,7 @@ const cashiersTableColumns = [
 const Cashiers = () => {
   return (
     <>
-      <PageTitle title={"Manage Cashiers"} />
+      <div className="page-title">Manage Cashiers</div>
       <Table
         className="table"
         columns={cashiersTableColumns}

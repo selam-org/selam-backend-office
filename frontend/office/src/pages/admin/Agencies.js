@@ -1,6 +1,5 @@
 import { Table, Space } from "antd";
 import { Link } from "react-router-dom";
-import PageTitle from "../../components/admin/PageTitle";
 import AdminButton from "../../components/admin/AdminButton";
 import "../styles/Admin.css";
 

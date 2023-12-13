@@ -2,14 +2,13 @@ import React from "react";
 import { Form, Input, Button, Table, Row } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import AdminButton from "../AdminButton";
-import PageTitle from "../PageTitle";
 
 const CommissionForm = () => {
   const [form] = Form.useForm();
 
   return (
     <>
-      <PageTitle title={"Manage Commission"} />
+      <div className="page-title">Manage Commission</div>
       <Form className="table" form={form} initialValues={{ windows: [] }}>
         <Form.List name="windows">
           {(fields, { add, remove }) => (

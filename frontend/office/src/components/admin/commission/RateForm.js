@@ -1,12 +1,11 @@
 import React from "react";
 import { Form, Input, Row, Col } from "antd";
 import AdminButton from "../AdminButton";
-import PageTitle from "../PageTitle";
 
 const RateForm = () => {
   return (
     <div className="rate-form-container">
-      <PageTitle title={"Manage Rate"} />
+      <div className="page-title">Manage Rate</div>
       <Form className="rate-form">
         <Row align={"middle"}>
           <Col>
