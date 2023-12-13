@@ -1,5 +1,5 @@
 const PageTitle = ({ title }) => {
-  return <span style={pageStyle}>{title}</span>;
+  return <div style={pageStyle}>{title}</div>;
 };
 
 const pageStyle = {

@@ -1,0 +1,25 @@
+.agency-title-container {
+  margin-bottom: 35px;
+}
+
+.agency-title {
+  font-weight: bold;
+  color: #1677ff;
+}
+
+.agency-name {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.commission-btns {
+  margin-top: 10px;
+}
+
+.rate-form-container {
+  margin-bottom: 40px;
+}
+
+.rate-form {
+  margin-top: 18px;
+}

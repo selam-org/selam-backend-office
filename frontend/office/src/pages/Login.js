@@ -15,11 +15,11 @@ const Login = () => {
         />
         <div className="login-input">
           <div className="login-input-title">User Name</div>
-          <FormInput placeHolder={"Enter the Username"} />
+          <FormInput placeholder={"Enter the Username"} />
         </div>
         <div className="login-input" style={{ margin: "15px 0px" }}>
           <div className="login-input-title">Password</div>
-          <FormInput placeHolder={"Enter your password"} />
+          <FormInput placeholder={"Enter your password"} />
         </div>
         <div className="login-input language-selector">
           <FormInput value={"English US"} />

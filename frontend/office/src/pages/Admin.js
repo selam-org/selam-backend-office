@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+  BankOutlined,
+  CaretLeftOutlined,
+  CaretRightOutlined,
   UserOutlined,
   BarChartOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button } from "antd";
-import Agency from "./admin/Agency";
+import { Link } from "react-router-dom";
+import Commission from "./admin/Commission";
+import Reports from "./admin/Reports";
+import Agencies from "./admin/Agencies";
+import Cashiers from "./admin/Cashiers";
 
 const { Header, Sider, Content } = Layout;
 
@@ -21,27 +27,56 @@ const Admin = () => {
         width={250}
         style={{
           height: "100vh",
-          paddingTop: "3%",
           backgroundColor: "white",
         }}
       >
+        <Button
+          type="text"
+          icon={
+            collapsed ? (
+              <CaretRightOutlined style={{ fontSize: "200%" }} />
+            ) : (
+              <CaretLeftOutlined style={{ fontSize: "200%" }} />
+            )
+          }
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            fontSize: "15px",
+            width: 64,
+            height: 64,
+            marginLeft: 5,
+          }}
+        />
         <Menu
           mode="inline"
           defaultSelectedKeys={["1"]}
+          style={{ marginTop: "1.5vh" }}
           items={[
             {
               key: "1",
-              icon: <UserOutlined />,
-              label: "Agency",
+              icon: (
+                <Link to="/admin/">
+                  <BankOutlined />
+                </Link>
+              ),
+              label: "Agencies",
             },
             {
               key: "2",
-              icon: <UserOutlined />,
-              label: "Cashier",
+              icon: (
+                <Link to="/admin/cashiers">
+                  <UserOutlined />
+                </Link>
+              ),
+              label: "Cashiers",
             },
             {
               key: "3",
-              icon: <BarChartOutlined />,
+              icon: (
+                <Link to="/admin/reports">
+                  <BarChartOutlined />
+                </Link>
+              ),
               label: "Reports",
             },
           ]}
@@ -53,18 +88,7 @@ const Admin = () => {
             padding: 0,
             backgroundColor: "white",
           }}
-        >
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
-          />
-        </Header>
+        ></Header>
         <Content
           style={{
             margin: "2px 2px",
@@ -73,8 +97,12 @@ const Admin = () => {
             backgroundColor: "white",
           }}
         >
-          {/* Content */}
-          <Agency />
+          <Routes>
+            <Route path="/admin" element={<Agencies />} />
+            <Route path="/admin/agencies/:agencyId" element={<Commission />} />
+            <Route path="/admin/cashiers" element={<Cashiers />} />
+            <Route path="/admin/reports" element={<Reports />} />
+          </Routes>
         </Content>
       </Layout>
     </Layout>
