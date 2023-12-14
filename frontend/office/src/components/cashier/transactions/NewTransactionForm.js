@@ -1,5 +1,5 @@
 import { Form, Row, Col, Image } from "antd";
-import FormInput from "../form/FormInput";
+import FormLabeledInput from "../form/FormLabeledInput";
 
 const onFinish = (values) => {
   console.log("Received values:", values);
@@ -20,12 +20,12 @@ const NewTransactionForm = () => {
           New Transaction (Search Customer)
         </div>
         <Row gutter={4}>
-          <TransactionsInput label="Telephone" name="telephone" />
-          <TransactionsInput label="Accound ID" name="accountId" />
-          <TransactionsInput label="First Name" name="firstName" />
-          <TransactionsInput label="Middle Name" name="middleName" />
-          <TransactionsInput label="Last Name" name="lastName" />
-          <TransactionsInput
+          <FormLabeledInput label="Telephone" name="telephone" />
+          <FormLabeledInput label="Accound ID" name="accountId" />
+          <FormLabeledInput label="First Name" name="firstName" />
+          <FormLabeledInput label="Middle Name" name="middleName" />
+          <FormLabeledInput label="Last Name" name="lastName" />
+          <FormLabeledInput
             label="Mother's Maiden Name"
             name="motherMaidenName"
           />
@@ -36,17 +36,6 @@ const NewTransactionForm = () => {
         <img src="/images/transaction-icons.png" width={150} alt="" />
       </div>
     </Form>
-  );
-};
-
-const TransactionsInput = ({ label, ...otherProps }) => {
-  return (
-    <Col span={4}>
-      <p className="app-text" style={{ color: "black", marginBottom: -5 }}>
-        {label}
-      </p>
-      <FormInput {...otherProps} />
-    </Col>
   );
 };
 

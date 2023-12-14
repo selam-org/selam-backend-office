@@ -1,11 +1,11 @@
 import { SearchOutlined } from "@ant-design/icons";
 import "./styles/SearchIcon.css";
 
-const SearchIcon = () => {
+const SearchIcon = ({ className, onClick }) => {
   return (
-    <div className="search-icon">
+    <button className={`search-icon ${className}`} onClick={onClick}>
       <SearchOutlined />
-    </div>
+    </button>
   );
 };
 

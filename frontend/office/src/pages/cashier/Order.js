@@ -1,11 +1,11 @@
 import { Row, Col } from "antd";
-import FormHeader from "../../components/form/FormHeader";
+import FormHeader from "../../components/cashier/form/FormHeader";
 
-import SenderInformationForm from "../../components/order/Forms/SenderInformationForm";
-import ReceiverInformationForm from "../../components/order/Forms/ReceiverInformationForm";
-import PaymentInformationForm from "../../components/order/Forms/PaymentInformationForm";
-import TransactionInformationForm from "../../components/order/Forms/TransactionInformation";
-import OrderHeader from "../../components/order/OrderHeader";
+import SenderInformationForm from "../../components/cashier/order/Forms/SenderInformationForm";
+import ReceiverInformationForm from "../../components/cashier/order/Forms/ReceiverInformationForm";
+import PaymentInformationForm from "../../components/cashier/order/Forms/PaymentInformationForm";
+import TransactionInformationForm from "../../components/cashier/order/Forms/TransactionInformation";
+import OrderHeader from "../../components/cashier/order/OrderHeader";
 
 const Order = () => {
   return (

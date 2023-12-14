@@ -10,8 +10,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/admin/*" element={<Admin />} />
-      <Route path="/client" element={<Transctions />} />
-      <Route path="/client/order" element={<Order />} />
+      <Route path="/cashier" element={<Transctions />} />
+      <Route path="/cashier/order" element={<Order />} />
     </Routes>
   );
 }

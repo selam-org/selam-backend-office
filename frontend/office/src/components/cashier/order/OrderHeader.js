@@ -2,8 +2,10 @@ import { Row, Col, Image } from "antd";
 import AppPrimaryButton from "../AppPrimaryButton";
 import OrderHeaderLink from "./OrderHeaderLink";
 import OrderHeaderInfo from "./OrderHeaderInfo";
+import FormDropdown from "../form/FormDropdown";
 
 const OrderHeader = () => {
+  const themeOptions = [{ title: "Yellow theme", value: "yellowTheme" }];
   return (
     <div className="order-header" style={{ marginBottom: 5 }}>
       <Row align={"middle"} style={{ marginBottom: 12 }}>
@@ -19,10 +21,17 @@ const OrderHeader = () => {
         <Col span={12}>
           <AppPrimaryButton label="Show me Balance & Credit Limit" />
         </Col>
-        <Col span={12} align={"right"}>
-          <OrderHeaderLink label="Search Customer" />
-          <OrderHeaderLink label="Main Page" />
-          <OrderHeaderLink label="Logout" />
+        <Col span={12}>
+          <Row justify={"end"} align={"middle"}>
+            <Col span={6}>
+              <FormDropdown options={themeOptions} />
+            </Col>
+            <Col>
+              <OrderHeaderLink label="Search Customer" />
+              <OrderHeaderLink label="Main Page" />
+              <OrderHeaderLink label="Logout" />
+            </Col>
+          </Row>
         </Col>
       </Row>
     </div>

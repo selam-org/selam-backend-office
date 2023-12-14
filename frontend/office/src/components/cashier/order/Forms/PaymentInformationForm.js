@@ -1,19 +1,50 @@
-import "../../../pages/styles/Order.css";
 import { Form, Row, Col, Button } from "antd";
+import { Checkbox } from "antd";
+import { useState } from "react";
 import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
 import SearchIcon from "../../SearchIcon";
 import FormTextArea from "../../form/FormTextArea";
 import FormHeaderInput from "../../form/FormHeaderInput";
 import FormDropDown from "../../form/FormDropdown";
-import { Checkbox } from "antd";
 import FormRadioButton from "../../form/FormRadioButton";
+import PayeeInformationModal from "./PayeeInformationModal";
+import "../../../../pages/styles/Order.css";
 
 const PaymentInformationForm = () => {
+  const paymentTypes = [
+    {
+      title: "Money",
+      value: "money",
+    },
+    {
+      title: "Product",
+      value: "product",
+    },
+  ];
+  const [openPayeeModal, setOpenPayeeModal] = useState(false);
+  const [confirmPayeeModalLoading, setConfirmPayeeModalLoading] =
+    useState(false);
+
+  const showPayeeModal = () => {
+    setOpenPayeeModal(true);
+  };
+  const handlePayeeModalOk = () => {
+    setConfirmPayeeModalLoading(true);
+    setTimeout(() => {
+      setOpenPayeeModal(false);
+      setConfirmPayeeModalLoading(false);
+    }, 2000);
+  };
+  const handlePayeeModalCancel = () => {
+    console.log("Clicked cancel button");
+    setOpenPayeeModal(false);
+  };
+
   return (
     <Form>
       <FormHeader label={"PAYMENT INFORMATION"}>
-        <FormRadioButton />
+        <FormRadioButton options={paymentTypes} />
       </FormHeader>
 
       <Row className="order-row">
@@ -27,12 +58,25 @@ const PaymentInformationForm = () => {
         </Col>
       </Row>
 
+      <PayeeInformationModal
+        onOk={handlePayeeModalOk}
+        confirmLoading={confirmPayeeModalLoading}
+        open={openPayeeModal}
+        onCancel={handlePayeeModalCancel}
+      />
+
       <Row className="order-row">
         <Col span={24}>
           <OrderLabeledInput
             label="Mode of Pay."
             inputSpan={15}
             className="payment-form-text-input"
+            InputComponent={() => (
+              <Button
+                className="grey-input-btn"
+                onClick={showPayeeModal}
+              ></Button>
+            )}
           />
         </Col>
       </Row>

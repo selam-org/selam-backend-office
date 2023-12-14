@@ -13,7 +13,18 @@
   border: 0.8px solid #888;
   height: 24px;
   color: #1c96c5;
-  background-color: #f5f4f4 !important;
+  background-color: transparent;
+}
+
+.ant-select-dropdown {
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+
+.ant-select-item-option-content {
+  color: #1c96c5;
+  padding: 0px;
 }
 
 .ant-select-selector:focus,

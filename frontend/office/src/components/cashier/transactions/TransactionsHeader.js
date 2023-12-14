@@ -1,7 +1,7 @@
-import { Row, Col, Image, Select } from "antd";
+import { Row, Col } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import UserInfo from "./UserInfo";
-import "../../pages/styles/Transactions.css";
+import "../../../pages/styles/Transactions.css";
 
 const TransactionsHeader = () => {
   return (

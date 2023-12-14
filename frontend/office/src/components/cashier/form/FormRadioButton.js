@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Radio } from "antd";
 
-const FormRadioButton = ({ label, onChange, value, ...rest }) => {
+/* options is a list of objects containing value and title properties. */
+const FormRadioButton = ({ options = [], label, onChange, value, ...rest }) => {
   return (
     <Form.Item
       label={label}
@@ -13,9 +14,10 @@ const FormRadioButton = ({ label, onChange, value, ...rest }) => {
         height: 30,
       }}
     >
-      <Radio.Group onChange={onChange} value={value}>
-        <Radio value={1}>Money</Radio>
-        <Radio value={2}>Product</Radio>
+      <Radio.Group onChange={onChange} value={value} {...rest}>
+        {options.map((option) => (
+          <Radio value={option.value}>{option.title}</Radio>
+        ))}
       </Radio.Group>
     </Form.Item>
   );

@@ -1,4 +1,4 @@
-import "../../../pages/styles/Order.css";
+import "../../../../pages/styles/Order.css";
 import { Form, Row, Col, Button } from "antd";
 import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
@@ -19,6 +19,17 @@ const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
 };
 
 const TransactionInformationForm = () => {
+  const printerTypes = [
+    {
+      title: "Regular",
+      value: "regular",
+    },
+    {
+      title: "Small",
+      value: "small",
+    },
+  ];
+
   return (
     <Form>
       <FormHeader label={"TRANSACTION INFORMATION"} titleSpan={24} />
@@ -91,7 +102,7 @@ const TransactionInformationForm = () => {
           <p className="app-text">SELECT PRINTER</p>
         </Col>
         <Col span={8}>
-          <FormRadioButton></FormRadioButton>
+          <FormRadioButton options={printerTypes} />
         </Col>
         <Col span={8} align={"right"}>
           <Button className="gray-btn" style={{ width: 120 }}>

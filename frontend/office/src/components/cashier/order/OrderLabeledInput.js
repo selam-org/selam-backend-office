@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import "../../pages/styles/Order.css";
+import "../../../pages/styles/Order.css";
 import FormInput from "../form/FormInput";
 import FormLabel from "../form/FormLabel";
 
