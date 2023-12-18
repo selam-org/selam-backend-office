@@ -52,17 +52,29 @@ const slice = createSlice({
     setIsAddAgencyModalOpen: (agency, action) => {
       agency.isAddAgencyModalOpen = action.payload.open;
     },
+    setIsAddAgencySuccess: (agency, action) => {
+      agency.isAddAgencySuccess = action.payload.open;
+    },
     updateAgency: (agency, action) => {
       console.log(action.payload.agency_id, agency.agencies);
       console.log(action.payload, "update agency in slice");
-      const index = agency.agencies.findIndex((bnk) => {
-        console.log(bnk.agency_id, action.payload.agency_id, "agency id");
-        return bnk.agency_id === action.payload.agency_id;
+      console.log(action.payload);
+
+      const { id } = action.payload;
+      const index = agency.agencies.findIndex((updated_agency) => {
+        console.log(
+          updated_agency.agency_id,
+          action.payload.agency_id,
+          "agency id"
+        );
+        return updated_agency.agency_id === action.payload.agency_id;
       });
+
       agency.agencies[index] = action.payload;
       agency.updateAgencyError = {};
       agency.isUpdateAgencyLoading = false;
-      agency.isUpdateAgencyModalOpen[agency.agencies[index].agency_id] = false;
+      agency.isUpdateAgencyModalOpen[id] = false;
+      console.log(agency.isUpdateAgencyModalOpen[id]);
     },
     updateAgencyLoading: (agency, action) => {
       agency.isUpdateAgencyLoading = true;
@@ -87,6 +99,7 @@ export const {
   deleteAgencyError,
   deleteAgencyLoading,
   setIsAddAgencyModalOpen,
+  setIsAddAgencySuccess,
   agencysError,
   agencyLoading,
   agencySuccess,
@@ -98,9 +111,7 @@ export const {
 export default slice.reducer;
 
 export const getAgenciesApiCall = () => (dispatch, getState) => {
-  console.log("this in get managers api call", getState().entities.auth);
   const token = getState().entities.auth.userCred.token;
-  // console.log(token);
   dispatch(
     action.apiCallBegan({
       url: "agencies/",
@@ -114,10 +125,8 @@ export const getAgenciesApiCall = () => (dispatch, getState) => {
     })
   );
 };
-export const updateAgencyApiCAll = (data, id) => (dispatch, getState) => {
-  console.log("this in get managers api call", getState().entities.auth);
+export const updateAgencyApiCall = (data, id) => (dispatch, getState) => {
   const token = getState().entities.auth.userCred.token;
-  // console.log(token);
   dispatch(
     action.apiCallBegan({
       url: `agencies/${id}/`,
@@ -134,9 +143,7 @@ export const updateAgencyApiCAll = (data, id) => (dispatch, getState) => {
 };
 
 export const addAgencyApiCall = (data) => (dispatch, getState) => {
-  console.log("this in get managers api call", getState().entities.auth);
   const { token, id } = getState().entities.auth.userCred;
-  console.log(token, id, "addAgency");
 
   dispatch(
     action.apiCallBegan({
@@ -155,8 +162,13 @@ export const addAgencyApiCall = (data) => (dispatch, getState) => {
 
 export const getAgencies = createSelector(
   (state) => state.entities.agency.agencies,
-
   (agencies) => agencies
+);
+
+export const getAgency = createSelector(
+  (state, id) =>
+    state.entities.agency.agencies.find((agency) => agency.id + "" === id + ""),
+  (agency) => agency
 );
 
 export const getAddAgencyErrors = createSelector(

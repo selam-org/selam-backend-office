@@ -5,6 +5,7 @@ import {
   addAgencyApiCall,
   isAddAgencyLoading,
   setIsAddAgencyModalOpen,
+  setIsAddAgencySuccess,
   isAddAgencyModalOpen,
   getAddAgencyErrors,
   isAddAgencySuccess,
@@ -52,6 +53,7 @@ const NewAgencyModal = () => {
         type: "success",
         content: "Agency added succesfully",
       });
+      dispatch(setIsAddAgencySuccess({ open: false }));
     }
 
     if (Object.keys(errors).length > 0) {

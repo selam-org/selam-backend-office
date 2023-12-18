@@ -99,7 +99,7 @@ const Admin = () => {
         >
           <Routes>
             <Route path="/" element={<Agencies />} />
-            <Route path="/agencies/:agencyId" element={<Commission />} />
+            <Route path="/agencies/:id" element={<Commission />} />
             <Route path="/cashiers" element={<Cashiers />} />
             <Route path="/reports" element={<Reports />} />
           </Routes>
