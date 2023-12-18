@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import transactions from "./transactions";
+import commission from "./commission";
 const authPersistConfig = {
   key: "auth 1.7",
   version: 1.0,
