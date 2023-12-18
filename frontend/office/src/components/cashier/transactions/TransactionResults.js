@@ -1,11 +1,24 @@
 import { Row, Image } from "antd";
 import FormInput from "../form/FormInput";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getTransactions } from "../../../store/transactions";
+import { Link } from "react-router-dom";
 const TransactionResult = () => {
+  const sender = useSelector(getTransactions);
   return (
     <>
       <div className="result-title">New Transaction (Search Customer)</div>
-      <div className="result-customers"></div>
+      <div className="result-customers">
+        <ul>
+          {sender.map((item) => {
+            return (
+              <Link key={item.id} to={`/orders/${item.id}`}>
+                <li>{item.sender_first_name}</li>
+              </Link>
+            );
+          })}
+        </ul>
+      </div>
       <Row className="results-footer">
         <span className="app-text" style={{ marginRight: 12 }}>
           First Page

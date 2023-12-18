@@ -37,7 +37,6 @@ const PaymentInformationForm = () => {
     }, 2000);
   };
   const handlePayeeModalCancel = () => {
-    console.log("Clicked cancel button");
     setOpenPayeeModal(false);
   };
 

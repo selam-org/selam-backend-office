@@ -14,7 +14,7 @@ const OrderLabeledInput = ({
   return (
     <Row className="order-input">
       <div className="order-form-label">
-        <FormLabel label={label} isRequired={isRequired} />
+        <FormLabel  label={label} isRequired={isRequired} />
       </div>
       <Col span={inputSpan}>
         <InputComponent {...rest} />

@@ -22,7 +22,7 @@ const apiCall =
     next(action);
     try {
       const response = await axios.request({
-        baseURL: "http://192.168.0.187:8000/",
+        baseURL: "http://localhost:8000/",
         url,
         method,
         data,
@@ -34,6 +34,7 @@ const apiCall =
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
       console.log(onSuccess, response.data);
     } catch (error) {
+      console.log(error, "error");
       if (error.response && error.response.status === 401) {
         console.log("here in 401");
         dispatch(logout());
@@ -56,6 +57,7 @@ const apiCall =
           });
       } else {
         dispatch(actions.apiCallFailed("error.message"));
+        console.log("error 1", error.message);
         if (onFailed)
           dispatch({
             type: onFailed,

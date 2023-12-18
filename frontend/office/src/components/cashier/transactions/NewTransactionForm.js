@@ -1,17 +1,29 @@
 import { Form, Row, Col, Image } from "antd";
 import FormLabeledInput from "../form/FormLabeledInput";
-
-const onFinish = (values) => {
-  console.log("Received values:", values);
-};
-
+import { useDispatch, useSelector } from "react-redux";
+import { getTransactionsApiCall } from "../../../store/transactions";
 const NewTransactionForm = () => {
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+  const handleSearch = () => {
+    form
+      .validateFields()
+      .then(async (values) => {
+        if (
+          values.sender_phone ||
+          values.sender_first_name ||
+          values.sender_last_name ||
+          values.sender_account ||
+          values.sender_mother_maiden
+        ) {
+          console.log(values);
+          dispatch(getTransactionsApiCall(values));
+        }
+      })
+      .catch((err) => {});
+  };
   return (
-    <Form
-      onFinish={onFinish}
-      labelCol={{ span: 6 }}
-      className="new-transaction-form"
-    >
+    <Form form={form} labelCol={{ span: 6 }} className="new-transaction-form">
       <div className="new-transaction-title">
         New Transaction (Search Customer)
       </div>
@@ -20,19 +32,45 @@ const NewTransactionForm = () => {
           New Transaction (Search Customer)
         </div>
         <Row gutter={4}>
-          <FormLabeledInput label="Telephone" name="telephone" />
-          <FormLabeledInput label="Accound ID" name="accountId" />
-          <FormLabeledInput label="First Name" name="firstName" />
-          <FormLabeledInput label="Middle Name" name="middleName" />
-          <FormLabeledInput label="Last Name" name="lastName" />
           <FormLabeledInput
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            label="Telephone"
+            name="sender_phone"
+          />
+          <FormLabeledInput
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            label="Account ID"
+            name="sender_account"
+          />
+          <FormLabeledInput
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            label="First Name"
+            name="sender_first_name"
+          />
+          <FormLabeledInput
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            label="Middle Name"
+            name="middleName"
+          />
+          <FormLabeledInput
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            label="Last Name"
+            name="sender_last_name"
+          />
+          <FormLabeledInput
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="Mother's Maiden Name"
-            name="motherMaidenName"
+            name="sender_mother_maiden"
           />
         </Row>
       </div>
       <div style={{ margin: "7px 0px" }}>
-        <img src="/images/search-glass.png" width={50} alt="" />
+        <img
+          onClick={handleSearch}
+          src="/images/search-glass.png"
+          width={50}
+          alt=""
+        />
         <img src="/images/transaction-icons.png" width={150} alt="" />
       </div>
     </Form>

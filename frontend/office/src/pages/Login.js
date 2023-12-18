@@ -12,7 +12,6 @@ const Login = () => {
   const loginError = useSelector((state) => getLoginError(state));
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     dispatch(login(values));
   };
 

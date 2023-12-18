@@ -7,13 +7,44 @@ import SearchIcon from "../../SearchIcon";
 import AppPrimaryButton from "../../AppPrimaryButton";
 import FormHeaderInput from "../../form/FormHeaderInput";
 import FormHeaderDropdown from "../../form/FormHeaderDropdown";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getReceivers } from "../../../../store/transactions";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 const ReceiverInformationForm = () => {
+  const [receiverId, setReceiverId] = useState();
+  const { senderId } = useParams();
+  const receivers = useSelector((state) => getReceivers(state, senderId));
+  console.log("receivers", receivers, "senderId", senderId, "senderId");
+  const [receiver, setReceiver] = useState();
+  useEffect(() => {
+    console.log("hi");
+    const re = receivers.find(
+      (receiver) => receiver.value + "" === receiverId + ""
+    );
+    setReceiver(re);
+  }, [receiverId]);
+  const handleReceiverChange = (id) => {
+    console.log(id, "id  handleReceiverChange", receiver);
+    setReceiverId(id);
+  };
+  console.log(receiver, "receiver")
   return (
-    <Form>
+    <Form
+      initialValues={{
+        receiver_last_name: "hi",
+        receiver_first_name: "hi",
+        
+      }}
+    >
       <FormHeader label={"RECEIVER INFORMATION"}>
         <Col span={7} style={{ paddingLeft: 15 }}>
-          <FormHeaderDropdown label="Select Receiver" isRequired={true} />
+          <FormHeaderDropdown
+            options={receivers}
+            onChange={handleReceiverChange}
+            label="Select Receiver"
+            isRequired={true}
+          />
         </Col>
         <Col span={8}>
           <Row align="middle" justify="end">
@@ -44,7 +75,12 @@ const ReceiverInformationForm = () => {
 
       <Row className="order-row">
         <Col span={8}>
-          <OrderLabeledInput label="First Name" isRequired={true} />
+          <OrderLabeledInput
+            name="receiver_first_name"
+            disabled={true}
+            label="First Name"
+            isRequired={true}
+          />
         </Col>
         <Col span={8}>
           <OrderLabeledInput label="Middle Name" />

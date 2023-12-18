@@ -4,18 +4,24 @@ import agency from "./agency";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import commission from "./commission";
-
+import transactions from "./transactions";
 const authPersistConfig = {
-  key: "auth 1.4",
+  key: "auth 1.7",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
   blacklist: ["loginError"],
 };
+const transactionPersistConfig = {
+  key: "transaction 1.0",
+  version: 1.0,
+  storage: storage,
+  stateReconciler: autoMergeLevel2,
+  blacklist: ["isGetTransactionsLoading", "getTransactionsError", "receivers"],
+};
 
 const agencyPersistConfig = {
-  key: "agency 1.4",
+  key: "agency 1.5",
   version: 1.2,
   storage: storage,
   stateReconciler: autoMergeLevel2,
@@ -44,4 +50,5 @@ export default combineReducers({
   auth: persistReducer(authPersistConfig, auth),
   agency: persistReducer(agencyPersistConfig, agency),
   commission: persistReducer(commissionPersistConfig, commission),
+  transaction: persistReducer(transactionPersistConfig, transactions),
 });

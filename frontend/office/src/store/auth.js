@@ -32,12 +32,7 @@ const slice = createSlice({
       auth.logedIn = true;
       auth.loginError = null;
     },
-    // logout: (auth, action) => {
-    //   auth.userCred = null;
-    //   auth.logedIn = false;
-    //   auth.isLogoutLoading = false;
-    //   auth.logoutError = null;
-    // },
+
     logoutError: (auth, action) => {
       auth.isLogoutLoading = false;
       auth.logoutError = action.payload;
