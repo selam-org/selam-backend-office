@@ -20,7 +20,7 @@ const Commission = () => {
 const AgencyTitle = () => {
   return (
     <div className="agency-title-container">
-      <Link to="/admin">
+      <Link to="/">
         <span className="agency-title">
           <LeftOutlined />
           <span className="agency-name">Silver Spring Office</span>

@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import { Table, Space, Modal, Input } from "antd";
+import React, { useState, useEffect } from "react";
+import { Table, Space, Modal, Input, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import AdminButton from "../../components/admin/AdminButton";
+import AddAgencyModal from "../../components/admin/agency/NewAgencyModal";
+import { getAgencies, getAgenciesApiCall } from "../../store/agency";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/Admin.css";
 
 const { Column } = Table;
 
-const agencies = [
-  { id: 1, title: "Silver Spring" },
-  { id: 2, title: "Washington DC" },
-  { id: 3, title: "Maryland" },
-  { id: 4, title: "Los Angeles" },
-];
-
 const Agencies = () => {
+  const dispatch = useDispatch();
+  const agencies = useSelector(getAgencies);
+
   const [editModalOpen, seteditModalOpen] = useState();
   const [confirmEditLoading, setconfirmEditLoading] = useState(false);
 
@@ -24,16 +23,20 @@ const Agencies = () => {
     seteditModalOpen(true);
   };
 
-  const showActivateModal = () => {
-    setactivateModalOpen(true);
-  };
-
   const handleEditModalOk = () => {
     setconfirmEditLoading(true);
     setTimeout(() => {
       seteditModalOpen(false);
       setconfirmEditLoading(false);
     }, 2000);
+  };
+
+  const handleActivateModalCancel = () => {
+    setactivateModalOpen(false);
+  };
+
+  const showActivateModal = () => {
+    setactivateModalOpen(true);
   };
 
   const handleActivateModalOk = () => {
@@ -48,21 +51,31 @@ const Agencies = () => {
     seteditModalOpen(false);
   };
 
-  const handleActivateModalCancel = () => {
-    setactivateModalOpen(false);
-  };
+  useEffect(() => {
+    dispatch(getAgenciesApiCall());
+  }, []);
+
+  console.log(agencies);
 
   return (
     <>
-      <div className="page-title">Manage Agencies</div>
-      <Table className="table" dataSource={agencies}>
-        <Column title="Title" dataIndex="title" key="title" />
+      <Row justify={"space-between"}>
+        <Col>
+          <div className="page-title">Manage Agencies</div>
+        </Col>
+        <Col>
+          <AddAgencyModal />
+        </Col>
+      </Row>
+      <Table className="table" dataSource={agencies} rowKey="id">
+        <Column title="Name" dataIndex="name" key="title" />
+        <Column title="Address" dataIndex="address" key="address" />
         <Column
           title="Action"
           key="action"
           render={(_, record) => (
             <Space size="middle">
-              <Link to={`/admin/agencies/${record.id}`}>
+              <Link to={`/agencies/${record.id}`}>
                 <AdminButton
                   style={AdminButtonStyle}
                   label={"Rate / Commission"}

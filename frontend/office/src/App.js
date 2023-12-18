@@ -3,16 +3,23 @@ import Login from "./pages/Login";
 import Order from "./pages/cashier/Order";
 import Transctions from "./pages/cashier/Transactions";
 import Admin from "./pages/Admin";
-import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getIsLogin, getLoggedinUser } from "./store/auth";
 
 function App() {
+  const isLogedin = useSelector((state) => getIsLogin(state));
+  const loggedinUser = useSelector((state) => getLoggedinUser(state));
+
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/admin/*" element={<Admin />} />
-      <Route path="/cashier" element={<Transctions />} />
-      <Route path="/cashier/order" element={<Order />} />
-    </Routes>
+    <>
+      {!isLogedin ? (
+        <Login />
+      ) : loggedinUser.user_type === "admin" ? (
+        <Admin />
+      ) : (
+        <Transctions />
+      )}
+    </>
   );
 }
 

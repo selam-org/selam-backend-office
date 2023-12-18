@@ -1,4 +1,4 @@
-import { Row, Col, Image } from "antd";
+import { Row, Col } from "antd";
 import AppPrimaryButton from "../AppPrimaryButton";
 import OrderHeaderLink from "./OrderHeaderLink";
 import OrderHeaderInfo from "./OrderHeaderInfo";
@@ -24,7 +24,10 @@ const OrderHeader = () => {
         <Col span={12}>
           <Row justify={"end"} align={"middle"}>
             <Col span={6}>
-              <FormDropdown options={themeOptions} />
+              <FormDropdown
+                options={themeOptions}
+                defaultValue={themeOptions[0].title}
+              />
             </Col>
             <Col>
               <OrderHeaderLink label="Search Customer" />

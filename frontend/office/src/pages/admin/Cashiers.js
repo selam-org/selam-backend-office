@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Table, Space, Modal, Input } from "antd";
+import { Table, Space, Modal, Input, Select } from "antd";
 import AdminButton from "../../components/admin/AdminButton";
 import "../styles/Admin.css";
+
+const { Option } = Select;
 
 const Cashiers = () => {
   const [editModalOpen, setEditModalOpen] = useState();
@@ -78,6 +80,15 @@ const Cashiers = () => {
               <Input className="modal-input" placeholder="First name" />
               <Input className="modal-input" placeholder="Last name" />
               <Input className="modal-input" placeholder="Email" />
+              <Select
+                className="modal-input"
+                style={{ width: "100%" }}
+                placeholder="Agency"
+              >
+                <Option value={"agency"}>Agency 1</Option>
+                <Option value={"agency"}>Agency 2</Option>
+                <Option value={"agency"}>Agency 3</Option>
+              </Select>
             </Modal>
             <AdminButton
               style={AdminButtonStyle}

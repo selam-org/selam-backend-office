@@ -7,7 +7,13 @@ const { Option } = Select;
 /*
  options is an array of objects containing value and title properties.
 */
-const FormDropdown = ({ options = [], label, className, ...rest }) => {
+const FormDropdown = ({
+  options = [],
+  label,
+  className,
+  defaultValue,
+  ...rest
+}) => {
   return (
     <Form.Item
       label={label}
@@ -21,7 +27,10 @@ const FormDropdown = ({ options = [], label, className, ...rest }) => {
       }}
       {...rest}
     >
-      <Select className={`form-select ${className}`}>
+      <Select
+        className={`form-select ${className}`}
+        defaultValue={defaultValue}
+      >
         {options.map((option) => (
           <Option value={option.value}>{option.title}</Option>
         ))}

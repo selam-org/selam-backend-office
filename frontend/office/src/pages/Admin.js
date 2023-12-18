@@ -55,7 +55,7 @@ const Admin = () => {
             {
               key: "1",
               icon: (
-                <Link to="/admin/">
+                <Link to="/">
                   <BankOutlined />
                 </Link>
               ),
@@ -64,7 +64,7 @@ const Admin = () => {
             {
               key: "2",
               icon: (
-                <Link to="/admin/cashiers">
+                <Link to="/cashiers">
                   <UserOutlined />
                 </Link>
               ),
@@ -73,7 +73,7 @@ const Admin = () => {
             {
               key: "3",
               icon: (
-                <Link to="/admin/reports">
+                <Link to="/reports">
                   <BarChartOutlined />
                 </Link>
               ),
