@@ -14,11 +14,12 @@ def transform_data_to_model(data):
         "sender_mother_maiden": " ",
         "sender_birth_date": datetime.strptime(data["Birthday Sender"], date_format),
         "sender_mobile_phone": "",
-        "sender_account": "",
+        "sender_account": "543234",
         "sender_ssn": data["Sender SSN"],
         "id_type": data["Number Id Sender"],
         "sender_state_identification": data["Sender Country Identification"],
         "sender_country_identification": data["Sender Country Identification"],
+        "sender_zip": data["Sender Zip"],
     }
     receiver = {
         "receiver_last_name": data["Receiver"].split(' ')[-1],

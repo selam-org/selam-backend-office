@@ -2,6 +2,7 @@
 # Create your models here.
 from django.db import models
 from user.models import Admin
+from agency.models import Agency
 
 
 class Commission(models.Model):
@@ -12,6 +13,11 @@ class Commission(models.Model):
     admin = models.ForeignKey(
         Admin,
         related_name='receiver_payment_info',
+        on_delete=models.CASCADE,
+    )
+    agency = models.ForeignKey(
+        Agency,
+        related_name='agency_payment_info',
         on_delete=models.CASCADE,
     )
 

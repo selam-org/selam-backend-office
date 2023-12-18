@@ -23,6 +23,7 @@ class Sender(models.Model):
     sender_state_identification = models.CharField(max_length=100)
     sender_country_identification = models.CharField(max_length=100)
     sender_identification_number = models.CharField(max_length=100)
+    sender_zip = models.CharField(max_length=100)
 
     def __str__(self):
         return f'{self.id} - {self.sender_address} - {self.sender_phone} - {self.sender_mobile_phone} '
