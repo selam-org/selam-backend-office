@@ -25,7 +25,7 @@ from user.views import CustomAuthTokenView
 from user.views import LogoutView
 from django.contrib import admin
 from django.urls import path
-from user.views import CashierCreateViewSet
+from user.views import CashierCreateViewSet, AdminsCreateViewSet
 from agency.views import AgencyViewSet
 from sender.views import SenderViewSet
 from receiver.views import ReceiverViewSet
@@ -48,6 +48,7 @@ router.register(r'receivers', ReceiverViewSet, basename='receivers')
 router.register(r'payment_infos', PaymentInfoViewSet, basename='payment_infos')
 router.register(r'orders', OrderViewSet, basename='orders')
 router.register(r'commissions', CommissionViewSet, basename='commissions')
+router.register(r'admin', AdminsCreateViewSet, basename='admin')
 
 urlpatterns = router.urls
 urlpatterns += [

@@ -8,7 +8,6 @@ class Sender(models.Model):
     id = models.AutoField(primary_key=True)
     sender_first_name = models.CharField(max_length=100)
     sender_last_name = models.CharField(max_length=100)
-    sender_phone = models.CharField(max_length=100)
     sender_country = models.CharField(
         max_length=100)
     sender_city = models.CharField(max_length=100)
@@ -26,4 +25,4 @@ class Sender(models.Model):
     sender_identification_number = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'{self.id} - {self.sender} - {self.sender_address} - {self.sender_phone} - {self.sender_mobile_phone} '
+        return f'{self.id} - {self.sender_address} - {self.sender_phone} - {self.sender_mobile_phone} '

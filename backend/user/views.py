@@ -15,7 +15,11 @@ class CashierCreateViewSet(mixins.CreateModelMixin,
                            viewsets.GenericViewSet):
     queryset = Cashier.objects.all()
     serializer_class = CashierSerializer
-
+class AdminsCreateViewSet(mixins.CreateModelMixin,
+                          viewsets.GenericViewSet):
+    queryset = Admin.objects.all()
+    serializer_class = AdminSerializer
+    pagination_class = None
 
 class CustomAuthTokenView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):

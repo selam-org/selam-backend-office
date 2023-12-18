@@ -6,6 +6,7 @@ from .models import Sender
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import OrderFilter
+from rest_framework.permissions import IsAuthenticated
 
 
 class SenderViewSet(viewsets.ModelViewSet):
@@ -15,6 +16,7 @@ class SenderViewSet(viewsets.ModelViewSet):
     search_fields = []
     serializer_class = SenderSerializer
     pagination_class = None
+    permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

@@ -16,12 +16,6 @@ class Receiver(models.Model):
         ('ADDIS ABABA GPO', 'ADDIS ABABA GPO'),
     ]
 
-    STATUS = [
-        ('Pending', 'Pending'),
-        ('Held', 'Held'),
-        ('Completed', 'Completed'),
-    ]
-
     id = models.AutoField(primary_key=True)
     receiver_first_name = models.CharField(max_length=100)
     receiver_last_name = models.CharField(max_length=100)
@@ -44,4 +38,4 @@ class Receiver(models.Model):
     )
 
     def __str__(self):
-        return f'{self.id} - {self.receiver} - {self.receiver_address} - {self.receiver_phone} - {self.receiver_mobile_phone} - {self.sender} '
+        return f'{self.id}- {self.receiver_address} - {self.receiver_phone} - {self.receiver_mobile_phone} - {self.sender} '
