@@ -37,6 +37,9 @@ class CustomAuthTokenView(ObtainAuthToken):
             response.data['user_type'] = user.user_type
             response.data['username'] = user.email
             response.data['full_name'] = user.full_name
+            if user.user_type == 'cashier':
+                cashier = Cashier.objects.filter(id=user.id).first()
+                response.data['agency'] = cashier.agency.id
         return response
 
 

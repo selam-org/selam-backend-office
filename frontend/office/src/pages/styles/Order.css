@@ -87,11 +87,9 @@
 }
 
 .yellow-btn {
-  background: linear-gradient(
-    0deg,
-    rgb(244, 253, 0) 11.2%,
-    rgb(255, 219, 47) 100.2%
-  );
+  background: linear-gradient(0deg,
+      rgb(244, 253, 0) 11.2%,
+      rgb(255, 219, 47) 100.2%);
 }
 
 .change-rate-btn {
@@ -169,6 +167,7 @@
   margin-top: 5px;
   padding: 5px;
 }
+
 .payee-info-input-row {
   background-color: #eeeeee;
   padding-top: 3px;
@@ -312,4 +311,12 @@
   position: absolute;
   top: 8px;
   right: 10px;
+}
+.bank-accounts-table .ant-table-row:hover {
+  background-color: inherit !important;
+  /* Or any color that matches the normal row background */
+}
+.bank-accounts-table .ant-table-row:focus {
+  background-color: inherit !important;
+  /* Or any color that matches the normal row background */
 }

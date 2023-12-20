@@ -1,6 +1,6 @@
 import { Form, Row, Col, Button } from "antd";
 import { Checkbox } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
 import SearchIcon from "../../SearchIcon";
@@ -15,7 +15,43 @@ import UpdateRate from "./UpdateRate";
 import CashManagementModal from "./CashManagementModal";
 import CustomerDocumentationModal from "./CustomerDocumentationModal";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPayment,
+  getCommissionsApiCall,
+  getCommissions,
+  getCommissionLoading,
+  getCommissionErrors,
+} from "../../../../store/transactions";
 const PaymentInformationForm = () => {
+  const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
+  const payment = useSelector(getPayment);
+  const calculation_option = [
+    {
+      value: "to Send a total of",
+      title: "to Send a total of",
+    },
+    {
+      value: "to Send a total with fee",
+      title: "to Send a total with fee",
+    },
+    {
+      value: "to Receive a total of",
+      title: "to Receive a total of",
+    },
+  ];
+  const moneyTypes = [
+    {
+      value: "CHECK",
+      title: "CHECK",
+    },
+    {
+      value: "CASH",
+      title: "CASH",
+    },
+  ];
   const paymentTypes = [
     {
       title: "Money",
@@ -29,7 +65,7 @@ const PaymentInformationForm = () => {
   const [openPayeeModal, setOpenPayeeModal] = useState(false);
   const [confirmPayeeModalLoading, setConfirmPayeeModalLoading] =
     useState(false);
-
+  const [detail, setDetail] = useState("");
   const showPayeeModal = () => {
     setOpenPayeeModal(true);
   };
@@ -43,9 +79,24 @@ const PaymentInformationForm = () => {
   const handlePayeeModalCancel = () => {
     setOpenPayeeModal(false);
   };
-
+  useEffect(() => {
+    dispatch(getCommissionsApiCall());
+  }, []);
+  useEffect(() => {
+    if (payment) {
+      setDetail(
+        `PC > ethiopia payee partner\ndemo payer address\n4444\nBANK > ${
+          payment.bank_name
+        }\nBranch > ${payment.branch ? payment.branch : ""}\nAccount Number > ${
+          payment.bank_account
+        }`
+      );
+      console.log(payment, "payment");
+    }
+  }, [payment]);
+  useEffect(() => {}, [detail]);
   return (
-    <Form>
+    <>
       <FormHeader label={"PAYMENT INFORMATION"}>
         <FormRadioButton options={paymentTypes} />
       </FormHeader>
@@ -55,8 +106,11 @@ const PaymentInformationForm = () => {
           <OrderLabeledInput
             label="Payee"
             inputSpan={14}
-            searchIcon={<SearchIcon />}
+            searchIcon={<SearchIcon onClick={showPayeeModal} />}
             className="payment-form-text-input"
+            defaultValue={payment ? "ethiopia payee partner" : ""}
+            disabled={true}
+            style={{ color: "#000000" }}
           />
         </Col>
       </Row>
@@ -84,8 +138,13 @@ const PaymentInformationForm = () => {
             InputComponent={() => (
               <Button
                 className="grey-input-btn"
-                onClick={showPayeeModal}
-              ></Button>
+                style={{
+                  textAlign: "left",
+                }}
+                // onClick={showPayeeModal}
+              >
+                {payment ? "BANK DEPOSIT" : ""}
+              </Button>
             )}
           />
         </Col>
@@ -98,42 +157,57 @@ const PaymentInformationForm = () => {
             inputSpan={15}
             InputComponent={FormTextArea}
             className="payment-form-text-input"
+            disabled={true}
+            style={{ color: "#000000" }}
+            value={detail}
           />
         </Col>
       </Row>
+      <Form
+        fomr={form}
+        initialValues={{
+          calculation_option: "to Send a total of",
+          moneyTypes: "CHECK",
+          amount: 0,
+        }}
+      >
+        <Row className="order-row order-amount-row">
+          <Col span={3}>
+            <span className="app-text bold-title">I want</span>
+          </Col>
+          <Col span={7}>
+            <FormDropDown
+              name="calculation_option"
+              options={calculation_option}
+            />
+          </Col>
+          <Col span={7}>
+            <FormHeaderInput name="amount" label="Amount" inputSpan={24} />
+          </Col>
+          <Col span={5}>
+            <FormDropDown name="moneyTypes" options={moneyTypes} />
+          </Col>
+        </Row>
 
-      <Row className="order-row order-amount-row">
-        <Col span={3}>
-          <span className="app-text bold-title">I want</span>
-        </Col>
-        <Col span={7}>
-          <FormDropDown />
-        </Col>
-        <Col span={7}>
-          <FormHeaderInput label="Amount" inputSpan={24} />
-        </Col>
-        <Col span={5}>
-          <FormDropDown />
-        </Col>
-      </Row>
+        <Row className="order-row ">
+          <Col span={10}>
+            <Checkbox style={{ marginLeft: 10 }} onChange={() => {}}>
+              Operation's on Hold
+            </Checkbox>
+          </Col>
+          <Col span={14}>
+            <Row>
+              <Col span={18}>
+                <Button className="gray-btn">Estimate Receipt</Button>
+              </Col>
+              <Col span={6}>
+                <Button className="green-btn">Calculate</Button>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Form>
 
-      <Row className="order-row ">
-        <Col span={10}>
-          <Checkbox style={{ marginLeft: 10 }} onChange={() => {}}>
-            Operation's on Hold
-          </Checkbox>
-        </Col>
-        <Col span={14}>
-          <Row>
-            <Col span={18}>
-              <Button className="gray-btn">Estimate Receipt</Button>
-            </Col>
-            <Col span={6}>
-              <Button className="green-btn">Calculate</Button>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
       <Row className="order-row ">
         <Col span={24}>
           <OrderLabeledInput
@@ -144,7 +218,7 @@ const PaymentInformationForm = () => {
         </Col>
       </Row>
       <Row className="order-row" style={{ padding: 14 }}></Row>
-    </Form>
+    </>
   );
 };
 

@@ -23,6 +23,12 @@ const initialState = {
   receiver: null,
   paymentInfo: [],
   payment: null,
+  commissions: [],
+  agency: null,
+  getAgencyLoading: false,
+  getAgencyError: {},
+  getCommissionLoading: false,
+  getCommissionError: {},
   addPaymentInfoError: {},
   isAddPaymentInfoLoading: false,
   updatePaymentInfoError: {},
@@ -33,6 +39,30 @@ const slice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
+    getCommissionError: (transaction, action) => {
+      transaction.getCommissionError = action.payload;
+      transaction.getCommissionLoading = false;
+    },
+    getCommissionLoading: (transaction, action) => {
+      transaction.getCommissionLoading = true;
+    },
+    getCommissionSuccess: (transaction, action) => {
+      transaction.commissions = action.payload;
+      transaction.getCommissionLoading = false;
+      transaction.getCommissionError = {};
+    },
+    getAgencyError: (transaction, action) => {
+      transaction.getAgencyError = action.payload;
+      transaction.getAgencyLoading = false;
+    },
+    getAgencyLoading: (transaction, action) => {
+      transaction.getAgencyLoading = true;
+    },
+    getAgencySuccess: (transaction, action) => {
+      transaction.agency = action.payload;
+      transaction.getAgencyLoading = false;
+      transaction.getAgencyError = {};
+    },
     updatePaymentInfoError: (transaction, action) => {
       transaction.updatePaymentInfoError = action.payload;
       transaction.updatePaymentInfoLoading = false;
@@ -211,6 +241,12 @@ export const {
   updatePaymentInfoError,
   updatePaymentInfoLoading,
   updatePaymentSuccess,
+  getAgencyError,
+  getAgencyLoading,
+  getAgencySuccess,
+  getCommissionError,
+  getCommissionLoading,
+  getCommissionSuccess,
 } = slice.actions;
 
 export default slice.reducer;
@@ -227,6 +263,43 @@ export const getTransactionsApiCall = (params) => (dispatch, getState) => {
       onFailed: transactionsError.type,
       method: "get",
       params,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+  );
+};
+export const getAgencyApiCall = (id) => (dispatch, getState) => {
+  console.log("this in get managers api call", getState().entities.auth);
+  const token = getState().entities.auth.userCred.token;
+  // console.log(token);
+  dispatch(
+    action.apiCallBegan({
+      url: `agencies/${id}/`,
+      onStart: getAgencyLoading.type,
+      onSuccess: getAgencySuccess.type,
+      onFailed: getAgencyError.type,
+      method: "get",
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+  );
+};
+export const getCommissionsApiCall = () => (dispatch, getState) => {
+  console.log("this in get managers api call", getState().entities.auth);
+  const { token, id } = getState().entities.auth.userCred;
+
+  dispatch(
+    action.apiCallBegan({
+      url: `commission/`,
+      onStart: getCommissionLoading.type,
+      onSuccess: getCommissionSuccess.type,
+      onFailed: getCommissionError.type,
+      method: "get",
+      params: {
+        agency: id,
+      },
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -464,4 +537,28 @@ export const getUpdatePaymentInfoLoading = createSelector(
 export const getUpdatePaymentInfoError = createSelector(
   (state) => state.entities.transaction.updatePaymentInfoError,
   (updatePaymentInfoError) => updatePaymentInfoError
+);
+export const getAgency = createSelector(
+  (state) => state.entities.transaction.agency,
+  (agency) => agency
+);
+export const getAgencyErrors = createSelector(
+  (state) => state.entities.transaction.getAgencyError,
+  (getAgencyError) => getAgencyError
+);
+export const isGetAgencyLoading = createSelector(
+  (state) => state.entities.transaction.getAgencyLoading,
+  (getAgencyLoading) => getAgencyLoading
+);
+export const getCommissions = createSelector(
+  (state) => state.entities.transaction.commissions,
+  (commissions) => commissions
+);
+export const getCommissionsErrors = createSelector(
+  (state) => state.entities.transaction.getCommissionError,
+  (getCommissionError) => getCommissionError
+);
+export const isGetCommissionsLoading = createSelector(
+  (state) => state.entities.transaction.getCommissionLoading,
+  (getCommissionLoading) => getCommissionLoading
 );

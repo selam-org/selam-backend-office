@@ -16,7 +16,7 @@ const authPersistConfig = {
   blacklist: ["loginError"],
 };
 const transactionPersistConfig = {
-  key: "transaction 1.0",
+  key: "transaction 1.1",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,

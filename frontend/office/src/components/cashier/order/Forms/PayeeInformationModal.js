@@ -8,6 +8,7 @@ import "../../../../pages/styles/Order.css";
 import SearchIcon from "../../SearchIcon";
 import FormInput from "../../form/FormInput";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import {
   getReceiver,
   getPaymentApiCall,
@@ -24,6 +25,7 @@ import {
 import { useEffect } from "react";
 
 const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
+  const [selectedRowKey, setSelectedRowKey] = useState();
   const dispatch = useDispatch();
   const receiver = useSelector(getReceiver);
   const paymentInfo = useSelector(getPaymentInfo);
@@ -44,6 +46,7 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
     if (!payment) {
       form.resetFields();
     }
+    setSelectedRowKey(payment?.id);
   }, [payment]);
   console.log(paymentInfo, "paymentInfo");
   const banks = [
@@ -94,9 +97,27 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
       value: "CHECKING ACCOUNT",
     },
   ];
+
+  const handleOk = () => {
+    // console.log("ok");
+    const py = paymentInfo.find((p) => p.id === selectedRowKey);
+    console.log(py, "py");
+    if (py) {
+      dispatch(setPayment(py));
+      if (onCancel) {
+        onCancel();
+      }
+    }
+  };
+  const handleCancel = () => {
+    setSelectedRowKey(payment?.id);
+    console.log("cancel", payment, payment?.id, selectedRowKey, "cancel");
+    if (onCancel) {
+      onCancel();
+    }
+  };
   const handleSave = () => {
     console.log("save payment");
-
     form
       .validateFields()
       .then((values) => {
@@ -142,6 +163,7 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
                     InputComponent={FormDropdown}
                     label={"Mode of payment"}
                     colSpan={24}
+                    
                   />
                 </Col>
                 <Col span={8}>
@@ -166,13 +188,17 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
             <PayeePartner />
             <Row className="payee-btn-container">
               <Col>
-                <AppPrimaryButton buttonClassName="payee-btn" label={"Ok"} />
+                <AppPrimaryButton
+                  onClick={handleOk}
+                  buttonClassName="payee-btn"
+                  label={"Ok"}
+                />
               </Col>
               <Col>
                 <AppPrimaryButton
                   buttonClassName="payee-btn payee-cancel-btn"
                   label={"Cancel"}
-                  onClick={onCancel}
+                  onClick={handleCancel}
                 />
               </Col>
             </Row>
@@ -245,7 +271,10 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
             </Form>
           </div>
 
-          <BankAccountsTable />
+          <BankAccountsTable
+            selectedRowKey={selectedRowKey}
+            setSelectedRowKey={setSelectedRowKey}
+          />
         </div>
       </Modal>
     </div>
@@ -289,9 +318,24 @@ const PayeePartner = () => {
   );
 };
 
-const BankAccountsTable = () => {
+const BankAccountsTable = (props) => {
+  const { setSelectedRowKey, selectedRowKey } = props;
   const paymentInfos = useSelector(getPaymentInfo);
-
+  const onRow = (record) => {
+    return {
+      onClick: () => {
+        // Toggle selection: if the row is already selected, deselect it, otherwise select it
+        console.log(record.id, "record key");
+        setSelectedRowKey(record.id);
+      },
+      // Apply the style conditionally
+      style:
+        selectedRowKey === record.id
+          ? { background: "blue" }
+          : { background: "white" },
+    };
+  };
+  useEffect(() => {}, [selectedRowKey]);
   const columns = [
     {
       title: "Account Number",
@@ -321,6 +365,7 @@ const BankAccountsTable = () => {
       dataSource={paymentInfos}
       columns={columns}
       pagination={false}
+      onRow={onRow}
     />
   );
 };
