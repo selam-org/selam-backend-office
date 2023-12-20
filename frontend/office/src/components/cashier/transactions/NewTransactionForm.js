@@ -6,6 +6,7 @@ const NewTransactionForm = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const handleSearch = () => {
+    console.log("Handle search called");
     form
       .validateFields()
       .then(async (values) => {
@@ -33,31 +34,37 @@ const NewTransactionForm = () => {
         </div>
         <Row gutter={4}>
           <FormLabeledInput
+            className="new-transaction-input"
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="Telephone"
             name="sender_phone"
           />
           <FormLabeledInput
+            className="new-transaction-input"
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="Account ID"
             name="sender_account"
           />
           <FormLabeledInput
+            className="new-transaction-input"
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="First Name"
             name="sender_first_name"
           />
           <FormLabeledInput
+            className="new-transaction-input"
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="Middle Name"
             name="middleName"
           />
           <FormLabeledInput
+            className="new-transaction-input"
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="Last Name"
             name="sender_last_name"
           />
           <FormLabeledInput
+            className="new-transaction-input"
             onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             label="Mother's Maiden Name"
             name="sender_mother_maiden"

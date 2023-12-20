@@ -9,7 +9,7 @@ import commission from "./commission";
 import cashier from "./cashier";
 
 const authPersistConfig = {
-  key: "auth 1.7",
+  key: "auth 1.8",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,

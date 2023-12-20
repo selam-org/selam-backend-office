@@ -94,6 +94,13 @@
   text-overflow: ellipsis;
 }
 
+.new-transaction-input input {
+  padding: 14px 5px;
+  border-radius: 2px;
+  color: black;
+  margin-top: 1px;
+}
+
 .result-title {
   background-color: black;
   color: white;
@@ -103,7 +110,17 @@
 }
 
 .result-customers {
-  min-height: 400px;
+  min-height: 50vh;
+}
+
+.results-table {
+  overflow-x: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.results-table::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
 }
 
 .results-footer {
@@ -120,12 +137,48 @@
   margin: 0px 5px;
 }
 
+.results-page-dropdown .ant-select {
+  width: 60px !important;
+  margin: 0px 5px;
+}
+
+.results-page-dropdown .ant-select-arrow {
+  color: black !important;
+}
+
+.results-page-dropdown .ant-select-selector {
+  color: black !important;
+}
+
 .page-arrow:hover {
   cursor: pointer;
 }
 
 .results-total-pages {
   margin: 0px 6px;
+}
+
+.senders-results .ant-table td,
+.senders-results .ant-table th {
+  border: 1px solid white !important;
+  padding: 2px !important;
+  padding-left: 5px !important;
+}
+
+.senders-results .ant-table th {
+  border-radius: 0px !important;
+  background-color: #ceecea !important;
+  color: #787 !important;
+  min-width: 250px !important;
+  font-weight: 500 !important;
+}
+
+.sender-account {
+  color: blue;
+}
+
+.senders-results .ant-table th:first-child {
+  min-width: 150px !important;
 }
 
 .footer {
