@@ -217,19 +217,3 @@ export const isUpdateAgencyModalOpen = createSelector(
   (state) => state.entities.agency.isUpdateAgencyModalOpen,
   (isUpdateAgencyModalOpen) => isUpdateAgencyModalOpen
 );
-
-export const getAgenciesUploadSingleOrder = createSelector(
-  (state) => {
-    const agencies = state.entities.agency.agencies;
-    const arr = [];
-    agencies.forEach((element) => {
-      arr.push({
-        ...element,
-        value: element.agency_name,
-        label: element.agency_name,
-      });
-    });
-    return arr;
-  },
-  (agencies) => agencies
-);

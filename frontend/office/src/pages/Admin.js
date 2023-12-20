@@ -19,14 +19,18 @@ const { Header, Sider, Content } = Layout;
 const Admin = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout>
+    <Layout
+      style={{
+        backgroundColor: "white",
+      }}
+    >
       <Sider
         trigger={null}
         collapsible
         collapsed={collapsed}
         width={250}
         style={{
-          height: "100vh",
+          // height: "100vh",
           backgroundColor: "white",
         }}
       >
@@ -93,7 +97,7 @@ const Admin = () => {
           style={{
             margin: "2px 2px",
             padding: 24,
-            minHeight: 280,
+            minHeight: "92vh",
             backgroundColor: "white",
           }}
         >

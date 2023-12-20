@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Form, Input, Button, Table, Row, message } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
-import AdminButton from "../AdminButton";
+import { Form, Input, Table, message, Row, Space } from "antd";
+import { validateDouble } from "../../../utils/form_validators";
 import {
-  validateInteger,
-  validateDouble,
-} from "../../../utils/form_validators";
-import {
+  deleteCommissionApiCall,
   getAgencyCommission,
   getCommissionApiCall,
   updateCommissionApiCall,
 } from "../../../store/commission";
+import AdminButton from "../AdminButton";
 
 const CommissionForm = () => {
   const { id } = useParams();
@@ -20,65 +17,30 @@ const CommissionForm = () => {
   const dispatch = useDispatch();
   const [messageApi, contextHolder] = message.useMessage();
 
-  let commission = useSelector((state) => getAgencyCommission(state, id));
-  let initialValues = { windows: commission ?? [] };
+  const commission = useSelector((state) => getAgencyCommission(state, id));
 
-  console.log("commission form", "commission", commission);
-  console.log("commission form", "initialValues", initialValues);
-
-  const validateWindows = (windows) => {
-    // Parse start and end values
-    const parsedWindows = windows.map((window) => ({
-      ...window,
-      start: parseInt(window.start),
-      end: parseInt(window.end),
-    }));
-
-    // Check if all ends are greater or equal than starts.
-    parsedWindows.forEach((window) => {
-      const { start, end } = window;
-      if (start > end) {
-        messageApi.open({
-          type: "error",
-          content: `${start} should be less than ${end}.`,
-        });
-        return false;
-      }
-    });
-
-    const sortedWindows = [...parsedWindows].sort((a, b) => a.start - b.start);
-
-    // Check if there is an overlap between windows.
-    for (let i = 0; i < sortedWindows.length - 1; i++) {
-      const currentEnd = sortedWindows[i].end;
-      const nextStart = sortedWindows[i + 1].start;
-
-      if (currentEnd >= nextStart) {
-        messageApi.open({
-          type: "error",
-          content: "Windows should be continuous",
-        });
-        return false;
-      }
-    }
-    return true;
+  console.log("commission updated to: ", commission);
+  var initialValues = {
+    windows: commission ?? [],
   };
 
-  const addCommission = async (addRow) => {
+  const handleEdit = async (record) => {
     try {
-      const { windows } = await form.validateFields();
-      const isValid = validateWindows(windows);
-      if (isValid) {
-        const lastAddedWindow = windows[windows.length - 1];
-        if (!lastAddedWindow) {
-          addRow();
-        } else if (!lastAddedWindow.id) {
-          await dispatch(updateCommissionApiCall(id, lastAddedWindow));
-          addRow();
-        }
-      }
+      const values = await form.validateFields();
+      const updatedCommission = Object.values(values["windows"]).find(
+        (item) => item.id === record.id
+      );
+      dispatch(updateCommissionApiCall(record.id, updatedCommission));
     } catch (e) {
-      console.log(e);
+      console.log("error", e);
+    }
+  };
+
+  const handleDelete = async (record) => {
+    try {
+      dispatch(deleteCommissionApiCall(record.id));
+    } catch (e) {
+      console.log("error", e);
     }
   };
 
@@ -86,32 +48,52 @@ const CommissionForm = () => {
     dispatch(getCommissionApiCall(id));
   }, []);
 
+  useEffect(() => {
+    if (commission) {
+      const sortedCommission = [...commission].sort(
+        (a, b) => a.start - b.start
+      );
+      form.setFieldsValue({
+        windows: sortedCommission,
+      });
+    }
+  }, [commission, form]);
+
   return (
     <>
       {contextHolder}
-      <div className="page-title">Manage Commission</div>
-      <Form className="table" form={form} initialValues={initialValues}>
+      <div className="page-sub-title">Edit Commissions</div>
+      <Form
+        className="edit-comission"
+        form={form}
+        initialValues={initialValues}
+      >
         <Form.List name="windows">
           {(fields, { add, remove }) => (
             <>
               <Table
-                dataSource={fields}
+                rowKey={(record) => record.id}
+                className="table"
+                dataSource={initialValues.windows}
                 columns={[
                   {
                     title: "Start",
                     dataIndex: "start",
                     key: "start",
                     render: (_, record, index) => (
-                      <Form.Item
-                        name={[index, "start"]}
-                        noStyle
-                        rules={[
-                          { required: true, message: "Start is required" },
-                          { validator: validateInteger },
-                        ]}
-                      >
-                        <Input placeholder="Start" />
-                      </Form.Item>
+                      <>
+                        <Form.Item name={"id"} noStyle></Form.Item>
+                        <Form.Item
+                          name={[index, "start"]}
+                          noStyle
+                          rules={[
+                            { required: true, message: "Start is required" },
+                            { validator: validateDouble },
+                          ]}
+                        >
+                          <Input placeholder="Start" />
+                        </Form.Item>
+                      </>
                     ),
                   },
                   {
@@ -124,7 +106,7 @@ const CommissionForm = () => {
                         noStyle
                         rules={[
                           { required: true, message: "End is required" },
-                          { validator: validateInteger },
+                          { validator: validateDouble },
                         ]}
                       >
                         <Input placeholder="End" />
@@ -152,28 +134,23 @@ const CommissionForm = () => {
                     title: "Action",
                     key: "action",
                     render: (_, record, index) => (
-                      <Button
-                        type="text"
-                        icon={<MinusOutlined />}
-                        onClick={() => remove(index)}
-                      />
+                      <Row>
+                        <Space size="large">
+                          <AdminButton
+                            label={"Save"}
+                            onClick={() => handleEdit(record)}
+                          />
+                          <AdminButton
+                            label={"Delete"}
+                            onClick={() => handleDelete(record)}
+                          />
+                        </Space>
+                      </Row>
                     ),
                   },
                 ]}
                 pagination={false}
               />
-              <Row justify="end" className="commission-btns">
-                <Form.Item>
-                  <AdminButton
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    className="admin-padded-btns"
-                    htmlType="submit"
-                    label={"Add"}
-                    onClick={() => addCommission(add)}
-                  />
-                </Form.Item>
-              </Row>
             </>
           )}
         </Form.List>

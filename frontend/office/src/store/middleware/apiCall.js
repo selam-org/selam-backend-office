@@ -20,8 +20,9 @@ const apiCall =
     if (onStart) dispatch({ type: onStart });
     next(action);
     try {
+      console.log("final data", data);
       const response = await axios.request({
-        baseURL: "http://localhost:8000/",
+        baseURL: "http://172.20.10.4:8000/",
         url,
         method,
         data,
@@ -30,7 +31,8 @@ const apiCall =
       });
       // console.log(response.data, "here", method, url, response);
       dispatch(actions.apiCallSuccess(response.data));
-      if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
+      if (onSuccess)
+        dispatch({ type: onSuccess, payload: response.data, params });
       console.log(onSuccess, response.data);
     } catch (error) {
       console.log(error, "error");

@@ -6,6 +6,8 @@ import { persistReducer } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import transactions from "./transactions";
 import commission from "./commission";
+import cashier from "./cashier";
+
 const authPersistConfig = {
   key: "auth 1.7",
   version: 1.0,
@@ -40,16 +42,39 @@ const agencyPersistConfig = {
 };
 
 const commissionPersistConfig = {
-  key: "commission 1.9",
+  key: "commission 1.0",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  whitelist: [],
+  whitelist: ["commissions"],
+};
+
+const cashierPersistConfig = {
+  key: "cashier 1.8",
+  version: 1.0,
+  storage: storage,
+  stateReconciler: autoMergeLevel2,
+  blacklist: [
+    "isGetCashiersLoading",
+    "getCashiersError",
+    "isAddCashierModalOpen",
+    "isAddCashierLoading",
+    "addCashierError",
+    "isAddCashierSuccess",
+    "isUpdateCashierLoading",
+    "updateCashierError",
+    "isUpdateCashierModalOpen",
+    "isChangePasswordLoading",
+    "isChangePasswordModalOpen",
+    "changePasswordError",
+    "isChangePasswordSuccess",
+  ],
 };
 
 export default combineReducers({
   auth: persistReducer(authPersistConfig, auth),
   agency: persistReducer(agencyPersistConfig, agency),
+  cashier: persistReducer(cashierPersistConfig, cashier),
   commission: persistReducer(commissionPersistConfig, commission),
   transaction: persistReducer(transactionPersistConfig, transactions),
 });

@@ -1,67 +1,28 @@
-import { useState } from "react";
-import { Table, Space, Modal, Input, Select } from "antd";
-import AdminButton from "../../components/admin/AdminButton";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Row, Col, Table, Space } from "antd";
+import { getCashiers, getCashiersApiCall } from "../../store/cashier";
+import NewCashierModal from "../../components/admin/cashier/NewCashierModal";
+import EditCashierModal from "../../components/admin/cashier/EditCashierModal";
+import ChangeCashierPasswordModal from "../../components/admin/cashier/ChangeCashierPasswordModal";
 import "../styles/Admin.css";
 
-const { Option } = Select;
-
 const Cashiers = () => {
-  const [editModalOpen, setEditModalOpen] = useState();
-  const [confirmEditLoading, setConfirmEditLoading] = useState(false);
+  const dispatch = useDispatch();
+  const cashiers = useSelector(getCashiers);
 
-  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState();
-  const [confirmChangePasswordLoading, setconfirmChangePasswordLoading] =
-    useState(false);
-
-  const showEditModal = () => {
-    setEditModalOpen(true);
-  };
-
-  const showChangePasswordModal = () => {
-    setChangePasswordModalOpen(true);
-  };
-
-  const handleEditModalOk = () => {
-    setConfirmEditLoading(true);
-    setTimeout(() => {
-      setEditModalOpen(false);
-      setConfirmEditLoading(false);
-    }, 2000);
-  };
-
-  const handleChangePasswordModalOk = () => {
-    setconfirmChangePasswordLoading(true);
-    setTimeout(() => {
-      setChangePasswordModalOpen(false);
-      setconfirmChangePasswordLoading(false);
-    }, 2000);
-  };
-
-  const handleEditModalCancel = () => {
-    setEditModalOpen(false);
-  };
-
-  const handleChangePasswordModalCancel = () => {
-    setChangePasswordModalOpen(false);
-  };
-
-  const cashiers = [
-    {
-      id: 0,
-      fullName: "Abdulefta Dedgeba",
-      email: "se.abdulefta.dedgeba@gmail.com",
-      isActive: false,
-    },
-  ];
+  useEffect(() => {
+    dispatch(getCashiersApiCall());
+  }, []);
 
   const cashiersTableColumns = [
-    { title: "Full Name", dataIndex: "fullName", key: "fullName" },
+    { title: "Full Name", dataIndex: "full_name", key: "full_name" },
     { title: "Email", dataIndex: "email", key: "email" },
     {
       title: "Status",
-      dataIndex: "isActive",
-      key: "isActive",
-      render: (_, { isActive }) => <> {isActive ? "Active" : "Inactive"}</>,
+      dataIndex: "is_active",
+      key: "is_active",
+      render: (_, { is_active }) => <> {is_active ? "Active" : "Inactive"}</>,
     },
     {
       title: "Action",
@@ -69,49 +30,9 @@ const Cashiers = () => {
       render: (_, cashier) => {
         return (
           <Space size="middle">
-            <Modal
-              title="Edit cashier's name"
-              open={editModalOpen}
-              onOk={handleEditModalOk}
-              confirmLoading={confirmEditLoading}
-              onCancel={handleEditModalCancel}
-            >
-              <div className="modal-title "></div>
-              <Input className="modal-input" placeholder="First name" />
-              <Input className="modal-input" placeholder="Last name" />
-              <Input className="modal-input" placeholder="Email" />
-              <Select
-                className="modal-input"
-                style={{ width: "100%" }}
-                placeholder="Agency"
-              >
-                <Option value={"agency"}>Agency 1</Option>
-                <Option value={"agency"}>Agency 2</Option>
-                <Option value={"agency"}>Agency 3</Option>
-              </Select>
-            </Modal>
-            <AdminButton
-              style={AdminButtonStyle}
-              label={"Edit"}
-              onClick={showEditModal}
-            />
-            <AdminButton style={AdminButtonStyle} label={"Activate"} />
-            <Modal
-              title="Change cashier's password"
-              open={changePasswordModalOpen}
-              onOk={handleChangePasswordModalOk}
-              confirmLoading={confirmChangePasswordLoading}
-              onCancel={handleChangePasswordModalCancel}
-            >
-              <div className="modal-title "></div>
-              <Input className="modal-input" placeholder="New password" />
-              <Input className="modal-input" placeholder="Confirm password" />
-            </Modal>
-            <AdminButton
-              style={AdminButtonStyle}
-              label={"Change Password"}
-              onClick={showChangePasswordModal}
-            />
+            <EditCashierModal id={cashier.id} />
+            <ChangeCashierPasswordModal id={cashier.id} />
+            {/* <AdminButton style={AdminButtonStyle} label={"Activate"} /> */}
           </Space>
         );
       },
@@ -120,7 +41,14 @@ const Cashiers = () => {
 
   return (
     <>
-      <div className="page-title">Manage Cashiers</div>
+      <Row justify={"space-between"}>
+        <Col>
+          <div className="page-title">Manage Cashiers</div>
+        </Col>
+        <Col>
+          <NewCashierModal />
+        </Col>
+      </Row>
       <Table
         className="table"
         columns={cashiersTableColumns}
@@ -128,10 +56,6 @@ const Cashiers = () => {
       ></Table>
     </>
   );
-};
-
-const AdminButtonStyle = {
-  margin: "0px 8px",
 };
 
 export default Cashiers;

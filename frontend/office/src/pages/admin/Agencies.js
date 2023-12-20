@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Table, Space, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import AdminButton from "../../components/admin/AdminButton";
-import AddAgencyModal from "../../components/admin/agency/NewAgencyModal";
+import NewAgencyModal from "../../components/admin/agency/NewAgencyModal";
 import { useDispatch, useSelector } from "react-redux";
 import EditAgencyModal from "../../components/admin/agency/EditAgencyModal";
+import ActivateAgencyButton from "../../components/admin/agency/ActivateAgencyButton";
 import {
   getAgencies,
   getAgenciesApiCall,
   setIsUpdateAgencyModal,
 } from "../../store/agency";
 import "../styles/Admin.css";
-import ActivateAgencyButton from "../../components/admin/agency/ActivateAgencyButton";
 
 const { Column } = Table;
 
@@ -39,7 +39,7 @@ const Agencies = () => {
           <div className="page-title">Manage Agencies</div>
         </Col>
         <Col>
-          <AddAgencyModal />
+          <NewAgencyModal />
         </Col>
       </Row>
       <Table className="table" dataSource={agencies} rowKey="id">
@@ -59,8 +59,8 @@ const Agencies = () => {
                   showEditModal(agency.id);
                 }}
               />
+              {/* <ActivateAgencyButton /> */}
               <EditAgencyModal id={agency.id} />
-              <ActivateAgencyButton />
             </Space>
           )}
         />

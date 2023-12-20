@@ -1,3 +1,8 @@
+.page-sub-title {
+  margin-top: 22px;
+  color: #333;
+}
+
 .agency-title-container {
   margin-bottom: 35px;
 }
@@ -22,4 +27,8 @@
 
 .rate-form {
   margin-top: 18px;
+}
+
+.commission-title {
+  margin-top: 50px;
 }
