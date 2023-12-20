@@ -15,8 +15,10 @@ const FormRadioButton = ({ options = [], label, onChange, value, ...rest }) => {
       }}
     >
       <Radio.Group onChange={onChange} value={value} {...rest}>
-        {options.map((option) => (
-          <Radio value={option.value}>{option.title}</Radio>
+        {options.map((option, index) => (
+          <Radio key={index} value={option.value}>
+            {option.title}
+          </Radio>
         ))}
       </Radio.Group>
     </Form.Item>

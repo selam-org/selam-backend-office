@@ -23,10 +23,13 @@ const EditAgencyModal = ({ id }) => {
   };
 
   const handleAdd = () => {
-    form.validateFields().then((values) => {
-      form.resetFields();
-      dispatch(updateAgencyApiCall(values, id));
-    });
+    form
+      .validateFields()
+      .then((values) => {
+        form.resetFields();
+        dispatch(updateAgencyApiCall(values, id));
+      })
+      .catch((err) => {});
   };
 
   const handleCancel = () => {

@@ -8,39 +8,74 @@ import AppPrimaryButton from "../../AppPrimaryButton";
 import FormHeaderInput from "../../form/FormHeaderInput";
 import FormHeaderDropdown from "../../form/FormHeaderDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { getReceivers } from "../../../../store/transactions";
+// import { getReceivers, setReceiver } from "../../../../store/transactions";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {
+  updateReceiverApiCall,
+  addReceiverApiCall,
+  getAddReceiverErrors,
+  getUpdateReceiverErrors,
+  isAddReceiverLoading,
+  isUpdateReceiverLoading,
+  getReceiver,
+  getReceivers,
+  setReceiver,
+} from "../../../../store/transactions";
 const ReceiverInformationForm = () => {
+  const dispatch = useDispatch();
+  const receiver = useSelector(getReceiver);
+  const isLoading =
+    useSelector(isUpdateReceiverLoading) | useSelector(isAddReceiverLoading);
   const [receiverId, setReceiverId] = useState();
   const { senderId } = useParams();
   const receivers = useSelector((state) => getReceivers(state, senderId));
-  console.log("receivers", receivers, "senderId", senderId, "senderId");
-  const [receiver, setReceiver] = useState();
+  // const [receiver, setReceiver] = useState();
+  const [_form] = Form.useForm();
+  const [edit, setEdit] = useState(true);
   useEffect(() => {
-    console.log("hi");
-    const re = receivers.find(
-      (receiver) => receiver.value + "" === receiverId + ""
-    );
-    setReceiver(re);
-  }, [receiverId]);
+    _form.setFieldsValue({ ...receiver });
+  }, [receiver]);
   const handleReceiverChange = (id) => {
-    console.log(id, "id  handleReceiverChange", receiver);
-    setReceiverId(id);
+    const re = receivers.find((receiver) => receiver.value + "" === id + "");
+
+    dispatch(setReceiver(re));
+    _form.setFieldsValue({ ...re });
+    setEdit(true);
   };
-  console.log(receiver, "receiver")
+
+  const handleSave = () => {
+    if (edit) return;
+    _form
+      .validateFields()
+      .then((values) => {
+        if (receiver) {
+          console.log("update");
+          dispatch(updateReceiverApiCall(values, receiver.id));
+        } else {
+          dispatch(
+            addReceiverApiCall({
+              ...values,
+              sender: senderId,
+              receiver_account: "899",
+              receiver_birth_date: "1983-05-27",
+            })
+          );
+          setReceiverId("");
+          setEdit(true);
+        }
+        _form.setFieldsValue(receiver);
+      })
+      .catch((err) => {});
+  };
+
   return (
-    <Form
-      initialValues={{
-        receiver_last_name: "hi",
-        receiver_first_name: "hi",
-        
-      }}
-    >
+    <Form form={_form}>
       <FormHeader label={"RECEIVER INFORMATION"}>
         <Col span={7} style={{ paddingLeft: 15 }}>
           <FormHeaderDropdown
             options={receivers}
+            defaultValue={receiver ? receiver.value : ""}
             onChange={handleReceiverChange}
             label="Select Receiver"
             isRequired={true}
@@ -50,7 +85,14 @@ const ReceiverInformationForm = () => {
           <Row align="middle" justify="end">
             <FormHeaderInput label="Account:" isRequired={true} />
             <Col style={{ marginLeft: 2 }}>
-              <AppPrimaryButton label="New" />
+              <AppPrimaryButton
+                onClick={() => {
+                  _form.resetFields();
+                  setEdit(false);
+                  dispatch(setReceiver(null));
+                }}
+                label="New"
+              />
             </Col>
           </Row>
         </Col>
@@ -58,18 +100,36 @@ const ReceiverInformationForm = () => {
 
       <Row className="order-row">
         <Col span={8}>
-          <OrderLabeledDropdown label="Country" isRequired={true} />
+          <OrderLabeledDropdown
+            name="receiver_country"
+            // defaultValue="Ethiopia"
+            disabled={edit}
+            label="Country"
+            isRequired={true}
+            options={[{ value: "Ethiopia", title: "Ethiopia" }]}
+          />
         </Col>
         <Col span={8}>
           <OrderLabeledDropdown
+            name="receiver_city"
+            // defaultValue="ADDIS ABABA GPO"
+            disabled={edit}
             label="City"
             inputSpan={10}
             isRequired={true}
             searchIcon={<SearchIcon />}
+            options={[{ value: "ADDIS ABABA GPO", title: "ADDIS ABABA GPO" }]}
           />
         </Col>
         <Col span={8}>
-          <OrderLabeledDropdown label="State" isRequired={true} />
+          <OrderLabeledDropdown
+            // defaultValue="Ethiopia"
+            name="receiver_state"
+            disabled={edit}
+            label="State"
+            isRequired={true}
+            options={[{ value: "Ethiopia", title: "Ethiopia" }]}
+          />
         </Col>
       </Row>
 
@@ -77,37 +137,73 @@ const ReceiverInformationForm = () => {
         <Col span={8}>
           <OrderLabeledInput
             name="receiver_first_name"
-            disabled={true}
+            disabled={edit}
             label="First Name"
             isRequired={true}
+            rules={[{ required: true, message: "" }]}
           />
         </Col>
         <Col span={8}>
-          <OrderLabeledInput label="Middle Name" />
+          <OrderLabeledInput
+            name="receiver_middle_name"
+            disabled={edit}
+            label="Middle Name"
+          />
         </Col>
         <Col span={8}>
-          <OrderLabeledInput label="Last Name" isRequired={true} />
+          <OrderLabeledInput
+            name="receiver_last_name"
+            rules={[{ required: true, message: "" }]}
+            disabled={edit}
+            label="Last Name"
+            isRequired={true}
+          />
         </Col>
       </Row>
 
       <Row className="order-row">
         <Col span={8}>
-          <OrderLabeledInput label="Mother's Maiden" isRequired={true} />
+          <OrderLabeledInput
+            name="receiver_maiden_name"
+            disabled={edit}
+            label="Mother's Maiden"
+            isRequired={true}
+          />
         </Col>
         <Col span={16}>
-          <OrderLabeledInput label="Address" isRequired={true} inputSpan={18} />
+          <OrderLabeledInput
+            name="receiver_address"
+            disabled={edit}
+            label="Address"
+            isRequired={true}
+            inputSpan={18}
+          />
         </Col>
       </Row>
 
       <Row className="order-row">
         <Col span={8}>
-          <OrderLabeledInput label="Phone" isRequired={true} />
+          <OrderLabeledInput
+            name="receiver_phone"
+            disabled={edit}
+            label="Phone"
+            isRequired={true}
+            rules={[{ required: true, message: "" }]}
+          />
         </Col>
         <Col span={8}>
-          <OrderLabeledInput label="Mobile Phone" />
+          <OrderLabeledInput
+            name="receiver_mobile_phone"
+            disabled={edit}
+            label="Mobile Phone"
+          />
         </Col>
         <Col span={8}>
-          <OrderLabeledInput label="DOB" />
+          <OrderLabeledInput
+            name="receiver_birth_date"
+            disabled={edit}
+            label="DOB"
+          />
         </Col>
       </Row>
 
@@ -122,9 +218,18 @@ const ReceiverInformationForm = () => {
         </Col>
         <Col span={8}>
           <Row className="order-output-btns" justify="end">
-            <AppPrimaryButton label="Edit" outlined={true} />
+            <AppPrimaryButton
+              onClick={() => setEdit(false)}
+              label="Edit"
+              outlined={true}
+            />
             <div style={{ marginLeft: 5 }}>
-              <AppPrimaryButton label="Save" />
+              <AppPrimaryButton
+                isLoading={isLoading}
+                disabled={isLoading}
+                onClick={handleSave}
+                label="Save"
+              />
             </div>
           </Row>
         </Col>

@@ -12,9 +12,12 @@ const RateForm = () => {
   const agency = useSelector((state) => getAgency(state, id));
 
   const handleSave = () => {
-    form.validateFields().then((values) => {
-      dispatch(updateAgencyApiCall(values, id));
-    });
+    form
+      .validateFields()
+      .then((values) => {
+        dispatch(updateAgencyApiCall(values, id));
+      })
+      .catch((err) => {});
   };
 
   const initialValues = {

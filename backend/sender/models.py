@@ -16,7 +16,7 @@ class Sender(models.Model):
     sender_address = models.CharField(max_length=100)
     sender_mother_maiden = models.CharField(max_length=100)
     sender_birth_date = models.DateField()
-    sender_mobile_phone = models.CharField(max_length=100)
+    sender_mobile_phone = models.CharField(max_length=100, blank=True, null=True)
     sender_account = models.CharField(max_length=100)
     sender_ssn = models.CharField(max_length=100)
     id_type = models.CharField(max_length=100)

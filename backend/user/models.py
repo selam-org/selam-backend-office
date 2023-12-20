@@ -13,8 +13,8 @@ from agency.models import Agency
 class User(AbstractUser):
     user_type = models.CharField(
         choices=USER_TYPES, max_length=150, default=USER_TYPES[1][0])
-    first_name = models.CharField(max_length=150, blank=True, null=True)
-    last_name = models.CharField(max_length=150, blank=True, null=True)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
     # Change to use email for authentication
     email = models.EmailField(unique=True)
 

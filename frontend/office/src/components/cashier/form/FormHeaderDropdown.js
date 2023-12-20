@@ -2,7 +2,6 @@ import { Form, Row, Col } from "antd";
 import FormDropdown from "./FormDropdown";
 
 const FormHeaderDropdown = ({ label, name, rules, ...rest }) => {
-  console.log(rest, "FormHeaderDropdown");
   return (
     <Row align="middle" justify="center">
       <Col style={{ marginRight: 10 }}>

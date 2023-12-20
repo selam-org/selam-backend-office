@@ -6,14 +6,47 @@ import OrderLabeledDropdown from "../OrderLabeledDropdown";
 import SearchIcon from "../../SearchIcon";
 import AppPrimaryButton from "../../AppPrimaryButton";
 import FormHeaderInput from "../../form/FormHeaderInput";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateSenderApiCall,
+  isUpdateSenderLoading,
+  setSender,
+} from "../../../../store/transactions";
 const SenderInformationForm = (props) => {
+  const [_form] = Form.useForm();
+  const isLoading = useSelector(isUpdateSenderLoading);
+  const dispatch = useDispatch();
   const countryOptions = [{ title: "Ethiopia", value: "Ethiopia" }];
   const { sender } = props;
   const [edit, setEdit] = useState(true);
+  useEffect(() => {
+    _form.setFieldsValue({ ...sender });
+  }, [sender]);
+  const handleSave = () => {
+    _form
+      .validateFields()
+      .then((values) => {
+        _form.resetFields();
+        console.log(values, "values");
+        dispatch(
+          updateSenderApiCall(
+            {
+              ...values,
+              sender_mobile_phone: "34",
+              sender_account: "343",
+            },
+            sender.id
+          )
+        );
+        setEdit(true);
+        _form.setFieldValue(values);
+      })
+      .catch((err) => {});
+  };
+
   return (
-    <Form initialValues={sender}>
+    <Form form={_form}>
       <FormHeader label={"SENDER INFORMATION"}>
         <Col span={8}>
           <Row align="middle" justify="end">
@@ -192,9 +225,9 @@ const SenderInformationForm = (props) => {
             />
             <div style={{ marginLeft: 5 }}>
               <AppPrimaryButton
-                onClick={() => {
-                  setEdit(true);
-                }}
+                disabled={isLoading}
+                loading={isLoading}
+                onClick={handleSave}
                 label="Save"
               />
             </div>

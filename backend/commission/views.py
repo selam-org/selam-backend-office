@@ -20,6 +20,7 @@ class CommissionViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        deleted_id = instance.bank_id
+        deleted_id = instance.id
+        agency = instance.agency.id
         instance.delete()
-        return Response({'id': deleted_id}, status=status.HTTP_200_OK)
+        return Response({'id': deleted_id, 'agency': agency}, status=status.HTTP_200_OK)

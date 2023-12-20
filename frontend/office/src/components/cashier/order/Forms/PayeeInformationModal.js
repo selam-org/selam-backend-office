@@ -1,4 +1,4 @@
-import { Row, Col, Modal, Table } from "antd";
+import { Row, Col, Modal, Table, Form } from "antd";
 import FormHeader from "../../form/FormHeader";
 import FormLabeledInput from "../../form/FormLabeledInput";
 import FormDropdown from "../../form/FormDropdown";
@@ -7,8 +7,118 @@ import { MinusOutlined } from "@ant-design/icons";
 import "../../../../pages/styles/Order.css";
 import SearchIcon from "../../SearchIcon";
 import FormInput from "../../form/FormInput";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getReceiver,
+  getPaymentApiCall,
+  getPaymentInfo,
+  getPaymentError,
+  getPaymentLoading,
+  getPayment,
+  setPayment,
+  updatePaymentInfoApiCall,
+  getUpdatePaymentInfoError,
+  getUpdatePaymentInfoLoading,
+  addPaymentInfoApiCall,
+} from "../../../../store/transactions";
+import { useEffect } from "react";
 const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
+  const dispatch = useDispatch();
+  const receiver = useSelector(getReceiver);
+  const paymentInfo = useSelector(getPaymentInfo);
+  const paymentError = useSelector(getPaymentError);
+  const paymentLoading = useSelector(getPaymentLoading);
+  const payment = useSelector(getPayment);
+  const updatePaymentInfoError = useSelector(getUpdatePaymentInfoError);
+  const updatePaymentInfoLoading = useSelector(getUpdatePaymentInfoLoading);
+  console.log(payment, "paymentOb");
+  const [form] = Form.useForm();
+  useEffect(() => {
+    if (receiver) {
+      dispatch(getPaymentApiCall({ receiver: receiver.id }));
+    }
+  }, [receiver]);
+  useEffect(() => {
+    form.setFieldsValue(payment);
+    if (!payment) {
+      form.resetFields();
+    }
+  }, [payment]);
+  console.log(paymentInfo, "paymentInfo");
+  const banks = [
+    {
+      title: "Bank of Abyssinia",
+      value: "Bank of Abyssinia",
+    },
+    {
+      title: "Commercial Bank of Ethiopia",
+      value: "Commercial Bank of Ethiopia",
+    },
+    {
+      title: "Dashen Bank",
+      value: "Dashen Bank",
+    },
+    {
+      title: "Wegagen Bank",
+      value: "Wegagen Bank",
+    },
+    {
+      title: "Awash Bank",
+      value: "Awash Bank",
+    },
+    {
+      title: "NIB Bank",
+      value: "NIB Bank",
+    },
+    {
+      title: "United Bank",
+      value: "United Bank",
+    },
+    {
+      title: "Oromia International Bank",
+      value: "Oromia International Bank",
+    },
+    {
+      title: "Cooperative Bank of Oromia",
+      value: "Cooperative Bank of Oromia",
+    },
+  ];
+  const account_types = [
+    {
+      title: "SAVINGS ACCOUNT",
+      value: "SAVINGS ACCOUNT",
+    },
+    {
+      title: "CHECKING ACCOUNT",
+      value: "CHECKING ACCOUNT",
+    },
+  ];
+  const handleSave = () => {
+    console.log("save payment");
+
+    form
+      .validateFields()
+      .then((values) => {
+        console.log(values, "payment values");
+        if (payment) {
+          dispatch(updatePaymentInfoApiCall(values, payment.id));
+        } else {
+          
+          dispatch(
+            addPaymentInfoApiCall({
+              ...values,
+              receiver: receiver.id,
+              mode_pay_receiver: "BANK DEPOSIT",
+              point_of_payment: "ethiopia payee partner",
+            })
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err, "err");
+        console.log("error");
+      });
+  };
   return (
     <div className="payee-modal">
       <Modal
@@ -70,56 +180,71 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
               label={"BANK ACCOUNT DETAILS"}
               className="payee-info-header bank-info-header"
             />
-            <Row gutter={10}>
-              <Col span={8}>
-                <FormLabeledInput
-                  labelClassName="bank-input-label"
-                  className="payee-input"
-                  InputComponent={FormDropdown}
-                  label={"Bank"}
-                  colSpan={24}
-                />
-              </Col>
-              <Col span={8}>
-                <FormLabeledInput
-                  labelClassName="bank-input-label"
-                  className="payee-input"
-                  InputComponent={FormDropdown}
-                  label={"Account Type"}
-                  colSpan={24}
-                />
-              </Col>
-              <Col span={8}>
-                <FormLabeledInput
-                  labelClassName="bank-input-label"
-                  className="payee-input"
-                  label={"Account Number"}
-                  colSpan={24}
-                />
-              </Col>
-            </Row>
-            <Row gutter={10} align={"bottom"}>
-              <Col span={8}>
-                <FormLabeledInput
-                  labelClassName="bank-input-label"
-                  className="payee-input"
-                  InputComponent={FormDropdown}
-                  label={"Branch Name"}
-                  colSpan={24}
-                />
-              </Col>
-              <Col span={8}>
-                <Row gutter={8}>
-                  <Col>
-                    <AppPrimaryButton label={"Add New"} />
-                  </Col>
-                  <Col>
-                    <AppPrimaryButton label={"Save"} />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
+            <Form form={form}>
+              <Row gutter={10}>
+                <Col span={8}>
+                  <FormLabeledInput
+                    labelClassName="bank-input-label"
+                    className="payee-input"
+                    InputComponent={FormDropdown}
+                    label={"Bank"}
+                    name="bank_name"
+                    colSpan={24}
+                    options={banks}
+                    rules={[{ required: true, message: "" }]}
+                  />
+                </Col>
+                <Col span={8}>
+                  <FormLabeledInput
+                    labelClassName="bank-input-label"
+                    className="payee-input"
+                    InputComponent={FormDropdown}
+                    label={"Account Type"}
+                    colSpan={24}
+                    name="account_type"
+                    options={account_types}
+                    rules={[{ required: true, message: "" }]}
+                  />
+                </Col>
+                <Col span={8}>
+                  <FormLabeledInput
+                    labelClassName="bank-input-label"
+                    className="payee-input"
+                    label={"Account Number"}
+                    colSpan={24}
+                    name="bank_account"
+                  />
+                </Col>
+              </Row>
+              <Row gutter={10} align={"bottom"}>
+                <Col span={8}>
+                  <FormLabeledInput
+                    labelClassName="bank-input-label"
+                    className="payee-input"
+                    label={"Branch Name"}
+                    colSpan={24}
+                    name="branch"
+                  />
+                </Col>
+                <Col span={8}>
+                  <Row gutter={8}>
+                    <Col>
+                      <AppPrimaryButton
+                        onClick={() => {
+                          dispatch(setPayment(null));
+                        }}
+                        label={"Add New"}
+                      />
+                    </Col>
+                    <Col>
+                      <AppPrimaryButton onClick={handleSave} label={"Save"} />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Form>
           </div>
+
           <BankAccountsTable />
         </div>
       </Modal>
@@ -165,43 +290,35 @@ const PayeePartner = () => {
 };
 
 const BankAccountsTable = () => {
-  const dataSource = [
-    {
-      key: "1",
-      accountNumber: "1000331401319",
-      bank: "Commercial Bank of Ethiopia",
-      branchName: "Main Branch",
-      accountType: "SAVINGS ACCOUNT",
-    },
-  ];
+  const paymentInfos = useSelector(getPaymentInfo);
 
   const columns = [
     {
       title: "Account Number",
-      dataIndex: "accountNumber",
-      key: "accountNumber",
+      dataIndex: "bank_account",
+      key: "bank_account",
     },
     {
       title: "Bank",
-      dataIndex: "bank",
-      key: "bank",
+      dataIndex: "bank_name",
+      key: "bank_name",
     },
     {
       title: "Branch Name",
-      dataIndex: "branchName",
-      key: "branchName",
+      dataIndex: "branch",
+      key: "branch",
     },
     {
       title: "Account Type",
-      dataIndex: "accountType",
-      key: "accountType",
+      dataIndex: "account_type",
+      key: "account_type",
     },
   ];
 
   return (
     <Table
       className="bank-accounts-table"
-      dataSource={dataSource}
+      dataSource={paymentInfos}
       columns={columns}
       pagination={false}
     />

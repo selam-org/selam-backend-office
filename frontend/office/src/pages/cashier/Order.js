@@ -10,18 +10,26 @@ import { useParams } from "react-router-dom";
 import { getTransactionById } from "../../store/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getReceiverApiCall, getReceivers } from "../../store/transactions";
+import {
+  getReceiverApiCall,
+  getReceivers,
+  setSender,
+  setReceiver,
+  getReceiver,
+} from "../../store/transactions";
 const Order = () => {
   const dispatch = useDispatch();
   const { senderId } = useParams();
   const sender = useSelector((state) => getTransactionById(state, senderId));
-  const receiver = useSelector((state) => getReceivers(state, senderId));
+  const receivers = useSelector((state) => getReceivers(state, senderId));
+  const receiver = useSelector(getReceiver);
   useEffect(() => {
-    console.log("success 2");
     dispatch(getReceiverApiCall({ sender: senderId }));
-    console.log("success 2");
   }, []);
-  console.log(receiver, "receiver");
+  useEffect(() => {
+    dispatch(setSender(sender));
+    if (receivers.length > 0 && !receiver) dispatch(setReceiver(receivers[0]));
+  }, [sender]);
   return (
     <>
       {sender ? (

@@ -17,7 +17,6 @@ const apiCall =
       headers,
       otherData,
     } = action.payload;
-    console.log(params, "params");
     if (onStart) dispatch({ type: onStart });
     next(action);
     try {

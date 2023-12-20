@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Select } from "antd";
 import "./styles/FormDropdown.css";
 
@@ -14,8 +14,8 @@ const FormDropdown = ({
   defaultValue,
   ...rest
 }) => {
+  useEffect(() => {}, [defaultValue]);
   const { disabled, onChange, ...other } = rest;
-  console.log(options, "options FormDropdown");
   return (
     <Form.Item
       label={label}
@@ -35,8 +35,10 @@ const FormDropdown = ({
         disabled={disabled}
         onChange={onChange}
       >
-        {options.map((option) => (
-          <Option value={option.value}>{option.title}</Option>
+        {options.map((option, index) => (
+          <Option key={index} value={option.value}>
+            {option.title}
+          </Option>
         ))}
       </Select>
     </Form.Item>

@@ -10,6 +10,8 @@ class PaymentInfo(models.Model):
     bank_account = models.CharField(max_length=100)
     point_of_payment = models.CharField(max_length=100)
     mode_pay_receiver = models.CharField(max_length=100)
+    account_type = models.CharField(max_length=100)
+    branch = models.CharField(max_length=100, blank=True, null=True)
     receiver = models.ForeignKey(
         Receiver,
         related_name='receiver_payment_info',

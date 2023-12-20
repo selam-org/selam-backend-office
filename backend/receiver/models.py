@@ -25,10 +25,12 @@ class Receiver(models.Model):
     receiver_city = models.CharField(max_length=100, choices=RECEIVER_CITY)
     receiver_state = models.CharField(max_length=100, choices=RECEIVER_STATE)
     receiver_phone = models.CharField(max_length=100)
-    receiver_address = models.CharField(max_length=100)
-    receiver_mother_maiden = models.CharField(max_length=100)
-    receiver_birth_date = models.DateField()
-    receiver_mobile_phone = models.CharField(max_length=100)
+    receiver_address = models.CharField(max_length=100, blank=True, null=True)
+    receiver_mother_maiden = models.CharField(
+        max_length=100, blank=True, null=True)
+    receiver_birth_date = models.DateField(blank=True, null=True)
+    receiver_mobile_phone = models.CharField(
+        max_length=100, blank=True, null=True)
     receiver_account = models.CharField(max_length=100)
 
     sender = models.ForeignKey(
