@@ -136,7 +136,11 @@ const PaymentInformationForm = () => {
       </Row>
       <Row className="order-row ">
         <Col span={24}>
-          <OrderLabeledInput label="Memo" inputSpan={17} />
+          <OrderLabeledInput
+            className="white-input"
+            label="Memo"
+            inputSpan={17}
+          />
         </Col>
       </Row>
       <Row className="order-row" style={{ padding: 14 }}></Row>

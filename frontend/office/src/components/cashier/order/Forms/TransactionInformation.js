@@ -1,9 +1,9 @@
-import "../../../../pages/styles/Order.css";
 import { Form, Row, Col, Button } from "antd";
 import FormHeader from "../../form/FormHeader";
 import OrderLabeledInput from "../OrderLabeledInput";
 import FormRadioButton from "../../form/FormRadioButton";
 import AppPrimaryButton from "../../AppPrimaryButton";
+import "../../../../pages/styles/Order.css";
 
 const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
   return (
@@ -82,12 +82,20 @@ const TransactionInformationForm = () => {
 
       <Row className="order-row ">
         <Col span={24}>
-          <OrderLabeledInput label="Message" inputSpan={17} />
+          <OrderLabeledInput
+            className="white-input"
+            label="Message"
+            inputSpan={17}
+          />
         </Col>
       </Row>
       <Row className="order-row ">
         <Col span={20}>
-          <OrderLabeledInput label="Discount Coupon" inputSpan={16} />
+          <OrderLabeledInput
+            className="white-input"
+            label="Discount Coupon"
+            inputSpan={15}
+          />
         </Col>
         <AppPrimaryButton label="Apply" />
       </Row>
