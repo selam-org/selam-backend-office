@@ -22,6 +22,7 @@ import {
   addPaymentInfoApiCall,
 } from "../../../../store/transactions";
 import { useEffect } from "react";
+
 const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
   const dispatch = useDispatch();
   const receiver = useSelector(getReceiver);
@@ -103,7 +104,6 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
         if (payment) {
           dispatch(updatePaymentInfoApiCall(values, payment.id));
         } else {
-          
           dispatch(
             addPaymentInfoApiCall({
               ...values,
@@ -125,13 +125,13 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
         style={{ padding: 0, borderRadius: 0, width: "70vw" }}
         footer={(_, { OkBtn, CancelBtn }) => <></>}
         {...otherProps}
-        className="payee-modal"
+        className="order-modal payee-modal"
         closable={false}
       >
-        <div className="payee-modal-content">
+        <div className="order-modal-content">
           <FormHeader
             label={"Payee Information"}
-            className="payee-info-header"
+            className="order-modal-header"
           />
           <div className="payee-info-form-box">
             <div className="payee-info-input-row">
@@ -178,7 +178,7 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
             </Row>
             <FormHeader
               label={"BANK ACCOUNT DETAILS"}
-              className="payee-info-header bank-info-header"
+              className="order-modal-header bank-info-header"
             />
             <Form form={form}>
               <Row gutter={10}>

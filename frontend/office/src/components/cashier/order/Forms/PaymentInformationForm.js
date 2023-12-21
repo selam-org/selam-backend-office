@@ -10,6 +10,10 @@ import FormDropDown from "../../form/FormDropdown";
 import FormRadioButton from "../../form/FormRadioButton";
 import PayeeInformationModal from "./PayeeInformationModal";
 import "../../../../pages/styles/Order.css";
+import AlertModal from "./AlertModal";
+import UpdateRate from "./UpdateRate";
+import CashManagementModal from "./CashManagementModal";
+import CustomerDocumentationModal from "./CustomerDocumentationModal";
 
 const PaymentInformationForm = () => {
   const paymentTypes = [
@@ -57,7 +61,14 @@ const PaymentInformationForm = () => {
         </Col>
       </Row>
 
-      <PayeeInformationModal
+      {/* <PayeeInformationModal
+        onOk={handlePayeeModalOk}
+        confirmLoading={confirmPayeeModalLoading}
+        open={openPayeeModal}
+        onCancel={handlePayeeModalCancel}
+      /> */}
+
+      <CustomerDocumentationModal
         onOk={handlePayeeModalOk}
         confirmLoading={confirmPayeeModalLoading}
         open={openPayeeModal}
