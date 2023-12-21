@@ -23,3 +23,7 @@ class Commission(models.Model):
 
     def __str__(self):
         return f'{self.id} - {self.start} - {self.end} - {self.commission} - {self.admin}'
+
+    class Meta:
+        # Add unique_together option to make start and agency unique together
+        unique_together = ('end', 'agency')

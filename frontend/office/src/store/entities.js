@@ -20,7 +20,13 @@ const transactionPersistConfig = {
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ["isGetTransactionsLoading", "getTransactionsError", "receivers"],
+  blacklist: [
+    "isGetTransactionsLoading",
+    "getTransactionsError",
+    "receivers",
+    "transInfo",
+    "isCalculate",
+  ],
 };
 
 const agencyPersistConfig = {

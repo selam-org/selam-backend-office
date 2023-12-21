@@ -5,11 +5,16 @@ import NewTransactionForm from "../../components/cashier/transactions/NewTransac
 import TransactionResult from "../../components/cashier/transactions/TransactionResults";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getCommissionApiCall } from "../../store/commission";
+// import { getCommissionApiCall , getAgencyApiCall} from "../../store/commission";
+import {
+  getCommissionsTranApiCall,
+  getAgencyApiCall,
+} from "../../store/transactions";
 const Transctions = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCommissionApiCall());
+    dispatch(getCommissionsTranApiCall());
+    dispatch(getAgencyApiCall());
   }, []);
   return (
     <>

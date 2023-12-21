@@ -5,6 +5,9 @@ import FormRadioButton from "../../form/FormRadioButton";
 import AppPrimaryButton from "../../AppPrimaryButton";
 import "../../../../pages/styles/Order.css";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getTransInfo } from "../../../../store/transactions";
+import { useEffect } from "react";
 const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
   return (
     <Row justify="space-between" style={{ marginLeft: 20, marginRight: 20 }}>
@@ -19,6 +22,9 @@ const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
 };
 
 const TransactionInformationForm = () => {
+  const transInfo = useSelector(getTransInfo);
+  console.log(transInfo, "calculate transinfo");
+  useEffect(() => {}, [transInfo]);
   const printerTypes = [
     {
       title: "Regular",
@@ -35,10 +41,16 @@ const TransactionInformationForm = () => {
       <FormHeader label={"TRANSACTION INFORMATION"} titleSpan={24} />
       <Row className="order-row">
         <Col span={12}>
-          <TransactionInfo title="Amount Sent" value="USD 100.0" />
+          <TransactionInfo
+            title="Amount Sent"
+            value={transInfo ? `ETB ${transInfo.sent}` : ""}
+          />
         </Col>
         <Col span={12}>
-          <TransactionInfo title="Rate" value="114.500" />
+          <TransactionInfo
+            title="Rate"
+            value={transInfo ? `ETB ${transInfo.rate}` : ""}
+          />
         </Col>
       </Row>
 
@@ -46,7 +58,7 @@ const TransactionInformationForm = () => {
         <Col span={24}>
           <TransactionInfo
             title="To Receive"
-            value="ETB 11,450.00"
+            value={transInfo ? `ETB ${transInfo.receive}` : ""}
             titleSpan={13}
             valueSpan={11}
           />
@@ -55,19 +67,31 @@ const TransactionInformationForm = () => {
 
       <Row className="order-row">
         <Col span={12}>
-          <TransactionInfo title="Fee" value="USD 0.0" />
+          <TransactionInfo
+            title="Fee"
+            value={transInfo ? `USD ${transInfo.fee}` : ""}
+          />
         </Col>
         <Col span={12}>
-          <TransactionInfo title="Commission" value="USD 5.00" />
+          <TransactionInfo
+            title="Commission"
+            value={transInfo ? `USD ${transInfo.commission}` : ""}
+          />
         </Col>
       </Row>
 
       <Row className="order-row">
         <Col span={12}>
-          <TransactionInfo title="Handling" value="USD 0.0" />
+          <TransactionInfo
+            title="Handling"
+            value={transInfo ? `ETB ${transInfo.handling}` : ""}
+          />
         </Col>
         <Col span={12}>
-          <TransactionInfo title="Deliv." value="USD 5.00" />
+          <TransactionInfo
+            title="Deliv."
+            value={transInfo ? `USD ${transInfo.deliv}` : ""}
+          />
         </Col>
       </Row>
 
@@ -76,7 +100,9 @@ const TransactionInformationForm = () => {
           <span className="order-total">TOTAL</span>
         </Col>
         <Col span={12}>
-          <span className="order-total">USD 105.00</span>
+          <span className="order-total">
+            {transInfo ? `USD ${transInfo.total}` : ""}
+          </span>
         </Col>
       </Row>
 

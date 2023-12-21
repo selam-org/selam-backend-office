@@ -18,28 +18,160 @@ import CustomerDocumentationModal from "./CustomerDocumentationModal";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPayment,
-  getCommissionsApiCall,
+  getCommissionsTranApiCall,
   getCommissions,
   getCommissionLoading,
   getCommissionErrors,
+  getAgencyApiCall,
+  getCommissionError,
+  getAgency,
+  setIsCalculate,
+  getIsCalculated,
+  setTransInfo,
+  getTransInfo,
 } from "../../../../store/transactions";
 const PaymentInformationForm = () => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const payment = useSelector(getPayment);
+  const commissions = useSelector(getCommissions);
+  const commissionError = useSelector(getCommissionError);
+  const agency = useSelector(getAgency);
+  const [rate, setRate] = useState(agency.rate);
+  const isCalculate = useSelector(getIsCalculated);
+  const transInfo = useSelector(getTransInfo);
+  useEffect(() => {
+    form.setFieldsValue({
+      calculation_option: 0,
+      moneyTypes: "CHECK",
+      // amount: ,
+    });
+  }, []);
+  const handleCalculate = () => {
+    dispatch(getCommissionsTranApiCall());
+    dispatch(getAgencyApiCall());
+    form
+      .validateFields()
+      .then((values) => {
+        console.log(values, "calculate");
+        if (isCalculate) {
+          console.log("first time");
+        }
+        setIsCalculate(false);
+
+        const option = calculation_option.find(
+          (option) => option.value === values.calculation_option
+        );
+        console.log(option, "calculate calFunc");
+        // if (!option) return;
+
+        const data = option.calculate(values.amount);
+        console.log(data, "calculate data");
+        dispatch(setTransInfo(data));
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
   const calculation_option = [
     {
-      value: "to Send a total of",
+      value: 0,
       title: "to Send a total of",
+
+      calculate: (amount) => {
+        amount = parseFloat(amount);
+        const coms = [...commissions];
+        coms.sort((a, b) => parseFloat(a.end) - parseFloat(b.end));
+        let com;
+        let minVal = 0;
+        for (let i = 0; i < coms.length; i++) {
+          const item = coms[i];
+          const [end, commission] = [
+            parseFloat(item.end),
+            parseFloat(item.commission),
+          ];
+          if (minVal <= amount && amount <= end) {
+            com = commission;
+            break;
+          } else if (i === coms.length - 1) {
+            com = commission;
+          }
+          minVal = end;
+        }
+
+        console.log(
+          amount,
+          "calculate  last",
+          com,
+          amount,
+          com / 100,
+          amount * (com / 100)
+        );
+        return {
+          fee: 0.0,
+          receive: parseFloat(amount * rate).toFixed(2),
+          rate: parseFloat(rate).toFixed(4),
+          handling: 0.0,
+          deliv: 0.0,
+          commission: parseFloat(amount * (com / 100)).toFixed(2),
+          total: parseFloat(amount + amount * (com / 100)).toFixed(2),
+          sent: parseFloat(amount).toFixed(2),
+        };
+      },
     },
     {
-      value: "to Send a total with fee",
+      value: 1,
       title: "to Send a total with fee",
+      calculate: (amount) => {
+        return {
+          fee: 0,
+          receive: 0,
+          rate: parseFloat(rate).toFixed(4),
+          handling: 0,
+          deliv: 0,
+          commission: 0,
+          total: amount,
+          sent: amount,
+        };
+      },
     },
     {
-      value: "to Receive a total of",
+      value: 2,
       title: "to Receive a total of",
+      calculate: (amount) => {
+        amount = parseFloat(amount);
+        const coms = [...commissions];
+        coms.sort((a, b) => parseFloat(a.end) - parseFloat(b.end));
+        let com;
+        let minVal = 0;
+        const value = amount / rate;
+        coms.forEach((item, index) => {
+          const [end, commission] = [
+            parseFloat(item.end),
+            parseFloat(item.commission),
+          ];
+          // if (com) return;
+          if (minVal <= value <= end) {
+            com = commission;
+          }
+          if (index === coms.length - 1) {
+            com = commission;
+          }
+          minVal = end;
+        });
+        console.log(coms, "calculate", com);
+        return {
+          fee: 0.0,
+          receive: parseFloat(amount).toFixed(4),
+          rate: parseFloat(rate).toFixed(4),
+          handling: 0.0,
+          deliv: 0.0,
+          commission: parseFloat(value * (com / 100)).toFixed(2),
+          total: parseFloat(value + value * (com / 100)).toFixed(2),
+          sent: parseFloat(value).toFixed(2),
+        };
+      },
     },
   ];
   const moneyTypes = [
@@ -80,7 +212,7 @@ const PaymentInformationForm = () => {
     setOpenPayeeModal(false);
   };
   useEffect(() => {
-    dispatch(getCommissionsApiCall());
+    dispatch(getCommissionsTranApiCall());
   }, []);
   useEffect(() => {
     if (payment) {
@@ -163,14 +295,7 @@ const PaymentInformationForm = () => {
           />
         </Col>
       </Row>
-      <Form
-        fomr={form}
-        initialValues={{
-          calculation_option: "to Send a total of",
-          moneyTypes: "CHECK",
-          amount: 0,
-        }}
-      >
+      <Form form={form}>
         <Row className="order-row order-amount-row">
           <Col span={3}>
             <span className="app-text bold-title">I want</span>
@@ -182,7 +307,21 @@ const PaymentInformationForm = () => {
             />
           </Col>
           <Col span={7}>
-            <FormHeaderInput name="amount" label="Amount" inputSpan={24} />
+            <FormHeaderInput
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+                {
+                  pattern: new RegExp(/^\d+$/),
+                  message: "",
+                },
+              ]}
+              name="amount"
+              label="Amount"
+              inputSpan={24}
+            />
           </Col>
           <Col span={5}>
             <FormDropDown name="moneyTypes" options={moneyTypes} />
@@ -201,7 +340,9 @@ const PaymentInformationForm = () => {
                 <Button className="gray-btn">Estimate Receipt</Button>
               </Col>
               <Col span={6}>
-                <Button className="green-btn">Calculate</Button>
+                <Button onClick={handleCalculate} className="green-btn">
+                  Calculate
+                </Button>
               </Col>
             </Row>
           </Col>

@@ -97,6 +97,7 @@ const PayeeInformationModal = ({ onCancel, ...otherProps }) => {
       value: "CHECKING ACCOUNT",
     },
   ];
+  
 
   const handleOk = () => {
     // console.log("ok");

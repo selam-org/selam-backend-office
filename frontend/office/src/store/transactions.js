@@ -33,12 +33,21 @@ const initialState = {
   isAddPaymentInfoLoading: false,
   updatePaymentInfoError: {},
   updatePaymentInfoLoading: false,
+  transInfo: null,
+  isCalculate: true,
 };
 
 const slice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
+    setTransInfo: (transaction, action) => {
+      console.log(action.payload, "calculate");
+      transaction.transInfo = action.payload;
+    },
+    setIsCalculate: (transaction, action) => {
+      transaction.isCalculate = action.payload;
+    },
     getCommissionError: (transaction, action) => {
       transaction.getCommissionError = action.payload;
       transaction.getCommissionLoading = false;
@@ -235,6 +244,7 @@ export const {
   addPaymentLoading,
   addPaymentSuccess,
   getPaymentError,
+  setTransInfo,
   getPaymentLoading,
   getPaymentSuccess,
   setPayment,
@@ -247,6 +257,7 @@ export const {
   getCommissionError,
   getCommissionLoading,
   getCommissionSuccess,
+  setIsCalculate,
 } = slice.actions;
 
 export default slice.reducer;
@@ -269,9 +280,9 @@ export const getTransactionsApiCall = (params) => (dispatch, getState) => {
     })
   );
 };
-export const getAgencyApiCall = (id) => (dispatch, getState) => {
+export const getAgencyApiCall = () => (dispatch, getState) => {
   console.log("this in get managers api call", getState().entities.auth);
-  const token = getState().entities.auth.userCred.token;
+  const { token, agency: id } = getState().entities.auth.userCred;
   // console.log(token);
   dispatch(
     action.apiCallBegan({
@@ -286,19 +297,19 @@ export const getAgencyApiCall = (id) => (dispatch, getState) => {
     })
   );
 };
-export const getCommissionsApiCall = () => (dispatch, getState) => {
+export const getCommissionsTranApiCall = () => (dispatch, getState) => {
   console.log("this in get managers api call", getState().entities.auth);
-  const { token, id } = getState().entities.auth.userCred;
+  const { token, agency } = getState().entities.auth.userCred;
 
   dispatch(
     action.apiCallBegan({
-      url: `commission/`,
+      url: `commissions/`,
       onStart: getCommissionLoading.type,
       onSuccess: getCommissionSuccess.type,
       onFailed: getCommissionError.type,
       method: "get",
       params: {
-        agency: id,
+        agency: agency,
       },
       headers: {
         Authorization: `Token ${token}`,
@@ -561,4 +572,12 @@ export const getCommissionsErrors = createSelector(
 export const isGetCommissionsLoading = createSelector(
   (state) => state.entities.transaction.getCommissionLoading,
   (getCommissionLoading) => getCommissionLoading
+);
+export const getIsCalculated = createSelector(
+  (state) => state.entities.transaction.isCalculate,
+  (isCalculate) => isCalculate
+);
+export const getTransInfo = createSelector(
+  (state) => state.entities.transaction.transInfo,
+  (transInfo) => transInfo
 );

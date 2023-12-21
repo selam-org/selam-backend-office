@@ -16,7 +16,8 @@ import {
   setSender,
   setReceiver,
   getReceiver,
-  getCommissionsApiCall,
+  getCommissionsTranApiCall,
+  getAgencyApiCall,
 } from "../../store/transactions";
 const Order = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ const Order = () => {
   const receiver = useSelector(getReceiver);
   useEffect(() => {
     dispatch(getReceiverApiCall({ sender: senderId }));
-    dispatch(getCommissionsApiCall());
+    dispatch(getCommissionsTranApiCall());
+    dispatch(getAgencyApiCall());
   }, []);
   useEffect(() => {
     dispatch(setSender(sender));
