@@ -1,6 +1,11 @@
+.commision-page table {
+  width: 70%;
+}
+
 .page-sub-title {
   margin-top: 22px;
   color: #333;
+  font-size: 14px;
 }
 
 .agency-title-container {

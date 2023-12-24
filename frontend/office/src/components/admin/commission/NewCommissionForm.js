@@ -1,18 +1,28 @@
 import { Form, Table, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import AdminButton from "../AdminButton";
-import { addCommissionApiCall } from "../../../store/commission";
+import {
+  addCommissionApiCall,
+  getAddCommissionErrors,
+  isAddCommissionSuccess,
+  isAddCommissionLoading,
+  setIsAddCommissionSuccess,
+} from "../../../store/commission";
 import {
   validateDouble,
   validatePercent,
 } from "../../../utils/form_validators";
+import useAntdMessage from "../../../hooks/useAntdMessage";
 
 const NewCommissionForm = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const isLoading = useSelector(isAddCommissionLoading);
+  const errors = useSelector(getAddCommissionErrors);
+  const success = useSelector(isAddCommissionSuccess);
 
   const initialValues = {
     commission: [
@@ -28,21 +38,23 @@ const NewCommissionForm = () => {
     try {
       const values = await form.validateFields();
       dispatch(addCommissionApiCall(id, values[0]));
-      console.log("Reset to: ", initialValues);
-      // form.setFieldsValue({
-      //   commission: [
-      //     {
-      //       start: "",
-      //       end: "",
-      //       commission: "",
-      //     },
-      //   ],
-      // });
-      await form.resetFields;
     } catch (e) {
       console.log("error", e);
     }
   };
+
+  const onSuccess = () => {
+    dispatch(setIsAddCommissionSuccess(false));
+    form.resetFields();
+  };
+
+  useAntdMessage(
+    errors,
+    success,
+    form,
+    onSuccess,
+    "New commission added successfully"
+  );
 
   return (
     <>
@@ -54,26 +66,10 @@ const NewCommissionForm = () => {
           rowKey={(record) => record.start}
           columns={[
             {
-              title: "Start",
-              dataIndex: "start",
-              key: "start",
-              render: (_, record, index) => (
-                <Form.Item
-                  name={[index, "start"]}
-                  noStyle
-                  rules={[
-                    { required: true, message: "Start is required" },
-                    { validator: validateDouble },
-                  ]}
-                >
-                  <Input placeholder="Start" />
-                </Form.Item>
-              ),
-            },
-            {
               title: "End",
               dataIndex: "end",
               key: "end",
+              width: "33.3%",
               render: (_, record, index) => (
                 <Form.Item
                   name={[index, "end"]}
@@ -91,6 +87,7 @@ const NewCommissionForm = () => {
               title: "Comission",
               dataIndex: "commission",
               key: "commission",
+              width: "33.3%",
               render: (_, record, index) => (
                 <Form.Item
                   name={[index, "commission"]}
@@ -108,15 +105,16 @@ const NewCommissionForm = () => {
               title: "Action",
               dataIndex: "action",
               key: "action",
+              width: "33.3%",
               render: (_, record, index) => (
                 <Form.Item>
                   <AdminButton
                     type="primary"
                     icon={<PlusOutlined />}
-                    className="admin-padded-btns"
                     htmlType="submit"
                     label={"Add"}
                     onClick={handleAdd}
+                    loading={isLoading}
                   />
                 </Form.Item>
               ),
@@ -124,18 +122,6 @@ const NewCommissionForm = () => {
           ]}
           pagination={false}
         />
-        {/* <Row justify="end" className="commission-btns">
-          <Form.Item>
-            <AdminButton
-              type="primary"
-              icon={<PlusOutlined />}
-              className="admin-padded-btns"
-              htmlType="submit"
-              label={"Add"}
-              onClick={handleAdd}
-            />
-          </Form.Item>
-        </Row> */}
       </Form>
     </>
   );

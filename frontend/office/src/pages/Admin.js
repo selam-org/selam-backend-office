@@ -54,7 +54,7 @@ const Admin = () => {
         <Menu
           mode="inline"
           defaultSelectedKeys={["1"]}
-          style={{ marginTop: "1.5vh" }}
+          style={{ marginTop: "1.5vh", border: "none" }}
           items={[
             {
               key: "1",
@@ -91,6 +91,7 @@ const Admin = () => {
           style={{
             padding: 0,
             backgroundColor: "white",
+            border: "none",
           }}
         ></Header>
         <Content
@@ -99,6 +100,7 @@ const Admin = () => {
             padding: 24,
             minHeight: "92vh",
             backgroundColor: "white",
+            border: "none",
           }}
         >
           <Routes>

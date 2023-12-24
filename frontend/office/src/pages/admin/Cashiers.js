@@ -32,7 +32,6 @@ const Cashiers = () => {
           <Space size="middle">
             <EditCashierModal id={cashier.id} />
             <ChangeCashierPasswordModal id={cashier.id} />
-            {/* <AdminButton style={AdminButtonStyle} label={"Activate"} /> */}
           </Space>
         );
       },

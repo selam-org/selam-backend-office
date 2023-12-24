@@ -13,6 +13,9 @@ const initialState = {
   isUpdateAgencyLoading: false,
   updateAgencyError: {},
   isUpdateAgencyModalOpen: {},
+  isUpdateRateLoading: false,
+  updateRateError: {},
+  showRateUpdatedSuccess: false,
 };
 
 const slice = createSlice({
@@ -54,6 +57,7 @@ const slice = createSlice({
     },
     setIsAddAgencySuccess: (agency, action) => {
       agency.isAddAgencySuccess = action.payload.open;
+      console.log("Turned off", action.payload.open);
     },
     updateAgency: (agency, action) => {
       console.log(action.payload.agency_id, agency.agencies);
@@ -83,6 +87,27 @@ const slice = createSlice({
       agency.updateAgencyError = action.payload;
       agency.isUpdateAgencyLoading = false;
     },
+    updateAgencyRate: (agency, action) => {
+      const index = agency.agencies.findIndex((updated_agency) => {
+        return updated_agency.agency_id === action.payload.agency_id;
+      });
+
+      agency.agencies[index] = action.payload;
+      agency.updateRateError = {};
+      agency.isUpdateRateLoading = false;
+      agency.showRateUpdatedSuccess = true;
+    },
+    updateAgencyRateLoading: (agency, action) => {
+      agency.isUpdateRateLoading = true;
+    },
+    updateAgencyRateError: (agency, action) => {
+      agency.updateRateError = action.payload;
+      agency.isUpdateRateLoading = false;
+      agency.showRateUpdatedSuccess = false;
+    },
+    setShowRateUpdatedSuccess: (agency, action) => {
+      agency.showRateUpdatedSuccess = action.payload;
+    },
     setIsUpdateAgencyModal: (agency, action) => {
       agency.isUpdateAgencyModalOpen[action.payload.id] = action.payload.open;
     },
@@ -106,6 +131,10 @@ export const {
   addAgency,
   addAgencyLoading,
   addAgencyError,
+  updateAgencyRate,
+  updateAgencyRateLoading,
+  updateAgencyRateError,
+  setShowRateUpdatedSuccess,
 } = slice.actions;
 
 export default slice.reducer;
@@ -142,6 +171,23 @@ export const updateAgencyApiCall = (data, id) => (dispatch, getState) => {
   );
 };
 
+export const updateAgencyRateApiCall = (data, id) => (dispatch, getState) => {
+  const token = getState().entities.auth.userCred.token;
+  dispatch(
+    action.apiCallBegan({
+      url: `agencies/${id}/`,
+      onStart: updateAgencyRateLoading.type,
+      onSuccess: updateAgencyRate.type,
+      onFailed: updateAgencyRateError.type,
+      method: "patch",
+      data,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+  );
+};
+
 export const addAgencyApiCall = (data) => (dispatch, getState) => {
   const { token, id } = getState().entities.auth.userCred;
 
@@ -162,7 +208,11 @@ export const addAgencyApiCall = (data) => (dispatch, getState) => {
 
 export const getAgencies = createSelector(
   (state) => state.entities.agency.agencies,
-  (agencies) => agencies
+  (agencies) => {
+    const sortedAgencies = agencies ? [...agencies] : [];
+    sortedAgencies.sort((a, b) => a.name.localeCompare(b.name));
+    return sortedAgencies;
+  }
 );
 
 export const getAgency = createSelector(
@@ -216,4 +266,19 @@ export const isUpdateAgencyLoading = createSelector(
 export const isUpdateAgencyModalOpen = createSelector(
   (state) => state.entities.agency.isUpdateAgencyModalOpen,
   (isUpdateAgencyModalOpen) => isUpdateAgencyModalOpen
+);
+
+export const isUpdateRateLoading = createSelector(
+  (state) => state.entities.agency.isUpdateRateLoading,
+  (isUpdateRateLoading) => isUpdateRateLoading
+);
+
+export const getShowRateUpdatedSuccess = createSelector(
+  (state) => state.entities.agency.showRateUpdatedSuccess,
+  (showRateUpdatedSuccess) => showRateUpdatedSuccess
+);
+
+export const getUpdateRateError = createSelector(
+  (state) => state.entities.agency.updateRateError,
+  (updateRateError) => updateRateError
 );

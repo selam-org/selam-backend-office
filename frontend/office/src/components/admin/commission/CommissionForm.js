@@ -1,25 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Form, Input, Table, message, Row, Space } from "antd";
-import { validateDouble } from "../../../utils/form_validators";
+import { Form, Input, Table, Row, Space } from "antd";
+import {
+  validateDouble,
+  validatePercent,
+} from "../../../utils/form_validators";
 import {
   deleteCommissionApiCall,
   getAgencyCommission,
   getCommissionApiCall,
   updateCommissionApiCall,
+  isUpdateCommissionSuccess,
+  isUpdateCommissionErrors,
+  setIsUpdateCommissionSuccess,
 } from "../../../store/commission";
 import AdminButton from "../AdminButton";
+import useAntdMessage from "../../../hooks/useAntdMessage";
 
 const CommissionForm = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
+  const errors = useSelector(isUpdateCommissionErrors);
+  const success = useSelector(isUpdateCommissionSuccess);
 
   const commission = useSelector((state) => getAgencyCommission(state, id));
 
-  console.log("commission updated to: ", commission);
   var initialValues = {
     windows: commission ?? [],
   };
@@ -44,24 +51,32 @@ const CommissionForm = () => {
     }
   };
 
+  const closeSuccessPopup = () => {
+    dispatch(setIsUpdateCommissionSuccess(false));
+  };
+
   useEffect(() => {
     dispatch(getCommissionApiCall(id));
   }, []);
 
   useEffect(() => {
     if (commission) {
-      const sortedCommission = [...commission].sort(
-        (a, b) => a.start - b.start
-      );
       form.setFieldsValue({
-        windows: sortedCommission,
+        windows: commission,
       });
     }
   }, [commission, form]);
 
+  useAntdMessage(
+    errors,
+    success,
+    form,
+    closeSuccessPopup,
+    "Commission updated successfully"
+  );
+
   return (
     <>
-      {contextHolder}
       <div className="page-sub-title">Edit Commissions</div>
       <Form
         className="edit-comission"
@@ -76,26 +91,6 @@ const CommissionForm = () => {
                 className="table"
                 dataSource={initialValues.windows}
                 columns={[
-                  {
-                    title: "Start",
-                    dataIndex: "start",
-                    key: "start",
-                    render: (_, record, index) => (
-                      <>
-                        <Form.Item name={"id"} noStyle></Form.Item>
-                        <Form.Item
-                          name={[index, "start"]}
-                          noStyle
-                          rules={[
-                            { required: true, message: "Start is required" },
-                            { validator: validateDouble },
-                          ]}
-                        >
-                          <Input placeholder="Start" />
-                        </Form.Item>
-                      </>
-                    ),
-                  },
                   {
                     title: "End",
                     dataIndex: "end",
@@ -123,7 +118,7 @@ const CommissionForm = () => {
                         noStyle
                         rules={[
                           { required: true, message: "Value is required" },
-                          { validator: validateDouble },
+                          { validator: validatePercent },
                         ]}
                       >
                         <Input placeholder="Value" />

@@ -12,6 +12,8 @@ import {
 } from "../../../store/agency";
 import AdminButton from "../AdminButton";
 import "../../../pages/styles/Admin.css";
+import useAntdMessage from "../../../hooks/useAntdMessage";
+import { validateDouble } from "../../../utils/form_validators";
 
 const NewAgencyModal = () => {
   const [form] = Form.useForm();
@@ -21,14 +23,29 @@ const NewAgencyModal = () => {
   const errors = useSelector(getAddAgencyErrors);
   const success = useSelector(isAddAgencySuccess);
 
-  const [messageApi, contextHolder] = message.useMessage();
-
   const showNewAgencyModal = () => {
     dispatch(setIsAddAgencyModalOpen({ open: true }));
   };
 
   const handleNewAgencyModalCancel = () => {
     dispatch(setIsAddAgencyModalOpen({ open: false }));
+  };
+
+  const validateMinimumMaximum = (_, value) => {
+    const formValues = form.getFieldsValue();
+    const currentMaximum = formValues.max_rate;
+    const currentMinimum = formValues.min_rate;
+    if (
+      currentMinimum !== undefined &&
+      currentMaximum !== undefined &&
+      parseFloat(currentMinimum) > parseFloat(currentMaximum)
+    ) {
+      return Promise.reject(
+        new Error("Minimum value cannot be greater than Maximum")
+      );
+    } else {
+      return Promise.resolve();
+    }
   };
 
   const onFinish = (values) => {
@@ -40,35 +57,21 @@ const NewAgencyModal = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    function showErrorPopup() {
-      messageApi.open({
-        type: "error",
-        content: Object.values(errors).join("\n"),
-      });
-    }
+  const onAgencyAdded = () => {
+    dispatch(setIsAddAgencySuccess({ open: false }));
+    dispatch(setIsAddAgencyModalOpen({ open: false }));
+  };
 
-    function showSuccessPopup() {
-      messageApi.open({
-        type: "success",
-        content: "Agency added succesfully",
-      });
-      dispatch(setIsAddAgencySuccess({ open: false }));
-    }
-
-    if (Object.keys(errors).length > 0) {
-      showErrorPopup();
-    }
-    if (success) {
-      showSuccessPopup();
-      dispatch(setIsAddAgencyModalOpen({ open: false }));
-      form.resetFields();
-    }
-  }, [errors, success]);
+  useAntdMessage(
+    errors,
+    success,
+    form,
+    onAgencyAdded,
+    "Agency added successfully"
+  );
 
   return (
     <Form name="add_agency" form={form} initialValues={{}}>
-      {contextHolder}
       <AdminButton label={"New"} onClick={showNewAgencyModal} />
       <Modal
         title="Add an agency"
@@ -116,6 +119,47 @@ const NewAgencyModal = () => {
           ]}
         >
           <Input placeholder={"Address"} />
+        </Form.Item>
+        <Form.Item
+          className="modal-input"
+          name="min_rate"
+          rules={[
+            {
+              required: true,
+              message: "Please add a minimum rate",
+            },
+            { validator: validateDouble },
+            { validator: validateMinimumMaximum },
+          ]}
+        >
+          <Input placeholder={"Minimum rate"} />
+        </Form.Item>
+        <Form.Item
+          className="modal-input"
+          name="max_rate"
+          rules={[
+            {
+              required: true,
+              message: "Please add a maximum rate",
+            },
+            { validator: validateDouble },
+            { validator: validateMinimumMaximum },
+          ]}
+        >
+          <Input placeholder={"Maximum rate"} />
+        </Form.Item>
+        <Form.Item
+          className="modal-input"
+          name="default_rate"
+          rules={[
+            {
+              required: true,
+              message: "Please add a default rate",
+            },
+            { validator: validateDouble },
+          ]}
+        >
+          <Input placeholder={"Default rate"} />
         </Form.Item>
       </Modal>
     </Form>

@@ -15,6 +15,7 @@ const authPersistConfig = {
   stateReconciler: autoMergeLevel2,
   blacklist: ["loginError"],
 };
+
 const transactionPersistConfig = {
   key: "transaction 1.1",
   version: 1.0,
@@ -30,21 +31,11 @@ const transactionPersistConfig = {
 };
 
 const agencyPersistConfig = {
-  key: "agency 1.5",
-  version: 1.2,
+  key: "agency 2.1",
+  version: 1.3,
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: [
-    "isAddAgencyLoading",
-    "isAddAgencyModalOpen",
-    "addAgencyError",
-    "isAddAgencySuccess",
-    "isGetAgenciesLoading",
-    "getAgenciesError",
-    "isUpdateAgencyLoading",
-    "updateAgencyError",
-    "isUpdateAgencyModalOpen",
-  ],
+  whitelist: ["agencies"],
 };
 
 const commissionPersistConfig = {

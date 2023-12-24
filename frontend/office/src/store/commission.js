@@ -8,7 +8,9 @@ const initialState = {
   getCommissionError: {},
   isAddCommissionLoading: false,
   addCommissionError: {},
+  isAddCommissionSuccess: false,
   isUpdateCommissionLoading: false,
+  isUpdateCommissionSuccess: false,
   updateCommissionError: {},
   isDeleteComissionLoading: false,
   deleteCommissionError: {},
@@ -34,6 +36,7 @@ const commissionSlice = createSlice({
     },
     addCommissionError: (state, action) => {
       state.addCommissionError = action.payload;
+      state.isAddCommissionSuccess = false;
     },
     addCommissionLoading: (state, action) => {
       state.isAddCommissionLoading = true;
@@ -44,6 +47,7 @@ const commissionSlice = createSlice({
         state.commissions[commission.agency] = [];
       state.commissions[commission.agency].push(commission);
       state.isAddCommissionLoading = false;
+      state.isAddCommissionSuccess = true;
     },
     updateCommissionError: (state, action) => {
       state.updateCommissionError = action.payload;
@@ -53,16 +57,20 @@ const commissionSlice = createSlice({
     },
     updateCommissionSuccess: (state, action) => {
       const { agency, id } = action.payload;
-      state.commissions[agency].map((commission) => {
-        if (commission.id === id) {
-          return { ...action.payload };
+      state.commissions[agency] = state.commissions[agency].map(
+        (commission) => {
+          if (commission.id === id) {
+            return { ...action.payload };
+          }
+          return commission;
         }
-        return commission;
-      });
+      );
       state.isUpdateCommissionLoading = false;
+      state.isUpdateCommissionSuccess = true;
     },
     deleteCommissionError: (state, action) => {
       state.deleteCommissionError = action.payload;
+      state.isUpdateCommissionSuccess = false;
     },
     deleteCommissionLoading: (state, action) => {
       state.isDeleteComissionLoading = true;
@@ -73,6 +81,12 @@ const commissionSlice = createSlice({
         (commission) => commission.id !== id
       );
       state.isDeleteComissionLoading = false;
+    },
+    setIsAddCommissionSuccess: (agency, action) => {
+      agency.isAddCommissionSuccess = action.payload;
+    },
+    setIsUpdateCommissionSuccess: (agency, action) => {
+      agency.isUpdateCommissionSuccess = action.payload;
     },
     extraReducers: (builder) => builder.addCase(logout, () => initialState),
   },
@@ -91,6 +105,8 @@ export const {
   deleteCommissionError,
   deleteCommissionLoading,
   deleteCommissionSuccess,
+  setIsAddCommissionSuccess,
+  setIsUpdateCommissionSuccess,
 } = commissionSlice.actions;
 
 export default commissionSlice.reducer;
@@ -126,6 +142,8 @@ export const addCommissionApiCall = (agency, data) => (dispatch, getState) => {
       data: {
         admin: userId,
         agency,
+        // TODO: Remove start of commission.
+        start: 0,
         ...data,
       },
       onStart: addCommissionLoading.type,
@@ -187,7 +205,11 @@ export const getCommissions = createSelector(
 
 export const getAgencyCommission = createSelector(
   (state, id) => state.entities.commission.commissions[id],
-  (commission) => commission
+  (commission) => {
+    let sortedCommission = commission !== undefined ? [...commission] : [];
+    sortedCommission.sort((a, b) => a.end - b.end);
+    return sortedCommission;
+  }
 );
 
 export const getAgenciesErrors = createSelector(
@@ -200,12 +222,32 @@ export const getAgenciesLoading = createSelector(
   (isGetCommissionLoading) => isGetCommissionLoading
 );
 
-export const getUpdateCommissionErrors = createSelector(
+export const getAddCommissionErrors = createSelector(
+  (state) => state.entities.commission.addCommissionError,
+  (addCommissionError) => addCommissionError
+);
+
+export const isAddCommissionLoading = createSelector(
+  (state) => state.entities.commission.isAddCommissionLoading,
+  (isAddCommissionLoading) => isAddCommissionLoading
+);
+
+export const isAddCommissionSuccess = createSelector(
+  (state) => state.entities.commission.isAddCommissionSuccess,
+  (isAddCommissionSuccess) => isAddCommissionSuccess
+);
+
+export const isUpdateCommissionErrors = createSelector(
   (state) => state.entities.commission.updateCommissionError,
   (updateCommissionError) => updateCommissionError
 );
 
-export const getUpdateCommissionLoading = createSelector(
+export const isUpdateCommissionLoading = createSelector(
   (state) => state.entities.commission.isUpdateCommissionLoading,
   (isUpdateCommissionLoading) => isUpdateCommissionLoading
+);
+
+export const isUpdateCommissionSuccess = createSelector(
+  (state) => state.entities.commission.isUpdateCommissionSuccess,
+  (isUpdateCommissionSuccess) => isUpdateCommissionSuccess
 );

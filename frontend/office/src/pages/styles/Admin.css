@@ -1,5 +1,5 @@
 .page-title {
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 600;
 }
 
@@ -14,12 +14,6 @@
 
 .table {
   margin-top: 20px;
-}
-
-.admin-padded-btns {
-  padding: 0px 40px;
-  margin: 8px;
-  min-height: 40px;
 }
 
 .modal-title {

@@ -3,7 +3,7 @@ import html2pdf from "html2pdf.js";
 import { Col, Row } from "antd";
 import "../styles/Receipt.css";
 
-const Receipt = () => {
+const Receipt = ({ receiptContent }) => {
   const openPDFInNewTab = () => {
     const element1 = document.getElementById("receipt-content");
 
@@ -17,7 +17,7 @@ const Receipt = () => {
       jsPDF: {
         unit: "mm",
         orientation: "portrait",
-        format: [pdfWidth, 800],
+        format: [pdfWidth, 1150],
       },
     };
 
@@ -236,7 +236,7 @@ const ReceiptContent = ({ receiptTo }) => {
           <p className="pair-col-bold ">AMOUNT AND CHARGES/ :</p>
         </Col>
       </Row>
-      <div className="table">
+      <div className="receipt-table">
         <div className="row">
           <p className="td td-1 pair-col-bold">Amount/ :</p>
           <p className="td td-2 pair-col">USD 247.62</p>

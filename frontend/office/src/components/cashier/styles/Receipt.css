@@ -112,12 +112,10 @@ p {
   font-size: 9.5px;
 }
 
-/* table {
-  width: 100%;
-  border-collapse: collapse;
-} */
 .amount-title {
-  margin-bottom: -14px;
+  /* margin-bottom: -14px; */
+  font-size: 10px;
+  font-weight: bolder;
 }
 
 .amount-title p {
@@ -125,11 +123,11 @@ p {
   font-weight: 700;
 }
 
-.table {
+.receipt-table {
   width: 100%;
 }
 
-.table {
+.receipt-table {
   border: 1.5px solid black;
 }
 
@@ -157,16 +155,6 @@ p {
   padding-left: 4px;
 }
 
-th:first-child,
-td:first-child {
-  width: 70px;
-}
-
-td:last-child {
-  width: 30px;
-  text-align: end;
-}
-
 .reward-row {
   padding-bottom: 13px;
 }
@@ -180,6 +168,7 @@ td:last-child {
 
 .receipt-info {
   margin: 0px 12px;
+  margin-top: 5px;
 }
 
 .receip-info-capital {
