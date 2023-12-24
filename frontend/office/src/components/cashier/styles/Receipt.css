@@ -194,10 +194,17 @@ td:last-child {
 
 .sign-info {
   text-align: center;
+  font-size: 9px;
   margin-top: 35px;
   margin-bottom: 70px;
 }
 
 .send-signature {
   margin-bottom: 70px;
+}
+
+.page-break {
+  padding: 2px;
+  margin-bottom: 80px;
+  margin-top: 40px;
 }
