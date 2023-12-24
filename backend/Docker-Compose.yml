@@ -1,41 +1,20 @@
 version: "3.8"
 services:
-  db:
-    image: postgres
 
-    ports:
-      - 5432:5432
-
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    restart: unless-stopped
 
   backend:
-    build: ./
+    build: .
 
     volumes:
-      - ./:/code
+      - ./app:/app
 
     restart: unless-stopped
 
     ports:
-      - "8000:8000"
-
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-
+      - "8000:8000"  
     # Generate static css and js, apply migrations and start server
-    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
-    depends_on:
-      - db
 
-volumes:
-  postgres_data:
+
+

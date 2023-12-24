@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+
+
+  backend-prod:
+    build: .
+
+    # volumes:
+    #   - ./app:/app
+
+    restart: unless-stopped
+
+    ports:
+      - "8080:8080"
+
+    command: sh -c "gunicorn office.wsgi:application --bind 0.0.0.0:8080"
+    # "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8080"
+
+
+
+

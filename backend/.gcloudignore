@@ -1,0 +1,9 @@
+.git
+.gitignore
+__pycache__/
+/setup.cfg
+Docker-Compose.yml
+Docker-Compose-Prod.yml
+Dockerfile
+Makefile
+README.md
