@@ -3,8 +3,25 @@ import FormHeader from "../../form/FormHeader";
 import CloseOrderModalBtn from "../CloseOrderModalBtn";
 import AppPrimaryButton from "../../AppPrimaryButton";
 import "../../styles/CustomerDocumentation.css";
-
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getTransactionById } from "../../../../store/transactions";
+import { useState } from "react";
 const CustomerDocumentationModal = ({ onCancel, ...otherProps }) => {
+  const [isRadioSelected, setIsRadioSelected] = useState(false);
+
+  const onRadioChange = (e) => {
+    setIsRadioSelected(e.target.checked);
+  };
+
+  const handleOnCancel = () => {
+    if (isRadioSelected) {
+      console.log("Radio button is selected");
+      onCancel();
+    } else {
+      console.log("Radio button is not selected");
+    }
+  };
   return (
     <div>
       <Modal
@@ -31,18 +48,34 @@ const CustomerDocumentationModal = ({ onCancel, ...otherProps }) => {
           <AppPrimaryButton
             buttonClassName={"document-cancel-btn"}
             label={"Close"}
+            onClick={handleOnCancel}
           />
         </Row>
         <div className="document-table-info">
           Please select IDs and click the Close button
         </div>
-        <DocumentationTable />
+        <DocumentationTable onRadioChange={onRadioChange} />
       </Modal>
     </div>
   );
 };
 
-const DocumentationTable = () => {
+const DocumentationTable = ({ onRadioChange, ...otherProps }) => {
+  const { senderId } = useParams();
+  const sender = useSelector((state) => getTransactionById(state, senderId));
+  let currentDate = new Date();
+  currentDate.setFullYear(currentDate.getFullYear() + 1);
+  let month = currentDate.getMonth() + 1; // Months are zero-indexed
+  let day = currentDate.getDate();
+  let year = currentDate.getFullYear();
+
+  month = month < 10 ? "0" + month : month;
+  day = day < 10 ? "0" + day : day;
+
+  let formattedDate = month + "/" + day + "/" + year;
+
+  console.log(sender, "senderDocument");
+
   const columns = [
     {
       title: "Default",
@@ -50,7 +83,7 @@ const DocumentationTable = () => {
       key: "default",
       render: (_, item, index) => (
         <>
-          <Radio>Radio</Radio>
+          <Radio onChange={onRadioChange}>Radio</Radio>
         </>
       ),
     },
@@ -76,18 +109,18 @@ const DocumentationTable = () => {
     },
     {
       title: "Country",
-      dataIndex: "country",
-      key: "country",
+      dataIndex: "sender_country",
+      key: "sender_country",
     },
     {
       title: "State",
-      dataIndex: "state",
-      key: "state",
+      dataIndex: "sender_state",
+      key: "sender_state",
     },
     {
       title: "City",
-      dataIndex: "city",
-      key: "city",
+      dataIndex: "sender_city",
+      key: "sender_city",
     },
     {
       title: "Issue Date",
@@ -112,7 +145,12 @@ const DocumentationTable = () => {
   ];
 
   return (
-    <Table className="document-table" columns={columns} pagination={false} />
+    <Table
+      dataSource={[{ ...sender, expiration_date: formattedDate }]}
+      className="document-table"
+      columns={columns}
+      pagination={false}
+    />
   );
 };
 

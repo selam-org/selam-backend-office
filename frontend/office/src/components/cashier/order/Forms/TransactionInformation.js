@@ -4,10 +4,10 @@ import OrderLabeledInput from "../OrderLabeledInput";
 import FormRadioButton from "../../form/FormRadioButton";
 import AppPrimaryButton from "../../AppPrimaryButton";
 import "../../../../pages/styles/Order.css";
-
+import UpdateRate from "./UpdateRate";
 import { useDispatch, useSelector } from "react-redux";
-import { getTransInfo } from "../../../../store/transactions";
-import { useEffect } from "react";
+import { getTransInfo, getIsCalculated } from "../../../../store/transactions";
+import { useEffect, useState } from "react";
 const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
   return (
     <Row justify="space-between" style={{ marginLeft: 20, marginRight: 20 }}>
@@ -22,9 +22,27 @@ const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
 };
 
 const TransactionInformationForm = () => {
+  const isCalculate = useSelector(getIsCalculated);
   const transInfo = useSelector(getTransInfo);
   console.log(transInfo, "calculate transinfo");
   useEffect(() => {}, [transInfo]);
+  const [openUpdaterModal, setOpenUpdaterModal] = useState(false);
+  const [confirmUpdaterModalLoading, setConfirmUpdaterModalLoading] =
+    useState(false);
+  const [detail, setDetail] = useState("");
+  const showUpdaterModal = () => {
+    setOpenUpdaterModal(true);
+  };
+  const handleUpdaterModalOk = () => {
+    setConfirmUpdaterModalLoading(true);
+    setTimeout(() => {
+      setOpenUpdaterModal(false);
+      setConfirmUpdaterModalLoading(false);
+    }, 2000);
+  };
+  const handleUpdaterModalCancel = () => {
+    setOpenUpdaterModal(false);
+  };
   const printerTypes = [
     {
       title: "Regular",
@@ -127,9 +145,22 @@ const TransactionInformationForm = () => {
       </Row>
       <Row className="order-row"></Row>
       <Row className="order-row">
-        <Button className="yellow-btn change-rate-btn">
-          Change Rate/Handling
-        </Button>
+        {isCalculate ? (
+          <></>
+        ) : (
+          <Button
+            onClick={showUpdaterModal}
+            className="yellow-btn change-rate-btn"
+          >
+            Change Rate/Handling
+          </Button>
+        )}
+        <UpdateRate
+          onOk={handleUpdaterModalOk}
+          confirmLoading={confirmUpdaterModalLoading}
+          open={openUpdaterModal}
+          onCancel={handleUpdaterModalCancel}
+        />
       </Row>
       <Row className="order-row" style={{ paddingLeft: 10 }}>
         <Col span={8}>

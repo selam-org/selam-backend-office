@@ -35,12 +35,17 @@ const initialState = {
   updatePaymentInfoLoading: false,
   transInfo: null,
   isCalculate: true,
+  rate: null,
 };
 
 const slice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
+    setTranRate: (transaction, action) => {
+      console.log(action.payload, "calculaterate");
+      transaction.rate = action.payload;
+    },
     setTransInfo: (transaction, action) => {
       console.log(action.payload, "calculate");
       transaction.transInfo = action.payload;
@@ -137,6 +142,8 @@ const slice = createSlice({
     addReceiverSuccess: (transaction, action) => {
       transaction.isAddReceiverLoading = false;
       transaction.addReceiverError = {};
+      transaction.payment = null;
+      transaction.paymentInfo = [];
       transaction.receivers.push(action.payload);
       transaction.receiver = {
         ...action.payload,
@@ -258,6 +265,7 @@ export const {
   getCommissionLoading,
   getCommissionSuccess,
   setIsCalculate,
+  setTranRate,
 } = slice.actions;
 
 export default slice.reducer;
@@ -577,6 +585,11 @@ export const getIsCalculated = createSelector(
   (state) => state.entities.transaction.isCalculate,
   (isCalculate) => isCalculate
 );
+export const getTranRate = createSelector(
+  (state) => state.entities.transaction.rate,
+  (rate) => rate
+);
+
 export const getTransInfo = createSelector(
   (state) => state.entities.transaction.transInfo,
   (transInfo) => transInfo

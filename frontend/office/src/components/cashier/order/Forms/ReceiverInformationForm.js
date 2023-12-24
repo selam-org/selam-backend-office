@@ -21,6 +21,7 @@ import {
   getReceiver,
   getReceivers,
   setReceiver,
+  setPayment,
 } from "../../../../store/transactions";
 const ReceiverInformationForm = () => {
   const dispatch = useDispatch();
@@ -90,6 +91,7 @@ const ReceiverInformationForm = () => {
                   _form.resetFields();
                   setEdit(false);
                   dispatch(setReceiver(null));
+                  dispatch(setPayment(null));
                 }}
                 label="New"
               />

@@ -18,7 +18,7 @@ const AlertModal = ({ onCancel, ...otherProps }) => {
               label={"Alert Message"}
               className="order-modal-header"
             />
-            <CloseOrderModalBtn />
+            <CloseOrderModalBtn onCancel={onCancel} />
           </div>
           <div
             style={{

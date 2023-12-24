@@ -18,6 +18,8 @@ import {
   getReceiver,
   getCommissionsTranApiCall,
   getAgencyApiCall,
+  setTranRate,
+  getAgency,
 } from "../../store/transactions";
 const Order = () => {
   const dispatch = useDispatch();
@@ -25,10 +27,14 @@ const Order = () => {
   const sender = useSelector((state) => getTransactionById(state, senderId));
   const receivers = useSelector((state) => getReceivers(state, senderId));
   const receiver = useSelector(getReceiver);
+  const agency = useSelector(getAgency);
   useEffect(() => {
     dispatch(getReceiverApiCall({ sender: senderId }));
     dispatch(getCommissionsTranApiCall());
     dispatch(getAgencyApiCall());
+    if (agency) {
+      dispatch(setTranRate(agency.default_rate));
+    }
   }, []);
   useEffect(() => {
     dispatch(setSender(sender));

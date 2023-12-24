@@ -29,6 +29,7 @@ import {
   getIsCalculated,
   setTransInfo,
   getTransInfo,
+  getTranRate,
 } from "../../../../store/transactions";
 const PaymentInformationForm = () => {
   const dispatch = useDispatch();
@@ -38,9 +39,13 @@ const PaymentInformationForm = () => {
   const commissions = useSelector(getCommissions);
   const commissionError = useSelector(getCommissionError);
   const agency = useSelector(getAgency);
-  const [rate, setRate] = useState(agency.rate);
+  const rate = useSelector(getTranRate);
+
   const isCalculate = useSelector(getIsCalculated);
   const transInfo = useSelector(getTransInfo);
+  useEffect(() => {
+    handleCalculate();
+  }, [rate]);
   useEffect(() => {
     form.setFieldsValue({
       calculation_option: 0,
@@ -48,6 +53,17 @@ const PaymentInformationForm = () => {
       // amount: ,
     });
   }, []);
+  const calculate = (values) => {
+    const option = calculation_option.find(
+      (option) => option.value === values.calculation_option
+    );
+    console.log(option, "calculate calFunc");
+    // if (!option) return;
+
+    const data = option.calculate(values.amount);
+    console.log(data, "calculate data");
+    dispatch(setTransInfo(data));
+  };
   const handleCalculate = () => {
     dispatch(getCommissionsTranApiCall());
     dispatch(getAgencyApiCall());
@@ -56,19 +72,10 @@ const PaymentInformationForm = () => {
       .then((values) => {
         console.log(values, "calculate");
         if (isCalculate) {
-          console.log("first time");
+          setOpenAlertModal(true);
         }
-        setIsCalculate(false);
-
-        const option = calculation_option.find(
-          (option) => option.value === values.calculation_option
-        );
-        console.log(option, "calculate calFunc");
-        // if (!option) return;
-
-        const data = option.calculate(values.amount);
-        console.log(data, "calculate data");
-        dispatch(setTransInfo(data));
+        dispatch(setIsCalculate(false));
+        calculate(values);
       })
       .catch((er) => {
         console.log(er);
@@ -85,6 +92,7 @@ const PaymentInformationForm = () => {
         coms.sort((a, b) => parseFloat(a.end) - parseFloat(b.end));
         let com;
         let minVal = 0;
+        console.log(coms, "calculate first");
         for (let i = 0; i < coms.length; i++) {
           const item = coms[i];
           const [end, commission] = [
@@ -146,27 +154,30 @@ const PaymentInformationForm = () => {
         let com;
         let minVal = 0;
         const value = amount / rate;
-        coms.forEach((item, index) => {
+        console.log(value, "lastcalculate", coms);
+        console.log(coms, "calculate first");
+        for (let i = 0; i < coms.length; i++) {
+          const item = coms[i];
           const [end, commission] = [
             parseFloat(item.end),
             parseFloat(item.commission),
           ];
-          // if (com) return;
-          if (minVal <= value <= end) {
+          if (minVal <= value && value <= end) {
+            console.log("lastcalculate 2", commission, value, end, minVal);
             com = commission;
-          }
-          if (index === coms.length - 1) {
+            break;
+          } else if (i === coms.length - 1) {
             com = commission;
           }
           minVal = end;
-        });
-        console.log(coms, "calculate", com);
+        }
+        console.log(coms, "lastcalculate 3 rec", com);
         return {
           fee: 0.0,
-          receive: parseFloat(amount).toFixed(4),
+          receive: parseFloat(amount).toFixed(2),
           rate: parseFloat(rate).toFixed(4),
           handling: 0.0,
-          deliv: 0.0,
+          deliv: 0.1,
           commission: parseFloat(value * (com / 100)).toFixed(2),
           total: parseFloat(value + value * (com / 100)).toFixed(2),
           sent: parseFloat(value).toFixed(2),
@@ -227,12 +238,65 @@ const PaymentInformationForm = () => {
     }
   }, [payment]);
   useEffect(() => {}, [detail]);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [confirmAlertModalLoading, setConfirmAlertModalLoading] =
+    useState(false);
+  // const [detail, setDetail] = useState("");
+  const showAlertModal = () => {
+    setOpenAlertModal(true);
+  };
+  const handleAlertModalOk = () => {
+    setConfirmAlertModalLoading(true);
+    setTimeout(() => {
+      setOpenAlertModal(false);
+      setConfirmAlertModalLoading(false);
+    }, 2000);
+  };
+  const handleAlertModalCancel = () => {
+    setOpenAlertModal(false);
+    setOpenDocumentModal(true);
+  };
+  const [openDocumentModal, setOpenDocumentModal] = useState(false);
+  const [confirmDocumentModalLoading, setConfirmDocumentModalLoading] =
+    useState(false);
+  // const [detail, setDetail] = useState("");
+  const showDocumentModal = () => {
+    setOpenDocumentModal(true);
+  };
+  const handleDocumentModalOk = () => {
+    setConfirmDocumentModalLoading(true);
+    setTimeout(() => {
+      setOpenDocumentModal(false);
+      setConfirmDocumentModalLoading(false);
+    }, 2000);
+  };
+  const handleDocumentModalCancel = () => {
+    setOpenDocumentModal(false);
+    // setTimeout(handleCalculate, 2000);
+  };
   return (
     <>
       <FormHeader label={"PAYMENT INFORMATION"}>
         <FormRadioButton options={paymentTypes} />
       </FormHeader>
-
+      <AlertModal
+        onOk={handleAlertModalOk}
+        confirmLoading={confirmAlertModalLoading}
+        open={openAlertModal}
+        onCancel={handleAlertModalCancel}
+      />
+      <CustomerDocumentationModal
+        onOk={handleDocumentModalOk}
+        confirmLoading={confirmDocumentModalLoading}
+        open={openDocumentModal}
+        onCancel={handleDocumentModalCancel}
+      />
+      {/* <CustomerDocumentationModal
+        onOk={handlePayeeModalOk}
+        confirmLoading={confirmPayeeModalLoading}
+        open={openPayeeModal}
+        onCancel={handlePayeeModalCancel}
+      /> */}
       <Row className="order-row">
         <Col span={24}>
           <OrderLabeledInput
@@ -247,19 +311,19 @@ const PaymentInformationForm = () => {
         </Col>
       </Row>
 
-      {/* <PayeeInformationModal
-        onOk={handlePayeeModalOk}
-        confirmLoading={confirmPayeeModalLoading}
-        open={openPayeeModal}
-        onCancel={handlePayeeModalCancel}
-      /> */}
-
-      <CustomerDocumentationModal
+      <PayeeInformationModal
         onOk={handlePayeeModalOk}
         confirmLoading={confirmPayeeModalLoading}
         open={openPayeeModal}
         onCancel={handlePayeeModalCancel}
       />
+
+      {/* <CustomerDocumentationModal
+        onOk={handlePayeeModalOk}
+        confirmLoading={confirmPayeeModalLoading}
+        open={openPayeeModal}
+        onCancel={handlePayeeModalCancel}
+      /> */}
 
       <Row className="order-row">
         <Col span={24}>
@@ -291,7 +355,15 @@ const PaymentInformationForm = () => {
             className="payment-form-text-input"
             disabled={true}
             style={{ color: "#000000" }}
-            value={detail}
+            value={
+              payment
+                ? `PC > ethiopia payee partner\ndemo payer address\n4444\nBANK > ${
+                    payment.bank_name
+                  }\nBranch > ${
+                    payment.branch ? payment.branch : ""
+                  }\nAccount Number > ${payment.bank_account}`
+                : ""
+            }
           />
         </Col>
       </Row>
