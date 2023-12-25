@@ -9,6 +9,7 @@ import {
   isAddCommissionSuccess,
   isAddCommissionLoading,
   setIsAddCommissionSuccess,
+  clearAddCommissionError,
 } from "../../../store/commission";
 import {
   validateDouble,
@@ -48,12 +49,17 @@ const NewCommissionForm = () => {
     form.resetFields();
   };
 
+  const clearAddAgencyError = () => {
+    dispatch(clearAddAgencyError);
+  };
+
   useAntdMessage(
     errors,
     success,
     form,
+    "New commission added successfully",
     onSuccess,
-    "New commission added successfully"
+    clearAddAgencyError
   );
 
   return (

@@ -22,7 +22,7 @@
   border-radius: 0px;
 }
 
-.ant-select-item-option-content {
+.form-select .ant-select-item-option-content {
   color: #1c96c5;
   padding: 0px;
 }

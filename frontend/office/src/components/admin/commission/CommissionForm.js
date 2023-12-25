@@ -14,6 +14,7 @@ import {
   isUpdateCommissionSuccess,
   isUpdateCommissionErrors,
   setIsUpdateCommissionSuccess,
+  clearUpdateCommissionError,
 } from "../../../store/commission";
 import AdminButton from "../AdminButton";
 import useAntdMessage from "../../../hooks/useAntdMessage";
@@ -55,6 +56,10 @@ const CommissionForm = () => {
     dispatch(setIsUpdateCommissionSuccess(false));
   };
 
+  const clearError = () => {
+    dispatch(clearUpdateCommissionError());
+  };
+
   useEffect(() => {
     dispatch(getCommissionApiCall(id));
   }, []);
@@ -71,8 +76,9 @@ const CommissionForm = () => {
     errors,
     success,
     form,
+    "Commission updated successfully",
     closeSuccessPopup,
-    "Commission updated successfully"
+    clearError
   );
 
   return (

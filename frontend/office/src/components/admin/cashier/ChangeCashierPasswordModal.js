@@ -11,7 +11,6 @@ import {
 } from "../../../store/cashier";
 import { useDispatch, useSelector } from "react-redux";
 import AdminButton from "../AdminButton";
-import useAntdMessage from "../../../hooks/useAntdMessage";
 
 const ChangeCashierPasswordModal = ({ id }) => {
   const [form] = Form.useForm();
@@ -47,14 +46,6 @@ const ChangeCashierPasswordModal = ({ id }) => {
   useEffect(() => {
     console.log("Password changed", success);
   }, [success]);
-
-  // useAntdMessage(
-  //   errors,
-  //   success,
-  //   form,
-  //   onSuccess,
-  //   "Password changed successfully"
-  // );
 
   return (
     <>

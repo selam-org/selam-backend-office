@@ -57,21 +57,19 @@ const slice = createSlice({
     },
     setIsAddAgencySuccess: (agency, action) => {
       agency.isAddAgencySuccess = action.payload.open;
-      console.log("Turned off", action.payload.open);
+    },
+    clearAddAgencyError: (agency, action) => {
+      agency.addAgencyError = {};
     },
     updateAgency: (agency, action) => {
-      console.log(action.payload.agency_id, agency.agencies);
+      console.log(action.payload.id, agency.agencies);
       console.log(action.payload, "update agency in slice");
-      console.log(action.payload);
+      console.log(agency.agencies, "original data");
 
       const { id } = action.payload;
       const index = agency.agencies.findIndex((updated_agency) => {
-        console.log(
-          updated_agency.agency_id,
-          action.payload.agency_id,
-          "agency id"
-        );
-        return updated_agency.agency_id === action.payload.agency_id;
+        console.log(updated_agency.id, action.payload.id, "agency id");
+        return updated_agency.id === action.payload.id;
       });
 
       agency.agencies[index] = action.payload;
@@ -128,6 +126,7 @@ export const {
   agencysError,
   agencyLoading,
   agencySuccess,
+  clearAddAgencyError,
   addAgency,
   addAgencyLoading,
   addAgencyError,

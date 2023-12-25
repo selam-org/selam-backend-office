@@ -71,8 +71,8 @@ const RateForm = () => {
     errors,
     success,
     form,
-    closeSuccessPopup,
-    "Rate updated successfully"
+    "Rate updated successfully",
+    closeSuccessPopup
   );
 
   useEffect(() => {

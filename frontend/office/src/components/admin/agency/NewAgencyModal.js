@@ -1,11 +1,11 @@
-import { Row, Form, Modal, Input, Space, message } from "antd";
+import { Row, Form, Modal, Input, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import {
   addAgencyApiCall,
   isAddAgencyLoading,
   setIsAddAgencyModalOpen,
   setIsAddAgencySuccess,
+  clearAddAgencyError,
   isAddAgencyModalOpen,
   getAddAgencyErrors,
   isAddAgencySuccess,
@@ -57,17 +57,22 @@ const NewAgencyModal = () => {
       .catch((err) => {});
   };
 
-  const onAgencyAdded = () => {
+  const onAgencyAddedSuccessShown = () => {
     dispatch(setIsAddAgencySuccess({ open: false }));
     dispatch(setIsAddAgencyModalOpen({ open: false }));
+  };
+
+  const onAddAgencyErrorShown = () => {
+    dispatch(clearAddAgencyError());
   };
 
   useAntdMessage(
     errors,
     success,
     form,
-    onAgencyAdded,
-    "Agency added successfully"
+    "Agency added successfully",
+    onAgencyAddedSuccessShown,
+    onAddAgencyErrorShown
   );
 
   return (

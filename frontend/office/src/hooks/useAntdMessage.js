@@ -2,20 +2,30 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { message } from "antd";
 
-const useAntdMessage = (errors, success, form, onSuccess, successMessage) => {
+// Don't forget to reset errors and success after showing both
+const useAntdMessage = (
+  errors,
+  success,
+  form,
+  successMessage,
+  onSuccess,
+  onError
+) => {
   const dispatch = useDispatch();
   const messageApi = message;
 
   useEffect(() => {
     const formatErrors = () => {
-      return Object.keys(errors)
-        .map((key) => {
-          if (key === "non_field_errors") {
-            return errors[key];
-          }
-          return `${key}: ${errors[key]}`;
-        })
-        .join("\n");
+      return Object.keys(errors).map((key) => {
+        if (key === "non_field_errors") {
+          return <p>errors[key]</p>;
+        }
+        return (
+          <p>
+            {key}: {errors[key]}
+          </p>
+        );
+      });
     };
 
     const showErrorPopup = () => {
@@ -32,6 +42,7 @@ const useAntdMessage = (errors, success, form, onSuccess, successMessage) => {
 
     if (Object.keys(errors).length > 0) {
       showErrorPopup();
+      onError();
     }
 
     if (success) {
@@ -39,7 +50,7 @@ const useAntdMessage = (errors, success, form, onSuccess, successMessage) => {
       onSuccess();
       form.resetFields();
     }
-  }, [errors, success, form, dispatch, messageApi, onSuccess, successMessage]);
+  }, [errors, success]);
 };
 
 export default useAntdMessage;

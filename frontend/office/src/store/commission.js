@@ -85,8 +85,14 @@ const commissionSlice = createSlice({
     setIsAddCommissionSuccess: (agency, action) => {
       agency.isAddCommissionSuccess = action.payload;
     },
+    clearAddCommissionError: (agency, action) => {
+      agency.addCommissionError = {};
+    },
     setIsUpdateCommissionSuccess: (agency, action) => {
       agency.isUpdateCommissionSuccess = action.payload;
+    },
+    clearUpdateCommissionError: (state, action) => {
+      state.updateCommissionError = {};
     },
     extraReducers: (builder) => builder.addCase(logout, () => initialState),
   },
@@ -106,7 +112,9 @@ export const {
   deleteCommissionLoading,
   deleteCommissionSuccess,
   setIsAddCommissionSuccess,
+  clearAddCommissionError,
   setIsUpdateCommissionSuccess,
+  clearUpdateCommissionError,
 } = commissionSlice.actions;
 
 export default commissionSlice.reducer;

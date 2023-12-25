@@ -18,6 +18,7 @@ const Cashiers = () => {
   const cashiersTableColumns = [
     { title: "Full Name", dataIndex: "full_name", key: "full_name" },
     { title: "Email", dataIndex: "email", key: "email" },
+    { title: "Agency", dataIndex: "agency", key: "agency" },
     {
       title: "Status",
       dataIndex: "is_active",
