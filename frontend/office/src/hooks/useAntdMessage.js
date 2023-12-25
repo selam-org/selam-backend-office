@@ -48,7 +48,7 @@ const useAntdMessage = (
     if (success) {
       showSuccessPopup();
       onSuccess();
-      form.resetFields();
+      form && form.resetFields();
     }
   }, [errors, success]);
 };

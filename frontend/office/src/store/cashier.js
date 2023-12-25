@@ -12,10 +12,9 @@ const initialState = {
   isAddCashierSuccess: false,
   isUpdateCashierLoading: false,
   updateCashierError: {},
-  isUpdateCashierModalOpen: {},
+  isUpdateCashierSuccess: false,
   isChangePasswordLoading: false,
   changePasswordError: {},
-  isChangePasswordModalOpen: {},
   isChangePasswordSuccess: false,
 };
 
@@ -59,8 +58,7 @@ const cashierSlice = createSlice({
       state.cashiers[index] = action.payload;
       state.updateCashierError = {};
       state.isUpdateCashierLoading = false;
-      state.isUpdateCashierModalOpen[id] = false;
-      console.log(state.isUpdateCashierModalOpen[id]);
+      state.isUpdateCashierSuccess = true;
     },
     updateCashierLoading: (state, action) => {
       state.isUpdateCashierLoading = true;
@@ -68,9 +66,15 @@ const cashierSlice = createSlice({
     updateCashierError: (state, action) => {
       state.updateCashierError = action.payload;
       state.isUpdateCashierLoading = false;
+      state.isUpdateCashierSuccess = false;
+    },
+    setIsUpdateCashieSuccess: (state, action) => {
+      state.isUpdateCashierSuccess = action.payload;
+    },
+    clearUpdateCashierError: (state, action) => {
+      state.updateCashierError = {};
     },
     changePassword: (state, action) => {
-      const { id } = action.payload;
       const index = state.cashiers.findIndex((updated_cashier) => {
         return updated_cashier.id === action.payload.id;
       });
@@ -78,7 +82,6 @@ const cashierSlice = createSlice({
       state.cashiers[index] = action.payload;
       state.changePasswordError = {};
       state.isChangePasswordLoading = false;
-      state.isChangePasswordModalOpen[id] = false;
       state.isChangePasswordSuccess = true;
     },
     changePasswordLoading: (state, action) => {
@@ -94,12 +97,6 @@ const cashierSlice = createSlice({
     },
     setIsAddCashierSuccess: (state, action) => {
       state.isAddCashierSuccess = action.payload.open;
-    },
-    setIsUpdateCashierModal: (state, action) => {
-      state.isUpdateCashierModalOpen[action.payload.id] = action.payload.open;
-    },
-    setIsChangePasswordModal: (state, action) => {
-      state.isChangePasswordModalOpen[action.payload.id] = action.payload.open;
     },
     setIsChangePasswordSuccess: (state, action) => {
       state.isChangePasswordSuccess = action.payload;
@@ -124,6 +121,8 @@ export const {
   updateCashierLoading,
   updateCashierError,
   setIsUpdateCashierModal,
+  setIsUpdateCashieSuccess,
+  clearUpdateCashierError,
   changePassword,
   changePasswordLoading,
   changePasswordError,
@@ -253,11 +252,6 @@ export const getAddCashierErrors = createSelector(
   (addCashierError) => addCashierError
 );
 
-export const isUpdateCashierModalOpen = createSelector(
-  (state) => state.entities.cashier.isUpdateCashierModalOpen,
-  (isUpdateCashierModalOpen) => isUpdateCashierModalOpen
-);
-
 export const isUpdateCashierLoading = createSelector(
   (state) => state.entities.cashier.isUpdateCashierLoading,
   (isUpdateCashierLoading) => isUpdateCashierLoading
@@ -268,9 +262,9 @@ export const getUpdateCashierErrors = createSelector(
   (updateCashierError) => updateCashierError
 );
 
-export const isChangePasswordModalOpen = createSelector(
-  (state) => state.entities.cashier.isChangePasswordModalOpen,
-  (isChangePasswordModalOpen) => isChangePasswordModalOpen
+export const isUpdateCashierSuccess = createSelector(
+  (state) => state.entities.cashier.isUpdateCashierSuccess,
+  (isUpdateCashierSuccess) => isUpdateCashierSuccess
 );
 
 export const isChangePasswordLoading = createSelector(

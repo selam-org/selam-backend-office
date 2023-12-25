@@ -3,32 +3,29 @@ import { Form, Modal, Input, Select } from "antd";
 import {
   updateCashierApiCall,
   isUpdateCashierLoading,
-  isUpdateCashierModalOpen,
-  setIsUpdateCashierModal,
   getUpdateCashierErrors,
   getCashier,
+  isUpdateCashierSuccess,
+  setIsUpdateCashieSuccess,
+  clearUpdateCashierError,
 } from "../../../store/cashier";
 import { getAgencies } from "../../../store/agency";
 import { useDispatch, useSelector } from "react-redux";
-import AdminButton from "../AdminButton";
+import useAntdMessage from "../../../hooks/useAntdMessage";
 
 const { Option } = Select;
 
-const EditCashierModal = ({ id }) => {
+const EditCashierModal = ({ id, onCancel, open }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const open = useSelector(isUpdateCashierModalOpen);
   const isLoading = useSelector(isUpdateCashierLoading);
   const errors = useSelector(getUpdateCashierErrors);
+  const success = useSelector(isUpdateCashierSuccess);
   const cashier = useSelector((state) => getCashier(state, id));
   const agencies = useSelector(getAgencies);
 
   const initialValues = {
     ...cashier,
-  };
-
-  const showNewCashierModal = () => {
-    dispatch(setIsUpdateCashierModal({ id, open: true }));
   };
 
   const handleAdd = () => {
@@ -42,24 +39,37 @@ const EditCashierModal = ({ id }) => {
       .catch(console.log);
   };
 
-  const handleCancel = () => {
-    dispatch(setIsUpdateCashierModal({ id, open: false }));
+  const onSuccessMessageShown = () => {
+    onCancel();
+    dispatch(setIsUpdateCashieSuccess(false));
+  };
+
+  const onErrorShown = () => {
+    dispatch(clearUpdateCashierError());
   };
 
   useEffect(() => {
     form.setFieldsValue(cashier);
   }, [cashier, form]);
 
+  useAntdMessage(
+    errors,
+    success,
+    form,
+    "Cashier info updated successfully",
+    onSuccessMessageShown,
+    onErrorShown
+  );
+
   return (
     <>
-      <AdminButton label={"Edit"} onClick={showNewCashierModal} />
       <Form name="edit-cashier-form" form={form} initialValues={initialValues}>
         <Modal
           title="Edit Cashier's profile"
-          open={open[id]}
+          open={open}
+          onCancel={onCancel}
           onOk={handleAdd}
           confirmLoading={isLoading}
-          onCancel={handleCancel}
           okText="Save"
           cancelText="Close"
         >
