@@ -6,11 +6,13 @@ import {
   isChangePasswordModalOpen,
   setIsChangePasswordModal,
   getChangePasswordErrors,
-  getCashier,
+  clearChangePasswordError,
   getChangePasswordSuccess,
+  setIsChangePasswordSuccess,
 } from "../../../store/cashier";
 import { useDispatch, useSelector } from "react-redux";
 import AdminButton from "../AdminButton";
+import useAntdMessage from "../../../hooks/useAntdMessage";
 
 const ChangeCashierPasswordModal = ({ id }) => {
   const [form] = Form.useForm();
@@ -28,7 +30,6 @@ const ChangeCashierPasswordModal = ({ id }) => {
     form
       .validateFields()
       .then((values) => {
-        // console.log(values);
         dispatch(changePasswordApiCall(id, values["password"]));
         form.resetFields();
       })
@@ -39,13 +40,22 @@ const ChangeCashierPasswordModal = ({ id }) => {
     dispatch(setIsChangePasswordModal({ id, open: false }));
   };
 
-  const onSuccess = () => {
-    dispatch(setIsChangePasswordModal({ id, open: false }));
+  const onSuccessMessageShown = () => {
+    dispatch(setIsChangePasswordSuccess(false));
   };
 
-  useEffect(() => {
-    console.log("Password changed", success);
-  }, [success]);
+  const onErrorShown = () => {
+    dispatch(clearChangePasswordError());
+  };
+
+  useAntdMessage(
+    errors,
+    success,
+    form,
+    "Password updated successfully",
+    onSuccessMessageShown,
+    onErrorShown
+  );
 
   return (
     <>
@@ -61,6 +71,7 @@ const ChangeCashierPasswordModal = ({ id }) => {
           confirmLoading={isLoading}
           onCancel={handleCancel}
           okText="Save"
+          cancelText="Close"
         >
           <div className="modal-title"></div>
           {/* Password Input */}

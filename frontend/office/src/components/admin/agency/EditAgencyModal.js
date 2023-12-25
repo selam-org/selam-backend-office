@@ -51,6 +51,7 @@ const EditAgencyModal = ({ id }) => {
         confirmLoading={isLoading}
         onCancel={handleCancel}
         okText="Save"
+        cancelText="Close"
       >
         <div className="modal-title"></div>
         <Form.Item

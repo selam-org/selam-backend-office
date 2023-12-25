@@ -103,6 +103,9 @@ const slice = createSlice({
       agency.isUpdateRateLoading = false;
       agency.showRateUpdatedSuccess = false;
     },
+    clearUpdateRateError: (agency, action) => {
+      agency.updateRateError = {};
+    },
     setShowRateUpdatedSuccess: (agency, action) => {
       agency.showRateUpdatedSuccess = action.payload;
     },
@@ -114,7 +117,6 @@ const slice = createSlice({
 });
 
 export const {
-  setIsUpdateAgencyModal,
   updateAgencyLoading,
   updateAgencyError,
   updateAgency,
@@ -133,7 +135,9 @@ export const {
   updateAgencyRate,
   updateAgencyRateLoading,
   updateAgencyRateError,
+  clearUpdateRateError,
   setShowRateUpdatedSuccess,
+  setIsUpdateAgencyModal,
 } = slice.actions;
 
 export default slice.reducer;

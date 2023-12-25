@@ -101,6 +101,12 @@ const cashierSlice = createSlice({
     setIsChangePasswordModal: (state, action) => {
       state.isChangePasswordModalOpen[action.payload.id] = action.payload.open;
     },
+    setIsChangePasswordSuccess: (state, action) => {
+      state.isChangePasswordSuccess = action.payload;
+    },
+    clearChangePasswordError: (state, action) => {
+      state.changePasswordError = {};
+    },
     extraReducers: (builder) => builder.addCase(logout, () => initialState),
   },
 });
@@ -122,6 +128,8 @@ export const {
   changePasswordLoading,
   changePasswordError,
   setIsChangePasswordModal,
+  setIsChangePasswordSuccess,
+  clearChangePasswordError,
 } = cashierSlice.actions;
 
 export default cashierSlice.reducer;

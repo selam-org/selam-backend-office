@@ -10,6 +10,7 @@ import {
   getUpdateRateError,
   getShowRateUpdatedSuccess,
   updateAgencyRateApiCall,
+  clearUpdateRateError,
 } from "../../../store/agency";
 import useAntdMessage from "../../../hooks/useAntdMessage";
 import { validateDouble } from "../../../utils/form_validators";
@@ -67,12 +68,17 @@ const RateForm = () => {
     dispatch(setShowRateUpdatedSuccess(false));
   };
 
+  const clearErrors = () => {
+    dispatch(clearUpdateRateError());
+  };
+
   useAntdMessage(
     errors,
     success,
     form,
     "Rate updated successfully",
-    closeSuccessPopup
+    closeSuccessPopup,
+    clearErrors
   );
 
   useEffect(() => {
