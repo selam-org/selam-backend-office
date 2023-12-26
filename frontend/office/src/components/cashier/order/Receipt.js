@@ -5,23 +5,23 @@ import "../styles/Receipt.css";
 
 const Receipt = ({ receiptContent }) => {
   const openPDFInNewTab = () => {
-    const element1 = document.getElementById("receipt-content");
-
+    const element = document.getElementById("receipt-content");
     const pdfWidth = 76;
+    const pdfHeight = 1150;
 
     const opt = {
       margin: 0,
-      filename: "merged-receipts.pdf",
+      filename: "receipt.pdf",
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 7 },
       jsPDF: {
         unit: "mm",
         orientation: "portrait",
-        format: [pdfWidth, 1150],
+        format: [pdfWidth, pdfHeight],
       },
     };
 
-    const pages = [element1];
+    const pages = [element];
     let doc = html2pdf().set(opt).from(pages[0]).toPdf();
     for (let j = 1; j < pages.length; j++) {
       doc = doc
