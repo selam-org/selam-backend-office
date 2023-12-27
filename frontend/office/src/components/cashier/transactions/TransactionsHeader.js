@@ -1,6 +1,6 @@
 import { Row, Col } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import UserInfo from "./UserInfo";
+import LoggedInCashierInfo from "./LoggedInCashierInfo";
 import "../../../pages/styles/Transactions.css";
 
 const TransactionsHeader = () => {
@@ -29,7 +29,7 @@ const TransactionsHeader = () => {
       <Col span={2} align="center" className="logo">
         <img src="/images/logo.png" width={80} alt="logo" />
       </Col>
-      <UserInfo />
+      <LoggedInCashierInfo />
     </Row>
   );
 };

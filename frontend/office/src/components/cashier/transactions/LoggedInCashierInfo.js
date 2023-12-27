@@ -1,6 +1,10 @@
 import { Col, Row } from "antd";
+import { useSelector } from "react-redux";
+import { getLoggedinUser } from "../../../store/auth";
 
-const UserInfo = () => {
+const LoggedInCashierInfo = () => {
+  const user = useSelector(getLoggedinUser);
+
   return (
     <Col span={4} className="user-info">
       <Row>
@@ -8,7 +12,7 @@ const UserInfo = () => {
           User
         </Col>
         <Col className="user-info-value" span={17}>
-          Fereja Mohammed
+          {user.full_name}
         </Col>
       </Row>
       <Row>
@@ -16,11 +20,11 @@ const UserInfo = () => {
           Agency
         </Col>
         <Col className="user-info-value" span={17}>
-          Se001 - Agency sadfdfdfd
+          {user.agency_name}
         </Col>
       </Row>
     </Col>
   );
 };
 
-export default UserInfo;
+export default LoggedInCashierInfo;

@@ -10,7 +10,7 @@ import {
 import { Layout, Menu, Button } from "antd";
 import { Link } from "react-router-dom";
 import Commission from "./admin/Commission";
-import Reports from "./admin/Reports";
+import Report from "./admin/Report";
 import Agencies from "./admin/Agencies";
 import Cashiers from "./admin/Cashiers";
 
@@ -77,11 +77,11 @@ const Admin = () => {
             {
               key: "3",
               icon: (
-                <Link to="/reports">
+                <Link to="/report">
                   <BarChartOutlined />
                 </Link>
               ),
-              label: "Reports",
+              label: "Report",
             },
           ]}
         />
@@ -107,7 +107,7 @@ const Admin = () => {
             <Route path="/" element={<Agencies />} />
             <Route path="/agencies/:id" element={<Commission />} />
             <Route path="/cashiers" element={<Cashiers />} />
-            <Route path="/reports" element={<Reports />} />
+            <Route path="/report" element={<Report />} />
           </Routes>
         </Content>
       </Layout>
