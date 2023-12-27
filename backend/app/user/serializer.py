@@ -3,10 +3,10 @@ from user.models import User, Cashier, Admin
 
 
 class UserSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField('get_full_name')
+    full_name = serializers.SerializerMethodField("get_full_name")
 
     def get_full_name(self, obj):
-        return obj.first_name + ' ' + obj.last_name
+        return obj.first_name + " " + obj.last_name
 
     def create(self, validated_data):
         # call create_user on user object. Without this
@@ -16,18 +16,25 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name',
-                  'last_name',  'user_type', 'is_active', 'full_name')
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "user_type",
+            "is_active",
+            "full_name",
+        )
         extra_kwargs = {
-            'password': {'write_only': True},
+            "password": {"write_only": True},
         }
 
 
 class AdminSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField('get_full_name')
+    full_name = serializers.SerializerMethodField("get_full_name")
 
     def get_full_name(self, obj):
-        return obj.first_name + ' ' + obj.last_name
+        return obj.first_name + " " + obj.last_name
 
     def create(self, validated_data):
         # call create_user on user object. Without this
@@ -37,18 +44,29 @@ class AdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Admin
-        fields = ('id', 'email', 'password', 'first_name',
-                  'last_name', 'user_type',  'full_name')
+        fields = (
+            "id",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "user_type",
+            "full_name",
+        )
         extra_kwargs = {
-            'password': {'write_only': True},
+            "password": {"write_only": True},
         }
 
 
 class CashierSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField('get_full_name')
+    full_name = serializers.SerializerMethodField("get_full_name")
+    agency_name = serializers.SerializerMethodField("get_agency_name")
 
     def get_full_name(self, obj):
-        return obj.first_name + ' ' + obj.last_name
+        return obj.first_name + " " + obj.last_name
+
+    def get_agency_name(self, obj):
+        return obj.agency.name
 
     def create(self, validated_data):
         # call create_user on user object. Without this
@@ -58,8 +76,19 @@ class CashierSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cashier
-        fields = ('id', 'email', 'password', 'first_name',
-                  'last_name', 'user_type', 'username', 'is_active', 'full_name', 'agency')
+        fields = (
+            "id",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "user_type",
+            "username",
+            "is_active",
+            "full_name",
+            "agency_name",
+            "agency",
+        )
         extra_kwargs = {
-            'password': {'write_only': True},
+            "password": {"write_only": True},
         }
