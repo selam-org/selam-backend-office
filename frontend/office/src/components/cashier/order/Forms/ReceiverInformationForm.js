@@ -22,6 +22,9 @@ import {
   getReceivers,
   setReceiver,
   setPayment,
+  getPaymentInfo,
+  getPayment,
+  setTransInfo,
 } from "../../../../store/transactions";
 const ReceiverInformationForm = () => {
   const dispatch = useDispatch();
@@ -32,8 +35,22 @@ const ReceiverInformationForm = () => {
   const { senderId } = useParams();
   const receivers = useSelector((state) => getReceivers(state, senderId));
   // const [receiver, setReceiver] = useState();
+  // const payment = useSelector(getPayment);
+  // const paymentInfo = useSelector(getPaymentInfo);
   const [_form] = Form.useForm();
   const [edit, setEdit] = useState(true);
+
+  // useEffect(() => {
+  //   if (!payment) {
+  //     console.log(1, "Payment Set");
+  //     if (paymentInfo.length > 0) {
+  //       setPayment(paymentInfo[0]);
+  //       console.log(payment, paymentInfo[0], "Payment Set 2")
+  //     }
+  //   }
+  // }, []);
+  // console.log(payment, "Payment Set");
+
   useEffect(() => {
     _form.setFieldsValue({ ...receiver });
   }, [receiver]);
@@ -92,6 +109,7 @@ const ReceiverInformationForm = () => {
                   setEdit(false);
                   dispatch(setReceiver(null));
                   dispatch(setPayment(null));
+                  dispatch(setTransInfo(null));
                 }}
                 label="New"
               />

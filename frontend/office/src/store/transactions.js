@@ -36,12 +36,33 @@ const initialState = {
   transInfo: null,
   isCalculate: true,
   rate: null,
+  orderLoading: false,
+  orderError: {},
+  isOrderSuccess: false,
 };
 
 const slice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
+    setTransaction: (transaction, action) => {
+      transaction.transactions = [];
+    },
+    setIsOrderSuccess: (transaction, action) => {
+      transaction.isOrderSuccess = action.payload;
+    },
+    postOrderLoading: (transaction, action) => {
+      transaction.orderLoading = true;
+    },
+    postOrderError: (transaction, action) => {
+      transaction.orderError = action.payload;
+      transaction.orderLoading = false;
+    },
+    postOrderSuccess: (transaction, action) => {
+      transaction.orderError = {};
+      transaction.orderLoading = false;
+      transaction.isOrderSuccess = true;
+    },
     setTranRate: (transaction, action) => {
       console.log(action.payload, "calculaterate");
       transaction.rate = action.payload;
@@ -263,9 +284,14 @@ export const {
   getAgencySuccess,
   getCommissionError,
   getCommissionLoading,
+  setIsOrderSuccess,
   getCommissionSuccess,
   setIsCalculate,
   setTranRate,
+  postOrderError,
+  postOrderLoading,
+  postOrderSuccess,
+  setTransaction,
 } = slice.actions;
 
 export default slice.reducer;
@@ -407,6 +433,24 @@ export const addReceiverApiCall = (data) => (dispatch, getState) => {
       onStart: addReceiverLoading.type,
       onSuccess: addReceiverSuccess.type,
       onFailed: addReceiverError.type,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+  );
+};
+export const addOrderApiCall = (data) => (dispatch, getState) => {
+  const token = getState().entities.auth.userCred.token;
+  // const userId = getState().entities.auth.userCred.user_id;
+  console.log(data, "data");
+  dispatch(
+    action.apiCallBegan({
+      url: `orders/`,
+      method: "post",
+      data,
+      onStart: postOrderLoading.type,
+      onSuccess: postOrderSuccess.type,
+      onFailed: postOrderError.type,
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -593,4 +637,18 @@ export const getTranRate = createSelector(
 export const getTransInfo = createSelector(
   (state) => state.entities.transaction.transInfo,
   (transInfo) => transInfo
+);
+export const getOrderLoading = createSelector(
+  (state) => state.entities.transaction.orderLoading,
+  (orderLoading) => orderLoading
+);
+
+export const getOrderError = createSelector(
+  (state) => state.entities.transaction.orderError,
+  (orderError) => orderError
+);
+
+export const getIsOrderSuccess = createSelector(
+  (state) => state.entities.transaction.isOrderSuccess,
+  (isOrderSuccess) => isOrderSuccess
 );

@@ -6,8 +6,17 @@ import AppPrimaryButton from "../../AppPrimaryButton";
 import "../../../../pages/styles/Order.css";
 import UpdateRate from "./UpdateRate";
 import { useDispatch, useSelector } from "react-redux";
-import { getTransInfo, getIsCalculated } from "../../../../store/transactions";
+import {
+  getTransInfo,
+  getIsCalculated,
+  getTransactionById,
+  getReceiver,
+  getTranRate,
+  getPayment,
+} from "../../../../store/transactions";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import CashManagementModal from "./CashManagementModal";
 const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
   return (
     <Row justify="space-between" style={{ marginLeft: 20, marginRight: 20 }}>
@@ -22,9 +31,22 @@ const TransactionInfo = ({ title, value, titleSpan = 14, valueSpan = 10 }) => {
 };
 
 const TransactionInformationForm = () => {
+  const { senderId } = useParams();
   const isCalculate = useSelector(getIsCalculated);
+  const receiver = useSelector(getReceiver);
+  const sender = useSelector((state) => getTransactionById(state, senderId));
   const transInfo = useSelector(getTransInfo);
+  const payment = useSelector(getPayment);
   console.log(transInfo, "calculate transinfo");
+  console.log(
+    sender,
+    isCalculate,
+    receiver,
+    payment,
+    transInfo,
+    "Payment Set 4",
+    sender && isCalculate && receiver && payment && transInfo
+  );
   useEffect(() => {}, [transInfo]);
   const [openUpdaterModal, setOpenUpdaterModal] = useState(false);
   const [confirmUpdaterModalLoading, setConfirmUpdaterModalLoading] =
@@ -53,10 +75,32 @@ const TransactionInformationForm = () => {
       value: "small",
     },
   ];
+  const [openProcessModal, setOpenProcessModal] = useState(false);
+  const [confirmProcessModalLoading, setConfirmProcessModalLoading] =
+    useState(false);
+  const showProcessModal = () => {
+    setOpenProcessModal(true);
+  };
+  const handleProcessModalOk = () => {
+    setConfirmProcessModalLoading(true);
+    setTimeout(() => {
+      setOpenProcessModal(false);
+      setConfirmProcessModalLoading(false);
+    }, 2000);
+  };
+  const handleProcessModalCancel = () => {
+    setOpenProcessModal(false);
+  };
 
   return (
     <Form>
       <FormHeader label={"TRANSACTION INFORMATION"} titleSpan={24} />
+      <CashManagementModal
+        onOk={setOpenProcessModal}
+        confirmLoading={confirmProcessModalLoading}
+        open={openProcessModal}
+        onCancel={handleProcessModalCancel}
+      />
       <Row className="order-row">
         <Col span={12}>
           <TransactionInfo
@@ -170,7 +214,16 @@ const TransactionInformationForm = () => {
           <FormRadioButton options={printerTypes} />
         </Col>
         <Col span={8} align={"right"}>
-          <Button className="gray-btn" style={{ width: 120 }}>
+          <Button
+            // disabled={true}
+            //  className="gray-btn"
+            disabled={
+              !(payment && sender && receiver && !isCalculate && transInfo)
+            }
+            style={{ width: 120 }}
+            className="green-btn"
+            onClick={showProcessModal}
+          >
             PROCESS
           </Button>
         </Col>

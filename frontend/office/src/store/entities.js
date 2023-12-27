@@ -9,7 +9,7 @@ import commission from "./commission";
 import cashier from "./cashier";
 
 const authPersistConfig = {
-  key: "auth 2.0",
+  key: "auth 2.3",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
@@ -17,17 +17,11 @@ const authPersistConfig = {
 };
 
 const transactionPersistConfig = {
-  key: "transaction 1.1",
+  key: "transaction 1.2",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: [
-    "isGetTransactionsLoading",
-    "getTransactionsError",
-    "receivers",
-    "transInfo",
-    "isCalculate",
-  ],
+  whitelist: ["transactions"],
 };
 
 const agencyPersistConfig = {
@@ -39,7 +33,7 @@ const agencyPersistConfig = {
 };
 
 const commissionPersistConfig = {
-  key: "commission 1.0",
+  key: "commission 1.1",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
@@ -47,7 +41,7 @@ const commissionPersistConfig = {
 };
 
 const cashierPersistConfig = {
-  key: "cashier 1.8",
+  key: "cashier 1.9",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,

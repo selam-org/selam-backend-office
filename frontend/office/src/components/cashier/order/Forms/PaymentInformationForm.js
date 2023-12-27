@@ -30,10 +30,13 @@ import {
   setTransInfo,
   getTransInfo,
   getTranRate,
+  getReceiver,
+  getPaymentInfo,
 } from "../../../../store/transactions";
 const PaymentInformationForm = () => {
   const dispatch = useDispatch();
-
+  const paymentInfo = useSelector(getPaymentInfo);
+  const receiver = useSelector(getReceiver);
   const [form] = Form.useForm();
   const payment = useSelector(getPayment);
   const commissions = useSelector(getCommissions);
@@ -302,7 +305,16 @@ const PaymentInformationForm = () => {
           <OrderLabeledInput
             label="Payee"
             inputSpan={14}
-            searchIcon={<SearchIcon onClick={showPayeeModal} />}
+            searchIcon={
+              <SearchIcon
+                onClick={() => {
+                  if (!receiver) {
+                    return;
+                  }
+                  showPayeeModal();
+                }}
+              />
+            }
             className="payment-form-text-input"
             defaultValue={payment ? "ethiopia payee partner" : ""}
             disabled={true}
@@ -412,7 +424,20 @@ const PaymentInformationForm = () => {
                 <Button className="gray-btn">Estimate Receipt</Button>
               </Col>
               <Col span={6}>
-                <Button onClick={handleCalculate} className="green-btn">
+                <Button
+                  // disabled={true}
+
+                  onClick={() => {
+                    if (!payment) {
+                      return;
+                    }
+                    if (!paymentInfo) {
+                      return;
+                    }
+                    handleCalculate();
+                  }}
+                  className="green-btn"
+                >
                   Calculate
                 </Button>
               </Col>
