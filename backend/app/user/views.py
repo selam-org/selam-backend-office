@@ -16,9 +16,20 @@ class CashierCreateViewSet(viewsets.ModelViewSet):
     serializer_class = CashierSerializer
     permission_classes = []
 
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
 
-class AdminsCreateViewSet(mixins.CreateModelMixin,
-                          viewsets.GenericViewSet):
+        if "password" in request.data:
+            instance.set_password(request.data["password"])
+            instance.save()
+
+        return Response(serializer.data)
+
+
+class AdminsCreateViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = Admin.objects.all()
     serializer_class = AdminSerializer
     pagination_class = None
@@ -29,17 +40,18 @@ class CustomAuthTokenView(ObtainAuthToken):
         response = super().post(request, *args, **kwargs)
         if response.status_code == 200:
             serializer = self.serializer_class(
-                data=request.data, context={'request': request})
+                data=request.data, context={"request": request}
+            )
             serializer.is_valid()
-            user = serializer.validated_data['user']
-            token = Token.objects.get(key=response.data['token'])
-            response.data['user_id'] = user.id
-            response.data['user_type'] = user.user_type
-            response.data['username'] = user.email
-            response.data['full_name'] = user.full_name
-            if user.user_type == 'cashier':
+            user = serializer.validated_data["user"]
+            token = Token.objects.get(key=response.data["token"])
+            response.data["user_id"] = user.id
+            response.data["user_type"] = user.user_type
+            response.data["username"] = user.email
+            response.data["full_name"] = user.full_name
+            if user.user_type == "cashier":
                 cashier = Cashier.objects.filter(id=user.id).first()
-                response.data['agency'] = cashier.agency.id
+                response.data["agency"] = cashier.agency.id
         return response
 
 
