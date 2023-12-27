@@ -9,11 +9,11 @@ import commission from "./commission";
 import cashier from "./cashier";
 
 const authPersistConfig = {
-  key: "auth 2.3",
+  key: "auth 2.5",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ["loginError"],
+  whitelist: ["userCred", "logedIn"],
 };
 
 const transactionPersistConfig = {

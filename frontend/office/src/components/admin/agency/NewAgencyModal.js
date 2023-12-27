@@ -48,6 +48,24 @@ const NewAgencyModal = () => {
     }
   };
 
+  const validateDefaultRate = (_, value) => {
+    const formValues = form.getFieldsValue();
+    const currentMaximum = formValues.max_rate;
+    const currentMinimum = formValues.min_rate;
+    const currentDefault = formValues.default_rate;
+    if (
+      currentDefault !== undefined &&
+      (parseFloat(currentDefault) < parseFloat(currentMinimum) ||
+        parseFloat(currentDefault) > parseFloat(currentMaximum))
+    ) {
+      return Promise.reject(
+        new Error("Default rate must be between minimum and maximum rate")
+      );
+    } else {
+      return Promise.resolve();
+    }
+  };
+
   const onFinish = (values) => {
     form
       .validateFields()
@@ -162,6 +180,7 @@ const NewAgencyModal = () => {
               message: "Please add a default rate",
             },
             { validator: validateDouble },
+            { validator: validateDefaultRate },
           ]}
         >
           <Input placeholder={"Default rate"} />

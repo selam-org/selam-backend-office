@@ -10,7 +10,6 @@ function Cashier(props) {
       <Route path="/" element={<Transctions />} />
       <Route path="/orders/:senderId" element={<Order />} />
       <Route path="/report" element={<h1>Reports</h1>} />
-      <Route path="/receipt" element={<Receipt />} />
     </Routes>
   );
 }

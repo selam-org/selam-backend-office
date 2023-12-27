@@ -1,12 +1,13 @@
-import { Modal, Radio, Row, Table } from "antd";
-import FormHeader from "../../form/FormHeader";
-import CloseOrderModalBtn from "../CloseOrderModalBtn";
-import AppPrimaryButton from "../../AppPrimaryButton";
-import "../../styles/CustomerDocumentation.css";
+import { Modal, Radio, Row, Table, Checkbox } from "antd";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getTransactionById } from "../../../../store/transactions";
 import { useState } from "react";
+import FormHeader from "../../form/FormHeader";
+import CloseOrderModalBtn from "../CloseOrderModalBtn";
+import AppPrimaryButton from "../../AppPrimaryButton";
+import "../../styles/CustomerDocumentation.css";
+
 const CustomerDocumentationModal = ({ onCancel, ...otherProps }) => {
   const [isRadioSelected, setIsRadioSelected] = useState(false);
 
@@ -91,6 +92,11 @@ const DocumentationTable = ({ onRadioChange, ...otherProps }) => {
       title: "Select",
       dataIndex: "select",
       key: "select",
+      render: (_, item, index) => (
+        <>
+          <Checkbox disabled={true}>Checkbox</Checkbox>;
+        </>
+      ),
     },
     {
       title: "ID ",

@@ -207,8 +207,16 @@ const SenderInformationForm = (props) => {
       </Row>
 
       <Row className="order-row order-output-row" justify="center">
-        <Col span={9}>
-          <p className="app-text success-text">Record Saved Succesfully</p>
+        <Col span={9} align={"left"}>
+          <img
+            style={{ marginTop: -5 }}
+            src="/images/rewards.png"
+            width={140}
+            alt=""
+          />
+          <p className="app-text success-text" style={{ marginLeft: 35 }}>
+            Record Saved Succesfully
+          </p>
         </Col>
         <Col span={9}>
           <p className="app-text success-text">Driver License No: </p>
@@ -216,6 +224,13 @@ const SenderInformationForm = (props) => {
         </Col>
         <Col span={6}>
           <Row className="order-output-btns" justify="end">
+            <img
+              style={{ marginRight: 2 }}
+              src="/images/contacts.png"
+              width={75}
+              alt=""
+            />
+
             <AppPrimaryButton
               onClick={() => {
                 setEdit(false);

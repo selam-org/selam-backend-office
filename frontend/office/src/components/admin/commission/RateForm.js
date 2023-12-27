@@ -52,6 +52,25 @@ const RateForm = () => {
     }
   };
 
+  const validateDefaultRate = (_, value) => {
+    const formValues = form.getFieldsValue();
+    const rates = formValues.rates[0];
+    const currentMaximum = rates.max_rate;
+    const currentMinimum = rates.min_rate;
+    const currentDefault = rates.default_rate;
+    if (
+      currentDefault !== undefined &&
+      (parseFloat(currentDefault) < parseFloat(currentMinimum) ||
+        parseFloat(currentDefault) > parseFloat(currentMaximum))
+    ) {
+      return Promise.reject(
+        new Error("Default value must be between Minimum and Maximum")
+      );
+    } else {
+      return Promise.resolve();
+    }
+  };
+
   const initialValues = React.useMemo(() => {
     return {
       rates: [
@@ -145,6 +164,7 @@ const RateForm = () => {
                         rules={[
                           { required: true, message: "Default is required" },
                           { validator: validateDouble },
+                          { validator: validateDefaultRate },
                         ]}
                       >
                         <Input placeholder="Default" />

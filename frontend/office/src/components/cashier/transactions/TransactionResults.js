@@ -25,7 +25,7 @@ const TransactionResult = () => {
             pagination={false}
             columns={[
               {
-                title: "Account #",
+                title: "ACCOUNT #",
                 dataIndex: "sender_account",
                 key: "sender_account",
                 render: (_, item, index) => (
