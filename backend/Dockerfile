@@ -17,5 +17,5 @@ RUN python manage.py collectstatic
 EXPOSE 8080
 
 ENV PATH="/home/app/.local/bin:${PATH}"
-CMD gunicorn --bind :$PORT office.wsgi
+# CMD gunicorn --bind :$PORT office.wsgi
 

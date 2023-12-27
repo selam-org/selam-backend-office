@@ -1,7 +1,5 @@
 version: "3.8"
 services:
-
-
   backend:
     build: .
 
@@ -11,10 +9,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "8000:8000"  
+      - "8080:8080"
     # Generate static css and js, apply migrations and start server
-    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-
-
-
-
+    # command: sh -c "python manage.py runserver 0.0.0.0:8080"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8080"

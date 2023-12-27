@@ -99,7 +99,7 @@ CORS_ALLOW_METHODS = [
 
 
 DATABASES = {
-    'default': dj_database_url.config(default="postgres://rngvvgxe:HqRYLuXPoEmIAnz3iI591ru-8OqK7QCP@drona.db.elephantsql.com/rngvvgxe")
+    'default': dj_database_url.config(default="postgres://selam_office_user:1Uvzw8BFGs5cVZ92dgq09cj7vjrHswdI@dpg-cm65eemd3nmc73ap4q20-a.oregon-postgres.render.com/selam_office")
     # {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': os.environ.get('POSTGRES_NAME'),
@@ -165,4 +165,3 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-

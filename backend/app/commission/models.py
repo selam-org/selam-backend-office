@@ -7,7 +7,6 @@ from agency.models import Agency
 
 class Commission(models.Model):
     id = models.AutoField(primary_key=True)
-    start = models.DecimalField(max_digits=20, decimal_places=2)
     end = models.DecimalField(max_digits=20, decimal_places=2)
     commission = models.DecimalField(max_digits=5, decimal_places=2)
     admin = models.ForeignKey(

@@ -1,5 +1,3 @@
-
-# Create your models here.
 from django.db import models
 from agency.models import Agency
 from sender.models import Sender
@@ -14,8 +12,8 @@ class Order(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    invoice_number = models.CharField(max_length=100)
-    confirmation_no = models.CharField(max_length=100)
+    invoice_no = models.BigIntegerField(unique=True, default=0)
+    confirmation_no = models.BigIntegerField(unique=True)
     date = models.DateField()
     sender_currency = models.CharField(max_length=100)
     received_currency = models.CharField(max_length=100)
@@ -35,5 +33,25 @@ class Order(models.Model):
         PaymentInfo, on_delete=models.SET_NULL, blank=True, null=True, related_name="payment_infos")
 
     def __str__(self):
-        return f'{self.id} - {self.sender} - {self.invoice_number} - {self.confirmation_no} - {self.receiver} - {self.payment_info} '
+        return f'{self.id} - {self.sender} - {self.invoice_no} - {self.confirmation_no} - {self.receiver} - {self.payment_info}'
 
+    def save(self, *args, **kwargs):
+        if not self.invoice_no:
+            # Find the latest invoice number and increment it
+            last_order = Order.objects.order_by('-invoice_no').first()
+            if last_order:
+                last_invoice_no = last_order.invoice_no
+                self.invoice_no = last_invoice_no + 1
+            else:
+                self.invoice_no = 125234  # Initial value
+
+        if not self.confirmation_no:
+            # Find the latest confirmation number and increment it
+            last_order = Order.objects.order_by('-confirmation_no').first()
+            if last_order:
+                last_confirmation_no = last_order.confirmation_no
+                self.confirmation_no = last_confirmation_no + 1
+            else:
+                self.confirmation_no = 121342537692  # Initial value
+
+        super().save(*args, **kwargs)

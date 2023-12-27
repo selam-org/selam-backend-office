@@ -14,7 +14,7 @@ def transform_data_to_model(data):
         "sender_mother_maiden": " ",
         "sender_birth_date": datetime.strptime(data["Birthday Sender"], date_format),
         "sender_mobile_phone": "",
-        "sender_account": "543234",
+        "sender_account": data["Id Sender"],
         "sender_ssn": data["Sender SSN"],
         "id_type": data["Number Id Sender"],
         "sender_state_identification": data["Sender Country Identification"],
@@ -32,7 +32,7 @@ def transform_data_to_model(data):
         "receiver_mother_maiden": "",
         "receiver_birth_date": datetime.strptime(data["Birthday Sender"], date_format),
         "receiver_mobile_phone": "",
-        "receiver_account": "",
+        "receiver_account": 66,
 
     }
     payment = {
@@ -43,8 +43,8 @@ def transform_data_to_model(data):
     }
 
     order = {
-        "invoice_number": data["Invoice"],
-        "confirmation_no": data["Confirmation No"],
+        # "invoice_number": data["Invoice"],
+        # "confirmation_no": data["Confirmation No"],
         "date": datetime.strptime(data["Date"], "%m/%d/%Y %I:%M:%S %p"),
         "sender_currency": data["Send Currency"],
         "received_currency": data["Received Currency"],

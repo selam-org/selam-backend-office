@@ -14,6 +14,7 @@ from .util import transform_data_to_model
 from sender.models import Sender
 from receiver.models import Receiver
 from payment_info.models import PaymentInfo
+from commission.models import Commission
 from .models import Order
 
 
@@ -28,6 +29,57 @@ class OrderViewSet(viewsets.ModelViewSet):
         deleted_id = instance.bank_id
         instance.delete()
         return Response({'id': deleted_id}, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_create(serializer)
+        order_obj = serializer.instance
+
+        # Calculate and update commission
+        commission_amount = self.calculate_commission(order_obj)
+        # Assuming you have a field for commission in Order model
+        order_obj.fee = commission_amount
+        order_obj.save()
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def calculate_commission(self, order):
+        """
+        Calculate the commission based on the agency and the total pay receiver.
+        Uses the highest commission if order is greater than all 'end' values,
+        and the lowest if it is lower than the least 'end' value.
+        """
+        agency = order.agency
+        net_amount_receiver = order.net_amount_receiver
+
+        highest_commission = Commission.objects.filter(
+            agency=agency).order_by('-end').first()
+        lowest_commission = Commission.objects.filter(
+            agency=agency).order_by('end').first()
+
+        # Default to 0 if no commission records are found
+        if not highest_commission or not lowest_commission:
+            return 0
+
+        try:
+            if net_amount_receiver > highest_commission.end:
+                commission_amount = highest_commission.commission
+            elif net_amount_receiver < lowest_commission.end:
+                commission_amount = lowest_commission.commission
+            else:
+                # Find the appropriate commission bracket
+                commission_record = Commission.objects.filter(
+                    agency=agency,
+                    end__gte=net_amount_receiver
+                ).order_by('end').first()
+                commission_amount = commission_record.commission if commission_record else 0
+        except Commission.DoesNotExist:
+            commission_amount = 0
+
+        return commission_amount
 
     @action(detail=False, methods=['post'], url_path='create_list')
     def create_list(self, request):
