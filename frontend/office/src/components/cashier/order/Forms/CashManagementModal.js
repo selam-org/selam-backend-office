@@ -63,7 +63,7 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
               ? parseFloat(transInfo.rate).toFixed(2)
               : transInfo.rate,
 
-            net_amount_receiver: transInfo.total,
+            net_amount_receiver: transInfo.sent,
             fee: transInfo.fee,
             payment_type: "cash",
             total_pay_receiver: transInfo.receive,
