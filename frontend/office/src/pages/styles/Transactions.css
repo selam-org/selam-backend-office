@@ -46,11 +46,19 @@
   margin-right: 5px;
   margin-left: 5px;
   font-size: 13px;
+  cursor: pointer;
+}
+
+.transaction-logout-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  margin-right: 1px;
+  margin-left: 1px;
 }
 
 .logo {
   padding: 5px 0px;
-  /* min-width: 80px; */
 }
 
 .language-dropdown {
@@ -83,7 +91,7 @@
 .user-info-key {
   color: yellow;
   border: 1px solid white;
-  padding: 5px 3px;
+  padding: 5.5px 3px;
 }
 
 .user-info-value {
@@ -93,6 +101,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.second-cell {
+  border-top: none;
 }
 
 .new-transaction-input input {

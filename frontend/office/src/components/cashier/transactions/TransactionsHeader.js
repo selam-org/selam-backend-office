@@ -1,9 +1,17 @@
 import { Row, Col } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import LoggedInCashierInfo from "./LoggedInCashierInfo";
+import { logoutApi } from "../../../store/auth";
+import { useDispatch } from "react-redux";
 import "../../../pages/styles/Transactions.css";
 
 const TransactionsHeader = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutApi());
+  };
+
   return (
     <Row className="transactions-header">
       <Col span={18} className="transactions-nav-container">
@@ -14,6 +22,13 @@ const TransactionsHeader = () => {
           <span className="transaction-nav-item">Transactions</span> |
           <span className="transaction-nav-item">Tools</span> |
           <span className="transaction-nav-item">Payments</span>|
+          <button
+            className="transaction-nav-item transaction-logout-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+          |
         </Row>
         <Row className="transactions-nav">
           <Col span={19}>

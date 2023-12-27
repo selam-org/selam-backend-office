@@ -46,8 +46,10 @@
   margin-bottom: 30px;
 }
 
-.login-btn :hover {
+.login-btn:hover {
   background-color: orange;
+  color: white !important;
+  border: none !important;
 }
 
 .login-input-title {

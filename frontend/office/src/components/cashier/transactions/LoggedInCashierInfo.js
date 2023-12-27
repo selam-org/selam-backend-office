@@ -16,10 +16,10 @@ const LoggedInCashierInfo = () => {
         </Col>
       </Row>
       <Row>
-        <Col className="user-info-key" span={7}>
+        <Col className="user-info-key second-cell" span={7}>
           Agency
         </Col>
-        <Col className="user-info-value" span={17}>
+        <Col className="user-info-value second-cell" span={17}>
           {user.agency_name}
         </Col>
       </Row>
