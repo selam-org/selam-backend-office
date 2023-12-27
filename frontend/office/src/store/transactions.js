@@ -39,6 +39,7 @@ const initialState = {
   orderLoading: false,
   orderError: {},
   isOrderSuccess: false,
+  order: null,
 };
 
 const slice = createSlice({
@@ -62,6 +63,7 @@ const slice = createSlice({
       transaction.orderError = {};
       transaction.orderLoading = false;
       transaction.isOrderSuccess = true;
+      transaction.order = action.payload;
     },
     setTranRate: (transaction, action) => {
       console.log(action.payload, "calculaterate");
@@ -651,4 +653,9 @@ export const getOrderError = createSelector(
 export const getIsOrderSuccess = createSelector(
   (state) => state.entities.transaction.isOrderSuccess,
   (isOrderSuccess) => isOrderSuccess
+);
+
+export const getOrder = createSelector(
+  (state) => state.entities.transaction.order,
+  (order) => order
 );

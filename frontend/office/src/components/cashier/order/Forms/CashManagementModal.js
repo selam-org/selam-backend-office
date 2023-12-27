@@ -24,6 +24,7 @@ import {
   setIsOrderSuccess,
   setTransaction,
   setTranRate,
+  getOrder,
 } from "../../../../store/transactions";
 import { useParams, useNavigate } from "react-router-dom";
 const CashManagementModal = ({ onCancel, ...otherProps }) => {
@@ -40,6 +41,7 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
   const errors = useSelector(getOrderError);
   const agency = useSelector(getAgency);
   const isOrderSuccess = useSelector(getIsOrderSuccess);
+  const order = useSelector(getOrder);
   const [form] = Form.useForm();
   form.setFieldsValue({
     ...transInfo,
@@ -73,7 +75,8 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
             payment_info: payment.id,
           })
         );
-        if (isOrderSuccess) {
+        if (isOrderSuccess && order) {
+          console.log("order success", order);
           dispatch(setIsOrderSuccess(false));
           onCancel();
           navigate("/");

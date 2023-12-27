@@ -16,7 +16,7 @@ class PaymentInfoViewSet(viewsets.ModelViewSet):
     filterset_class = PaymentInfoFilter
     search_fields = []
     pagination_class = None
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
