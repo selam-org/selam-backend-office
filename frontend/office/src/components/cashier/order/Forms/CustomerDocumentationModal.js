@@ -83,7 +83,7 @@ const DocumentationTable = ({ onRadioChange, ...otherProps }) => {
       key: "default",
       render: (_, item, index) => (
         <>
-          <Radio onChange={onRadioChange}>Radio</Radio>
+          <Radio onChange={onRadioChange}></Radio>
         </>
       ),
     },

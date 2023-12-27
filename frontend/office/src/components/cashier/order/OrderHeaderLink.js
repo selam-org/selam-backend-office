@@ -1,4 +1,4 @@
-const OrderHeaderLink = ({ label }) => {
+const OrderHeaderLink = ({ label, to }) => {
   return (
     <>
       <span className="order-header-link-pipe">|</span>

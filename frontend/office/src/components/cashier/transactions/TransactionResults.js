@@ -116,9 +116,9 @@ const TransactionResult = () => {
               alt="left-arrow"
             />
             <div className="results-page-input">
-              <FormInput />
+              <FormInput defaultValue={0} />
             </div>
-            /<span className="results-total-pages">0</span>
+            /<span className="results-total-pages">1</span>
             <img
               className="page-arrow"
               src="/images/right-arrow.svg"
@@ -130,7 +130,7 @@ const TransactionResult = () => {
             </span>
           </Row>
         </Col>
-        <Col>Total Records: 0</Col>
+        <Col>Total Records: {sender.length}</Col>
         <Col className="results-page-dropdown" span={14} align="right">
           <FormDropdown options={pageSizeOptions} defaultValue={10} />
         </Col>

@@ -2,6 +2,7 @@ import { Form, Row, Col, Image } from "antd";
 import FormLabeledInput from "../form/FormLabeledInput";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactionsApiCall } from "../../../store/transactions";
+
 const NewTransactionForm = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();

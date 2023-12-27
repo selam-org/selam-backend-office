@@ -1,11 +1,25 @@
 import { Row, Col } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import AppPrimaryButton from "../AppPrimaryButton";
 import OrderHeaderLink from "./OrderHeaderLink";
 import OrderHeaderInfo from "./OrderHeaderInfo";
 import FormDropdown from "../form/FormDropdown";
+import { getLoggedinUser, logoutApi } from "../../../store/auth";
 
 const OrderHeader = () => {
   const themeOptions = [{ title: "Yellow theme", value: "yellowTheme" }];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(getLoggedinUser);
+
+  const handleLogout = () => {
+    dispatch(logoutApi());
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
+
   return (
     <div className="order-header" style={{ marginBottom: 5 }}>
       <Row align={"middle"} style={{ marginBottom: 12 }}>
@@ -13,8 +27,8 @@ const OrderHeader = () => {
           <img src="/images/logo.png" width={100} alt="logo" />
         </Col>
         <Col span={12} align={"right"}>
-          <OrderHeaderInfo title="User" value="Fereja Mohammed" />
-          <OrderHeaderInfo title="Agency" value="Se001 -Agency sa" />
+          <OrderHeaderInfo title="User" value={user.full_name} />
+          <OrderHeaderInfo title="Agency" value={user.agency_name} />
         </Col>
       </Row>
       <Row style={{ padding: "0 10px" }}>
@@ -30,9 +44,13 @@ const OrderHeader = () => {
               />
             </Col>
             <Col>
-              <OrderHeaderLink label="Search Customer" />
+              <Link to={"/"}>
+                <OrderHeaderLink label="Search Customer" />
+              </Link>
               <OrderHeaderLink label="Main Page" />
-              <OrderHeaderLink label="Logout" />
+              <btn onClick={handleLogout}>
+                <OrderHeaderLink label="Logout" />
+              </btn>
             </Col>
           </Row>
         </Col>

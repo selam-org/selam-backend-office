@@ -24,6 +24,10 @@
   margin-left: 2px;
 }
 
+.document-modal .ant-table {
+  width: 120% !important;
+}
+
 .document-modal .ant-table td,
 .document-modal .ant-table th {
   border: 0.5px solid #ccc !important;
@@ -33,9 +37,13 @@
 .document-modal .ant-table th {
   border-radius: 0px !important;
   background-color: #ddd !important;
-  min-width: 100px !important;
   white-space: nowrap;
   padding: 0px 8px !important;
+  font-weight: 500 !important;
+}
+
+.document-modal .ant-table td {
+  padding-right: 15px !important;
 }
 
 .document-table {
