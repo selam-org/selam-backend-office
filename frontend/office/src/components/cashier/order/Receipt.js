@@ -3,7 +3,7 @@ import html2pdf from "html2pdf.js";
 import { Col, Row } from "antd";
 import "../styles/Receipt.css";
 
-const Receipt = ({ receiptContent }) => {
+const Receipt = ({ order }) => {
   const openPDFInNewTab = () => {
     const element = document.getElementById("receipt-content");
     const pdfWidth = 76;
@@ -44,9 +44,9 @@ const Receipt = ({ receiptContent }) => {
     <div>
       <div style={{ display: "nones" }}>
         <div id="receipt-content" className="receipt-content">
-          <ReceiptContent receiptTo="Agent" />
+          <ReceiptContent receiptTo="Agent" order={order} />
           <HorizontalLine className={"page-break"} />
-          <ReceiptContent receiptTo="Customer" />
+          <ReceiptContent receiptTo="Customer" order={order} />
         </div>
       </div>
       <button style={{ margin: 130 }} onClick={openPDFInNewTab}>
@@ -56,7 +56,9 @@ const Receipt = ({ receiptContent }) => {
   );
 };
 
-const ReceiptContent = ({ receiptTo }) => {
+const ReceiptContent = ({ receiptTo, order }) => {
+  const { sender_obj, receiver_obj, payment_info_obj, agency_obj } = order;
+
   return (
     <>
       <p className="receipt-title">
@@ -98,7 +100,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Date/ :</p>
           </Col>
           <Col span={12} className="pair-col">
-            <p>12/16/2023 10:05:36 AM</p>
+            <p>{order.date}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"middle"}>
@@ -106,7 +108,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Invoice #/ :</p>
           </Col>
           <Col span={12} className="pair-col">
-            <p>SE001-119661</p>
+            <p>{order.invoice_number}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"middle"}>
@@ -114,7 +116,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Txn Ref No/ : </p>
           </Col>
           <Col span={12} className="pair-col">
-            <p>349573570257</p>
+            <p>{order.confirmation_no}</p>
           </Col>
         </Row>
       </div>
@@ -130,7 +132,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Account #/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>230266</p>
+            <p>{sender_obj.id}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -138,7 +140,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Name/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>BONIFACE FONKWO</p>
+            <p>{`${sender_obj.sender_first_name} ${sender_obj.sender_last_name}`}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -146,7 +148,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Telephone/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>2404233510</p>
+            <p>{sender_obj.sender_phone}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -154,7 +156,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Address/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>5515 JAMES RD FORT BELVOIR Virginia United States</p>
+            <p>{sender_obj.sender_address}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -162,7 +164,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Zip Code/ :</p>
           </Col>
           <Col span={11} className="pair-col-bold">
-            <p>22060</p>
+            <p>{sender_obj.sender_zip}</p>
           </Col>
         </Row>
       </div>
@@ -178,7 +180,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Account #/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>245730</p>
+            <p>{receiver_obj.id}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -186,7 +188,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Name/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>MESERET KELEMU</p>
+            <p>{`${receiver_obj.receiver_first_name} ${receiver_obj.receiver_last_name}`}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -194,7 +196,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Telephone/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>0923356890</p>
+            <p>{receiver_obj.receiver_phone}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -202,7 +204,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Address/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>ADDIS ABABA GPO Ethiopia Ethiopia</p>
+            <p>{receiver_obj.receiver_address}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -210,7 +212,9 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Bank/Branch/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>Abay Bank/</p>
+            <p>
+              {payment_info_obj.bank_name} {payment_info_obj.branch}
+            </p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -218,7 +222,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Account/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>1759116081653026--</p>
+            <p>{payment_info_obj.bank_account}</p>
           </Col>
         </Row>
         <Row className="key-pair-row" align={"top"}>
@@ -226,7 +230,7 @@ const ReceiptContent = ({ receiptTo }) => {
             <p>Type/ :</p>
           </Col>
           <Col span={14} className="pair-col-bold">
-            <p>SAVINGS ACCOUNT</p>
+            <p>{payment_info_obj.account_type}</p>
           </Col>
         </Row>
       </div>
@@ -239,15 +243,15 @@ const ReceiptContent = ({ receiptTo }) => {
       <div className="receipt-table">
         <div className="row">
           <p className="td td-1 pair-col-bold">Amount/ :</p>
-          <p className="td td-2 pair-col">USD 247.62</p>
+          <p className="td td-2 pair-col">USD {order.net_amount_receiver}</p>
         </div>
         <div className="row">
           <p className="td td-1 pair-col">Rate/ :</p>
-          <p className="td td-2 pair-col">ETB 115.0000</p>
+          <p className="td td-2 pair-col">ETB {order.rate_change_receiver}</p>
         </div>
         <div className="row">
           <p className="td td-1 pair-col">Fee :</p>
-          <p className="td td-2 pair-col">USD 12.38</p>
+          <p className="td td-2 pair-col">USD {order.fee}</p>
         </div>
         <div className="row">
           <p className="td td-1 pair-col">Handling/ :</p>
@@ -255,7 +259,7 @@ const ReceiptContent = ({ receiptTo }) => {
         </div>
         <div className="row">
           <p className="td td-1 pair-col-bold">Total Charges/ :</p>
-          <p className="td td-2 pair-col">USD 12.38</p>
+          <p className="td td-2 pair-col">USD {order.fee}</p>
         </div>
         <div className="row ">
           <p className="td td-1 pair-col-bold reward-row">Reward Amount/ :</p>
@@ -267,7 +271,9 @@ const ReceiptContent = ({ receiptTo }) => {
         </div>
         <div className="row">
           <p className="td td-1 pair-col-bold">Total/ :</p>
-          <p className="td td-2 pair-col">USD 260</p>
+          <p className="td td-2 pair-col">
+            USD {parseFloat(order.net_amount_receiver) + parseFloat(order.fee)}
+          </p>
         </div>
       </div>
       <Row className="key-pair-title">
@@ -281,7 +287,7 @@ const ReceiptContent = ({ receiptTo }) => {
           <p> No./ :</p>
         </Col>
         <Col span={14}>
-          <span className="confirmation-no-value">349573570257</span>
+          <span className="confirmation-no-value">{order.confirmation_no}</span>
         </Col>
       </Row>
       <Row className="key-pair-row" align={"top"}>
@@ -289,7 +295,7 @@ const ReceiptContent = ({ receiptTo }) => {
           <p>Delivery Type :</p>
         </Col>
         <Col span={14} className="pair-col-bold">
-          <p>BANK DEPOSIT</p>
+          <p>{payment_info_obj.mode_pay_receiver}</p>
         </Col>
       </Row>
       <Row className="key-pair-row" align={"top"}>
@@ -297,7 +303,7 @@ const ReceiptContent = ({ receiptTo }) => {
           <p>Will Pay/ :</p>
         </Col>
         <Col span={8} className="pair-col-bold">
-          <p>ETB 28476.19</p>
+          <p>ETB {order.total_pay_receiver}</p>
         </Col>
       </Row>
       <Row className="key-pair-row" align={"top"}>
