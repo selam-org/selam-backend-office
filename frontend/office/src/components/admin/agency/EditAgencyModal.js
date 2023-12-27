@@ -36,8 +36,6 @@ const EditAgencyModal = ({ id }) => {
     dispatch(setIsUpdateAgencyModal({ id, open: false }));
   };
 
-  // console.log("agency", id);
-
   useEffect(() => {
     form.setFieldsValue(agency);
   }, [agency, form, id]);
