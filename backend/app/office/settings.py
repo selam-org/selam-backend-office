@@ -99,16 +99,17 @@ CORS_ALLOW_METHODS = [
 
 
 DATABASES = {
-    'default': dj_database_url.config(default="postgres://selam_office_user:1Uvzw8BFGs5cVZ92dgq09cj7vjrHswdI@dpg-cm65eemd3nmc73ap4q20-a.oregon-postgres.render.com/selam_office")
-    # {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': os.environ.get('POSTGRES_NAME'),
-    #     'USER': os.environ.get('POSTGRES_USER'),
-    #     'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-    #     'HOST': 'drona.db.elephantsql.com',
-    #     'PORT': 5432,
-    # }
+    # 'default': dj_database_url.config(default="postgres://selam_office_user:1Uvzw8BFGs5cVZ92dgq09cj7vjrHswdI@dpg-cm65eemd3nmc73ap4q20-a.oregon-postgres.render.com/selam_office")
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': 5432,
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

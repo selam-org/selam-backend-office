@@ -35,6 +35,7 @@ const Order = () => {
   useEffect(() => {
     if (agency) {
       dispatch(setTranRate(agency.default_rate));
+      console.log("agency 1", agency);
     }
     dispatch(getReceiverApiCall({ sender: senderId }));
     dispatch(getCommissionsTranApiCall());

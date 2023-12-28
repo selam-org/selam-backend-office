@@ -5,6 +5,9 @@ import "../../styles/CashManagement.css";
 import AppPrimaryButton from "../../AppPrimaryButton";
 import CloseOrderModalBtn from "../CloseOrderModalBtn";
 import { useDispatch, useSelector } from "react-redux";
+import html2pdf from "html2pdf.js";
+import React, { useEffect } from "react";
+import Receipt from "../Receipt";
 import {
   addOrderApiCall,
   getOrderError,
@@ -23,6 +26,7 @@ import {
   setTransInfo,
   setIsOrderSuccess,
   setTransaction,
+  setOrderNull,
   setTranRate,
   getOrder,
 } from "../../../../store/transactions";
@@ -48,12 +52,64 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
     customer_pay: 0,
     agent_returns: 0,
   });
+  const [localLoading, setLocalLoading] = React.useState(false);
+  const openPDFInNewTab = () => {
+    const element = document.getElementById("receipt-content");
+    const pdfWidth = 76;
+    const pdfHeight = 785;
+
+    const opt = {
+      margin: 0,
+      filename: "receipt.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 7 },
+      jsPDF: {
+        unit: "mm",
+        orientation: "portrait",
+        format: [pdfWidth, pdfHeight],
+      },
+    };
+
+    const pages = [element];
+    let doc = html2pdf().set(opt).from(pages[0]).toPdf();
+    for (let j = 1; j < pages.length; j++) {
+      doc = doc
+        .get("pdf")
+        .then((pdf) => {
+          pdf.addPage();
+        })
+        .from(pages[j])
+        .toContainer()
+        .toCanvas()
+        .toPdf();
+    }
+
+    doc.get("pdf").then(function (pdf) {
+      window.open(pdf.output("bloburl"), "_blank");
+    });
+  };
+  useEffect(() => {
+    if (getIsOrderSuccess && order) {
+      openPDFInNewTab();
+      dispatch(setOrderNull(null));
+      console.log("order success", order);
+      dispatch(setIsOrderSuccess(false));
+      dispatch(setTranRate(agency.default_rate));
+      dispatch(setTransInfo(null));
+      dispatch(setPayment(null));
+      dispatch(setTransaction(null));
+      onCancel();
+      navigate("/");
+      setLocalLoading(false);
+    }
+  }, [errors, isOrderSuccess, order]);
   const handleOk = () => {
     console.log("handleOK");
     form
       .validateFields()
       .then((values) => {
         console.log(values);
+        setLocalLoading(true);
         dispatch(
           addOrderApiCall({
             invoice_number: "string",
@@ -75,24 +131,32 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
             payment_info: payment.id,
           })
         );
-        if (isOrderSuccess && order) {
-          console.log("order success", order);
-          dispatch(setIsOrderSuccess(false));
-          onCancel();
-          navigate("/");
-          setTranRate(agency.default_rate);
-          setTransInfo(null);
-          setPayment(null);
 
-          setTransaction({});
-        }
+        // setTimeout(() => {
+        //   // console.log(order, isOrderSuccess, "order isOrder");
+        //   if (isOrderSuccess && order) {
+        //     dispatch(setOrderNull(null));
+        //     console.log("order success", order);
+        //     dispatch(setIsOrderSuccess(false));
+        //     dispatch(setTranRate(agency.default_rate));
+        //     dispatch(setTransInfo(null));
+        //     dispatch(setPayment(null));
+        //     dispatch(setTransaction(null));
+        //     openPDFInNewTab();
+        //     onCancel();
+        //     navigate("/");
+        //     setLocalLoading(false);
+        //   }
+        // }, 2000);
       })
       .catch((error) => {
         console.log(error);
+        setLocalLoading(false);
       });
   };
   return (
     <div>
+      <Receipt />
       <Modal
         footer={(_, { OkBtn, CancelBtn }) => <></>}
         {...otherProps}

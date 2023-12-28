@@ -32,6 +32,7 @@ import {
   getTranRate,
   getReceiver,
   getPaymentInfo,
+  setTranRate,
 } from "../../../../store/transactions";
 const PaymentInformationForm = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,9 @@ const PaymentInformationForm = () => {
     handleCalculate();
   }, [rate]);
   useEffect(() => {
+    if (agency) {
+      dispatch(setTranRate(agency.default_rate));
+    }
     form.setFieldsValue({
       calculation_option: 0,
       moneyTypes: "CHECK",
@@ -117,7 +121,8 @@ const PaymentInformationForm = () => {
           com,
           amount,
           com / 100,
-          amount * (com / 100)
+          amount * (com / 100),
+          rate
         );
         return {
           fee: 0.0,

@@ -46,6 +46,9 @@ const slice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
+    setOrderNull: (transaction, action) => {
+      transaction.order = null;
+    },
     setTransaction: (transaction, action) => {
       transaction.transactions = [];
     },
@@ -58,6 +61,7 @@ const slice = createSlice({
     postOrderError: (transaction, action) => {
       transaction.orderError = action.payload;
       transaction.orderLoading = false;
+      transaction.isOrderSuccess = false;
     },
     postOrderSuccess: (transaction, action) => {
       transaction.orderError = {};
@@ -292,6 +296,7 @@ export const {
   setTranRate,
   postOrderError,
   postOrderLoading,
+  setOrderNull,
   postOrderSuccess,
   setTransaction,
 } = slice.actions;

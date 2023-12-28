@@ -17,15 +17,15 @@ const authPersistConfig = {
 };
 
 const transactionPersistConfig = {
-  key: "transaction 1.2",
+  key: "transaction 1.5",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  whitelist: ["transactions"],
+  whitelist: ["transactions", "agency", "commissions", "receivers"],
 };
 
 const agencyPersistConfig = {
-  key: "agency 2.1",
+  key: "agency 2.3",
   version: 1.3,
   storage: storage,
   stateReconciler: autoMergeLevel2,
@@ -33,7 +33,7 @@ const agencyPersistConfig = {
 };
 
 const commissionPersistConfig = {
-  key: "commission 1.1",
+  key: "commission 1.2",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
@@ -41,7 +41,7 @@ const commissionPersistConfig = {
 };
 
 const cashierPersistConfig = {
-  key: "cashier 1.9",
+  key: "cashier 2.0",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,

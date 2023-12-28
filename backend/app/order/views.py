@@ -40,7 +40,8 @@ class OrderViewSet(viewsets.ModelViewSet):
         # Calculate and update commission
         commission_amount = self.calculate_commission(order_obj)
         # Assuming you have a field for commission in Order model
-        order_obj.fee = commission_amount
+        order_obj.fee = order_obj.net_amount_receiver * \
+            (commission_amount / 100)
         order_obj.save()
 
         headers = self.get_success_headers(serializer.data)
@@ -90,7 +91,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
             sender_obj, created = Sender.objects.get_or_create(
                 sender_phone=sender["sender_phone"], defaults=sender)
-            print(sender_obj, 'sender', created)
+            # print(sender_obj, 'sender', created)
             receiver['sender'] = sender_obj
             receiver_obj, receiver_created = Receiver.objects.get_or_create(
                 receiver_first_name=receiver["receiver_first_name"], receiver_last_name=receiver["receiver_last_name"], defaults=receiver)
@@ -100,8 +101,10 @@ class OrderViewSet(viewsets.ModelViewSet):
             order["sender"] = sender_obj
             order["receiver"] = receiver_obj
             order["payment_info"] = payment_info_obj
-            order_obj, order_created = Order.objects.get_or_create(
-                defaults=order)
-            print(receiver_obj, sender, payment_info, order_obj)
+            # order_obj, order_created = Order.objects.create(
+            #     defaults=order)
+            # print(receiver_obj, sender, payment_info, order_obj)
+            order_obj = Order.objects.create(**order)
+
 
         return Response({'message': 'Order created successfully'}, status=status.HTTP_201_CREATED)
