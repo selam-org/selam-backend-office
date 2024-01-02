@@ -44,7 +44,7 @@ class Order(models.Model):
                 self.invoice_no = last_invoice_no + 1
             else:
                 self.invoice_no = 125234  # Initial value
-
+            # self.invoice_no = 125234
         if not self.confirmation_no:
             # Find the latest confirmation number and increment it
             last_order = Order.objects.order_by('-confirmation_no').first()
@@ -53,5 +53,6 @@ class Order(models.Model):
                 self.confirmation_no = last_confirmation_no + 1
             else:
                 self.confirmation_no = 121342537692  # Initial value
+            # self.confirmation_no = 121342537692
 
         super().save(*args, **kwargs)
