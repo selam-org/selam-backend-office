@@ -1,0 +1,93 @@
+.orders-table {
+  width: 60%;
+}
+
+.orders-table .ant-table-cell {
+  border-radius: 0px !important;
+  padding: 0px;
+  padding-bottom: 5px !important;
+}
+
+.orders-table th::before {
+  display: none !important;
+}
+
+.orders-table th {
+  background-color: #d3d3d3 !important;
+  border-radius: 0px !important;
+  padding: 0px !important;
+  font-size: 12px;
+  color: #3170af !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  border: none !important;
+}
+
+.orders-table td {
+  padding: 0px !important;
+  font-size: 12px;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid #aaa !important; /* Add a bottom border to each cell */
+  padding-left: 5px !important;
+}
+
+/* For vertical lines between columns */
+.ant-table-thead th,
+.ant-table-tbody td {
+  border-right: 1px solid #aaa;
+}
+
+/* Ensure the last row does not have a bottom border */
+.ant-table-tbody tr:last-child td {
+  border-bottom: none;
+  padding-bottom: 16px !important;
+}
+
+.ant-table-tbody tr:not(:last-child) td:nth-child(1),
+.ant-table-thead td:nth-child(1) {
+  padding: 3px 9px !important;
+  color: #3170af !important;
+  background-color: #d3d3d3 !important;
+  border: none !important;
+}
+
+.ant-table-tbody td:nth-child(3):not(.ant-table-cell-fixed-header) {
+  color: blue;
+}
+
+.ant-table-tbody td:nth-child(7):not(.ant-table-cell-fixed-header) {
+  text-align: end;
+  padding-right: 3px !important;
+}
+
+/* Styles for 8th column (excluding the last row) */
+.ant-table-tbody
+  tr:not(:last-child)
+  td:nth-child(8):not(.ant-table-cell-fixed-header) {
+  background-color: #c4cdff;
+  text-align: end;
+  padding-right: 3px !important;
+}
+
+/* Styles for 9th column (excluding the last row) */
+.ant-table-tbody
+  tr:not(:last-child)
+  td:nth-child(9):not(.ant-table-cell-fixed-header) {
+  background-color: #abffd9;
+}
+
+/* Styles for 10th column (excluding the last row) */
+.ant-table-tbody
+  tr:not(:last-child)
+  td:nth-child(10):not(.ant-table-cell-fixed-header) {
+  background-color: #eafe87;
+}
+
+.last-row-total {
+  color: blue;
+  background-color: #dcdcdc;
+  font-weight: 600;
+  font-style: italic;
+}

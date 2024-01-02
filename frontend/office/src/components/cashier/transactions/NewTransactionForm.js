@@ -26,7 +26,7 @@ const NewTransactionForm = () => {
   };
   return (
     <Form form={form} labelCol={{ span: 6 }} className="new-transaction-form">
-      <div className="new-transaction-title">
+      <div className="cashier-page-title">
         New Transaction (Search Customer)
       </div>
       <div className="new-transaction-box">

@@ -4,6 +4,7 @@ import FormDropdown from "../form/FormDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../../../store/transactions";
 import { Link } from "react-router-dom";
+import Footer from "../Footer";
 
 const TransactionResult = () => {
   const sender = useSelector(getTransactions);
@@ -135,9 +136,7 @@ const TransactionResult = () => {
           <FormDropdown options={pageSizeOptions} defaultValue={10} />
         </Col>
       </Row>
-      <div className="footer">
-        © Copyrights 2021 - White Wings Technologies-MTS ENTERPRISE - 5.10
-      </div>
+      <Footer />
     </div>
   );
 };

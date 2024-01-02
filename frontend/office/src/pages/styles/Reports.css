@@ -1,0 +1,183 @@
+.report-content {
+  margin-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.cashier-page-title {
+  padding: 5px 8px;
+  color: #3f77ac;
+  font-weight: 600;
+}
+
+.report-box {
+  width: 88%;
+  border: 1px solid #ccc;
+}
+
+.report-box-title {
+  background: linear-gradient(0deg, #ddd 20.2%, white 60.2%);
+  padding: 5px 8px;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+
+.report-params {
+  padding: 0px 8px;
+  margin: 0px;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-right: none;
+}
+
+.date-title {
+  margin-right: 35px;
+}
+
+.report-date-picker {
+  margin: 0px 5px;
+}
+
+.date-format {
+  font-size: 11px;
+  margin-right: 25px;
+  margin-left: 2px;
+}
+
+.report-params .form-select {
+  border: none;
+}
+
+.report-params .ant-select-selector {
+  border-radius: 3px;
+  border: 0.8px solid #666;
+  width: 150px !important;
+}
+
+.report-params .ant-radio {
+  margin-right: -5px !important;
+}
+
+.report-params .ant-radio-inner {
+  width: 12px !important;
+  height: 12px !important;
+  margin-bottom: 4px !important;
+}
+
+.report-params .ant-radio-wrapper {
+  margin-right: 0px !important;
+}
+
+.report-btns {
+  padding: 5px 8px;
+  border-bottom: 0.8px solid #ccc;
+}
+
+.report-btn {
+  background-color: red;
+  margin-right: 5px;
+  color: white;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.report-btn-green {
+  background-color: #12960f;
+}
+
+.report-btn-blue {
+  background: linear-gradient(180deg, #427db1 60.2%, #9fcbe8 100.2%);
+}
+
+.report-btn-red {
+  background-color: #d00000;
+}
+
+.agency-table {
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 10px;
+  border: inherit;
+  background-color: indigo !important;
+  border: 1px solid red;
+}
+
+.agency-table th {
+  font-weight: 400;
+  min-width: 120px;
+  padding-top: 1px !important;
+  padding-bottom: 6px !important;
+}
+
+.agency-table td,
+.agency-table th {
+  border: 1px solid #aaa;
+}
+
+.agency-table td {
+  border-bottom: 2px solid #aaa;
+}
+
+.agency-table td {
+  background-color: white;
+  text-align: start;
+  padding-left: 3px;
+  padding: 3px 3px;
+}
+
+.agency-table th,
+.index-column-td {
+  background-color: #d3d3d3 !important;
+  text-align: center !important;
+  color: #3170af;
+  font-weight: 600;
+}
+
+.index-column-th {
+  min-width: 25px !important;
+}
+
+.ending-balance {
+  background-color: #3170af;
+  color: white;
+  font-weight: 650;
+  padding: 6px 8px;
+}
+
+.ending-balance-title {
+  margin-bottom: 2px;
+}
+
+.page-btns {
+  padding: 8px 7px;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-left: none;
+}
+
+.page-btn {
+  padding: 4px 8px;
+  background-color: #3170af;
+  margin-right: 5px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.page-info {
+  background-color: #fbff00;
+}
+
+.page-info .form-select .ant-select-arrow,
+.page-info .form-select .ant-select-selector {
+  color: black !important;
+}
+
+.page-dropdown {
+  margin: 0px 3px;
+}

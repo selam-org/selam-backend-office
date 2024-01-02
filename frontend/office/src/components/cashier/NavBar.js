@@ -1,11 +1,14 @@
 import { Row, Col } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import LoggedInCashierInfo from "./LoggedInCashierInfo";
-import { logoutApi } from "../../../store/auth";
+import LoggedInCashierInfo from "./transactions/LoggedInCashierInfo";
+import { logoutApi } from "../../store/auth";
 import { useDispatch } from "react-redux";
 import "../../../pages/styles/Transactions.css";
 import Reports from "./../Reports";
-const TransactionsHeader = () => {
+import { Link } from "react-router-dom";
+import "../../pages/styles/Transactions.css";
+
+const NavBar = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -13,10 +16,12 @@ const TransactionsHeader = () => {
   };
 
   return (
-    <Row className="transactions-header">
-      <Col span={18} className="transactions-nav-container">
+    <div className="nav-container">
+      <div className="transactions-nav-container">
         <Row className="transactions-nav">
-          <span className="transaction-nav-item">Transactions</span> |
+          <Link to="/">
+            <span className="transaction-nav-item">Transactions</span> |
+          </Link>
           <span className="transaction-nav-item">Services</span> |
           <span className="transaction-nav-item">Reports</span>|
           <span className="transaction-nav-item">
@@ -25,6 +30,7 @@ const TransactionsHeader = () => {
           |<span className="transaction-nav-item">Transactions</span> |
           <span className="transaction-nav-item">Tools</span> |
           <span className="transaction-nav-item">Payments</span>|
+          <span className="transaction-nav-item">Dashboard</span> |
           <button
             className="transaction-nav-item transaction-logout-btn"
             onClick={handleLogout}
@@ -43,12 +49,12 @@ const TransactionsHeader = () => {
             <LanguageDropDown />
           </Col>
         </Row>
-      </Col>
-      <Col span={2} align="center" className="logo">
-        <img src="/images/logo.png" width={80} alt="logo" />
-      </Col>
+      </div>
+      <div span={2} align="center" className="logo">
+        <img src="/images/logo.png" alt="logo" className="logo-img" />
+      </div>
       <LoggedInCashierInfo />
-    </Row>
+    </div>
   );
 };
 
@@ -63,4 +69,4 @@ const LanguageDropDown = () => {
   );
 };
 
-export default TransactionsHeader;
+export default NavBar;

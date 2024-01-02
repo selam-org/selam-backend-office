@@ -6,7 +6,7 @@ const LoggedInCashierInfo = () => {
   const user = useSelector(getLoggedinUser);
 
   return (
-    <Col span={4} className="user-info">
+    <div className="user-info">
       <Row>
         <Col className="user-info-key" span={7}>
           User
@@ -23,7 +23,7 @@ const LoggedInCashierInfo = () => {
           {user.agency_name}
         </Col>
       </Row>
-    </Col>
+    </div>
   );
 };
 

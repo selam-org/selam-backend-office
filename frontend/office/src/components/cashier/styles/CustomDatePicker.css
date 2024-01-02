@@ -1,0 +1,50 @@
+.date-picker-container {
+  border: 1px solid #bbb;
+  display: flex;
+}
+
+.ant-picker {
+  min-width: 120px;
+}
+
+.date-picker-icon-container {
+  height: 22px;
+  background-color: #b6d0f2;
+  width: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  margin-left: -21px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.date-picker-icon {
+  stroke-width: 45;
+  stroke: black;
+  color: black;
+}
+
+.date-picker {
+  padding: 0px 3px;
+  border-radius: 0px;
+  border: none;
+}
+
+.date-picker input {
+  font-size: 12px !important;
+  font-weight: 600;
+}
+
+.date-picker .ant-picker-suffix,
+.date-picker .ant-picker-clear {
+  display: none;
+}
+
+.ant-picker-focused {
+  box-shadow: none; /* Remove any box-shadow or other focus styles */
+  border-color: transparent; /* Make the border transparent on focus */
+  outline: none; /* Remove the outline */
+}

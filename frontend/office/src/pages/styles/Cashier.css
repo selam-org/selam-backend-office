@@ -1,3 +1,8 @@
-.ant-form-item {
-  margin: 0px;
+.footer {
+  background-color: black;
+  color: white;
+  margin-top: 7px;
+  padding: 3px 15px;
+  font-weight: 300;
+  font-size: 15px;
 }

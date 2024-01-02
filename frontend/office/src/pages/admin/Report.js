@@ -15,7 +15,6 @@ import * as XLSX from "xlsx";
 const { RangePicker } = DatePicker;
 
 const Report = () => {
-  
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const dispatch = useDispatch();
@@ -151,7 +150,10 @@ const Report = () => {
     <>
       <div className="page-title">Report</div>
       <Row className="report-form" align={"middle"}>
-        <RangePicker onChange={handleDateChange} className="date-picker" />
+        <RangePicker
+          onChange={handleDateChange}
+          className="admin-date-picker"
+        />
         <AdminButton
           loading={loading}
           disabled={loading || isGenerateButtonDisabled}
