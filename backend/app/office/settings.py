@@ -94,7 +94,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'http://192.168.0.189:3000',
 # ]
 CORS_ALLOW_METHODS = [
-    'GET', 'POST', 'DELETE', 'PUT', 'PATCH'
+    'GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTION'
 ]
 
 

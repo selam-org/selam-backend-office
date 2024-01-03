@@ -52,6 +52,7 @@ class AdminSerializer(serializers.ModelSerializer):
             "last_name",
             "user_type",
             "full_name",
+            "username",
         )
         extra_kwargs = {
             "password": {"write_only": True},

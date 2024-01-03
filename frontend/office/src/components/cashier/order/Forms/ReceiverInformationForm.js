@@ -192,7 +192,7 @@ const ReceiverInformationForm = () => {
         </Col>
         <Col span={16}>
           <OrderLabeledInput
-            name="receiver_address"
+            name="receiver_addres"
             disabled={edit}
             label="Address"
             isRequired={true}
