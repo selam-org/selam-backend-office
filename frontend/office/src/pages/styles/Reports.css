@@ -137,6 +137,10 @@
   font-weight: 600;
 }
 
+.report-order-table {
+  width: 60%;
+}
+
 .index-column-th {
   min-width: 25px !important;
 }

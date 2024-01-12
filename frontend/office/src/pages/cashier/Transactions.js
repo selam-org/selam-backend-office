@@ -2,7 +2,7 @@ import NewTransactionForm from "../../components/cashier/transactions/NewTransac
 import TransactionResult from "../../components/cashier/transactions/TransactionResults";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import NavBar from "../../components/cashier/NavBar";
+import NavBar from "../../components/cashier/navbar/NavBar";
 import {
   getCommissionsTranApiCall,
   getAgencyApiCall,

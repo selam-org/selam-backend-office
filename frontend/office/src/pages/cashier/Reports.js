@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import NavBar from "../../components/cashier/NavBar";
+import NavBar from "../../components/cashier/navbar/NavBar";
 import FormRadioButton from "../../components/cashier/form/FormRadioButton";
 import FormDropDown from "../../components/cashier/form/FormDropdown";
 import AgencyTable from "../../components/cashier/reports/AgencyTable";
@@ -58,9 +58,9 @@ const Reports = () => {
             <FormDropDown options={currencyTypes} defaultValue={"Dollar"} />
           </Row>
           <Row className="report-btns">
-            <btn className="report-btn report-btn-green">VIEW STATEMENT</btn>
-            <btn className="report-btn report-btn-blue">SEARCH</btn>
-            <btn className="report-btn report-btn-red">CLOSE</btn>
+            <div className="report-btn report-btn-green">VIEW STATEMENT</div>
+            <div className="report-btn report-btn-blue">SEARCH</div>
+            <div className="report-btn report-btn-red">CLOSE</div>
           </Row>
           <AgencyTable />
           <Row align={"middle"} className="ending-balance">
@@ -70,11 +70,13 @@ const Reports = () => {
               <div>119,140,251.38</div>
             </Col>
           </Row>
-          <OrdersTable />
+          <div className="report-order-table">
+            <OrdersTable />
+          </div>
           <Row align={"middle"} className="ending-balance  ">
             <Col span={4}>1/1/2024</Col>
             <Col span={20}>
-              <div className="ending-balance-title">Ending Balance: USD</div>
+              <div className="ending-balance-title">Beginning Balance: USD</div>
               <div>119,140,251.38</div>
             </Col>
           </Row>

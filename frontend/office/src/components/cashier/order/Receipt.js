@@ -1,5 +1,4 @@
 import React from "react";
-import html2pdf from "html2pdf.js";
 import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
 import { getOrder } from "../../../store/transactions";
@@ -7,41 +6,6 @@ import "../styles/Receipt.css";
 
 const Receipt = () => {
   const order = useSelector(getOrder);
-  // const openPDFInNewTab = () => {
-  //   const element = document.getElementById("receipt-content");
-  //   const pdfWidth = 76;
-  //   const pdfHeight = 1150;
-
-  //   const opt = {
-  //     margin: 0,
-  //     filename: "receipt.pdf",
-  //     image: { type: "jpeg", quality: 1 },
-  //     html2canvas: { scale: 7 },
-  //     jsPDF: {
-  //       unit: "mm",
-  //       orientation: "portrait",
-  //       format: [pdfWidth, pdfHeight],
-  //     },
-  //   };
-
-  //   const pages = [element];
-  //   let doc = html2pdf().set(opt).from(pages[0]).toPdf();
-  //   for (let j = 1; j < pages.length; j++) {
-  //     doc = doc
-  //       .get("pdf")
-  //       .then((pdf) => {
-  //         pdf.addPage();
-  //       })
-  //       .from(pages[j])
-  //       .toContainer()
-  //       .toCanvas()
-  //       .toPdf();
-  //   }
-
-  //   doc.get("pdf").then(function (pdf) {
-  //     window.open(pdf.output("bloburl"), "_blank");
-  //   });
-  // };
 
   return (
     <>

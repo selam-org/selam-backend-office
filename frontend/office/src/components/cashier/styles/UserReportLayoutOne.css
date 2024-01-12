@@ -1,0 +1,149 @@
+.user-report1-content {
+  font-size: 12.5px !important;
+  padding: 0px 180px;
+  padding-top: 95px;
+}
+
+.ur1-title {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.45px;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+.ur1-sub-container {
+  margin-bottom: 11px;
+}
+
+.ur1-sub-key-1 {
+  margin-right: 65px;
+}
+
+.ur1-sub-val-1 {
+  margin-right: 25px;
+}
+
+.ur1-sub-key-2 {
+  margin-right: 30px;
+}
+
+.ur1-user {
+  color: rgb(42, 42, 163);
+  font-weight: 800;
+  font-size: 13.5px;
+  margin-bottom: 5px;
+}
+
+.user-report-content th {
+  background-color: #d3d3d3 !important;
+  border-top: 2px solid black !important;
+  border-bottom: 2px solid black !important;
+  border-radius: 0px !important;
+  padding: 0px !important;
+  padding-right: 10px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  vertical-align: top;
+}
+
+.user-report-content th::before {
+  display: none;
+}
+
+.user-report-content td {
+  font-size: 12px !important;
+  vertical-align: top;
+}
+
+.user-report-content .ant-table-tbody > tr > td {
+  border: none !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.user-report1-content td:nth-child(1) {
+  max-width: 100px !important;
+}
+
+.user-report1-content td:nth-child(2) {
+  max-width: 80px !important;
+}
+
+.user-report1-content td:nth-child(4) {
+  min-width: 180px !important;
+  text-align: start;
+}
+
+.user-report1-content th:nth-child(5) {
+  text-align: center !important;
+}
+
+.user-report1-content td:nth-child(5) {
+  text-align: center !important;
+}
+
+.user-report1-content th:nth-child(6) {
+  text-align: center !important;
+  max-width: 75px !important;
+}
+
+.user-report1-content td:nth-child(6) {
+  max-width: 75px !important;
+  text-align: center !important;
+}
+
+.user-report1-content th:nth-child(7) {
+  text-align: end !important;
+}
+
+.user-report1-content td:nth-child(7) {
+  min-width: 150px !important;
+  text-align: end !important;
+}
+
+.user-report1-content th:nth-child(8) {
+  text-align: end !important;
+}
+
+.user-report1-content td:nth-child(8) {
+  min-width: 110px !important;
+  text-align: end !important;
+}
+
+.user-report1-content th:nth-child(9) {
+  text-align: end !important;
+}
+
+.user-report1-content td:nth-child(9) {
+  min-width: 110px !important;
+  text-align: end !important;
+}
+
+.user-report1-content th:nth-child(10) {
+  text-align: end !important;
+}
+
+.user-report1-content td:nth-child(10) {
+  min-width: 80px !important;
+  text-align: end !important;
+}
+
+.user-report1-content th:nth-child(11) {
+  text-align: center !important;
+}
+
+.user-report1-content td:nth-child(11) {
+  text-align: center !important;
+}
+
+.user-report1-content th:nth-child(12) {
+  text-align: end !important;
+}
+
+.user-report1-content td:nth-child(12) {
+  min-width: 110px !important;
+  text-align: end !important;
+}

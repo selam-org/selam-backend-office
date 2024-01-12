@@ -1,6 +1,6 @@
 import { DatePicker } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import "../cashier/styles/CustomDatePicker.css";
+import "../cashier/styles/DatePicker.css";
 
 const CustomDatePicker = ({ ...props }) => {
   return (

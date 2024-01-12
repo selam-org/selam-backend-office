@@ -1,0 +1,76 @@
+.header {
+  display: flex;
+}
+
+.nav-container {
+  flex: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav {
+  background-color: #1a538c;
+  padding: 5px 8px;
+  color: white;
+}
+
+.nav-item {
+  font-weight: bold;
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  color: white;
+  position: relative;
+}
+
+.nav-item-tool-tip {
+  display: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.nav-item-container:hover .nav-item-tool-tip {
+  display: block;
+}
+
+.nav-bar-tool-container {
+  background-color: white;
+  border: 2px solid black;
+  padding: 8px;
+  width: 270px;
+  /* z-index: 2; */
+}
+
+.nav-bar-tool-header-container {
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2px;
+}
+
+.nav-bar-tool-header {
+  padding: 5px 5px;
+  background-color: yellow;
+  font-weight: 700;
+  font-size: 13px;
+  color: black;
+}
+
+.tool-tip-item {
+  margin-top: 2px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tool-tip-icon {
+  stroke: black;
+  font-size: 8px;
+  stroke-width: 50;
+}
+
+.tool-tip-item-label {
+  color: black;
+  margin-left: 8px;
+  font-size: 12.5px;
+}

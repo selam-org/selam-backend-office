@@ -17,6 +17,14 @@
   font-weight: 700;
 }
 
+.btn-green {
+  background-color: #12960f;
+}
+
+.btn-red {
+  background-color: #d00000;
+}
+
 .bold-title {
   font-weight: 700;
   font-size: 14px;

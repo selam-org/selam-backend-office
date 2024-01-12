@@ -1,6 +1,6 @@
-.orders-table {
+/* .orders-table {
   width: 60%;
-}
+} */
 
 .orders-table .ant-table-cell {
   border-radius: 0px !important;
@@ -34,36 +34,41 @@
 }
 
 /* For vertical lines between columns */
-.ant-table-thead th,
-.ant-table-tbody td {
+.orders-table .ant-table-thead th,
+.orders-table .ant-table-tbody td {
   border-right: 1px solid #aaa;
 }
 
 /* Ensure the last row does not have a bottom border */
-.ant-table-tbody tr:last-child td {
+.orders-table .ant-table-tbody tr:last-child td {
   border-bottom: none;
   padding-bottom: 16px !important;
 }
 
-.ant-table-tbody tr:not(:last-child) td:nth-child(1),
-.ant-table-thead td:nth-child(1) {
+.orders-table .ant-table-tbody tr:not(:last-child) td:nth-child(1),
+.orders-table .ant-table-thead td:nth-child(1) {
   padding: 3px 9px !important;
   color: #3170af !important;
   background-color: #d3d3d3 !important;
   border: none !important;
 }
 
-.ant-table-tbody td:nth-child(3):not(.ant-table-cell-fixed-header) {
+.orders-table
+  .ant-table-tbody
+  td:nth-child(3):not(.ant-table-cell-fixed-header) {
   color: blue;
 }
 
-.ant-table-tbody td:nth-child(7):not(.ant-table-cell-fixed-header) {
+.orders-table
+  .ant-table-tbody
+  td:nth-child(7):not(.ant-table-cell-fixed-header) {
   text-align: end;
   padding-right: 3px !important;
 }
 
 /* Styles for 8th column (excluding the last row) */
-.ant-table-tbody
+.orders-table
+  .ant-table-tbody
   tr:not(:last-child)
   td:nth-child(8):not(.ant-table-cell-fixed-header) {
   background-color: #c4cdff;
@@ -72,14 +77,16 @@
 }
 
 /* Styles for 9th column (excluding the last row) */
-.ant-table-tbody
+.orders-table
+  .ant-table-tbody
   tr:not(:last-child)
   td:nth-child(9):not(.ant-table-cell-fixed-header) {
   background-color: #abffd9;
 }
 
 /* Styles for 10th column (excluding the last row) */
-.ant-table-tbody
+.orders-table
+  .ant-table-tbody
   tr:not(:last-child)
   td:nth-child(10):not(.ant-table-cell-fixed-header) {
   background-color: #eafe87;

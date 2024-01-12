@@ -122,6 +122,7 @@ const NewAgencyModal = () => {
       >
         <Form.Item
           name="name"
+          className="modal-input"
           rules={[
             {
               required: true,
