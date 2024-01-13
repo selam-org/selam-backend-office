@@ -94,7 +94,7 @@ const DocumentationTable = ({ onRadioChange, ...otherProps }) => {
       key: "select",
       render: (_, item, index) => (
         <>
-          <Checkbox disabled={true}>Checkbox</Checkbox>;
+          <Checkbox disabled={true}></Checkbox>
         </>
       ),
     },
