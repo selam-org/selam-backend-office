@@ -140,6 +140,50 @@ const PaymentInformationForm = () => {
       value: 1,
       title: "to Send a total with fee",
       calculate: (amount) => {
+        amount = parseFloat(amount);
+        const coms = [...commissions];
+
+        coms.sort((a, b) => parseFloat(a.end) - parseFloat(b.end));
+        let com;
+        let minVal = 0;
+        console.log(coms, "calculate first");
+        let amountWithoutFee = 0;
+        for (let i = 0; i < coms.length; i++) {
+          const item = coms[i];
+          const [end, commission] = [
+            parseFloat(item.end),
+            parseFloat(item.commission),
+          ];
+           amountWithoutFee =  (100 * amount)/(100 + commission)
+          console.log(amountWithoutFee, "amountWithoutFee", minVal, end, commission, amount);
+          if (minVal <= amountWithoutFee && amountWithoutFee <= end) {
+            com = commission;
+            break;
+          } else if (i === coms.length - 1) {
+            com = commission;
+          }
+          minVal = end;
+        }
+
+        console.log(
+          amount,
+          "calculate  last",
+          com,
+          amount,
+          com / 100,
+          amount * (com / 100),
+          rate
+        );
+        return {
+          fee: 0.0,
+          receive: parseFloat(amountWithoutFee * rate).toFixed(2),
+          rate: parseFloat(rate).toFixed(4),
+          handling: 0.0,
+          deliv: 0.0,
+          commission: parseFloat(amountWithoutFee * (com / 100)).toFixed(2),
+          total: parseFloat(amountWithoutFee + amountWithoutFee * (com / 100)).toFixed(2),
+          sent: parseFloat(amountWithoutFee).toFixed(2),
+        };
         return {
           fee: 0,
           receive: 0,

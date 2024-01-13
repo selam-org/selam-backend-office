@@ -105,7 +105,7 @@ const TransactionInformationForm = () => {
         <Col span={12}>
           <TransactionInfo
             title="Amount Sent"
-            value={transInfo ? `ETB ${transInfo.sent}` : ""}
+            value={transInfo ? `USD ${transInfo.sent}` : ""}
           />
         </Col>
         <Col span={12}>
@@ -146,7 +146,7 @@ const TransactionInformationForm = () => {
         <Col span={12}>
           <TransactionInfo
             title="Handling"
-            value={transInfo ? `ETB ${transInfo.handling}` : ""}
+            value={transInfo ? `USD ${transInfo.handling}` : ""}
           />
         </Col>
         <Col span={12}>
