@@ -18,12 +18,12 @@ class Sender(models.Model):
     sender_birth_date = models.DateField()
     sender_mobile_phone = models.CharField(max_length=100, blank=True, null=True)
     sender_account = models.CharField(max_length=100)
-    sender_ssn = models.CharField(max_length=100)
+    sender_ssn = models.CharField(max_length=100, blank=True, null=True)
     id_type = models.CharField(max_length=100)
     sender_state_identification = models.CharField(max_length=100)
     sender_country_identification = models.CharField(max_length=100)
     sender_identification_number = models.CharField(max_length=100)
-    sender_zip = models.CharField(max_length=100)
+    sender_zip = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.id} - {self.sender_address} - {self.sender_phone} - {self.sender_mobile_phone} '
+        return f'{self.id} - {self.sender_address} - {self.sender_phone} - {self.sender_mobile_phone} - {self.sender_first_name} - {self.sender_last_name} '

@@ -105,6 +105,14 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
   }, [errors, isOrderSuccess, order]);
   const handleOk = () => {
     console.log("handleOK");
+    function getCurrentDate() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+      const day = String(now.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
     form
       .validateFields()
       .then((values) => {
@@ -114,7 +122,7 @@ const CashManagementModal = ({ onCancel, ...otherProps }) => {
           addOrderApiCall({
             invoice_number: "string",
             confirmation_no: "string",
-            date: "2023-12-27",
+            date: getCurrentDate(),
             sender_currency: "Dollar",
             received_currency: "Ethiopian Birr",
             rate_change_receiver: transInfo.rate

@@ -33,7 +33,7 @@ class Order(models.Model):
         PaymentInfo, on_delete=models.SET_NULL, blank=True, null=True, related_name="payment_infos")
 
     def __str__(self):
-        return f'{self.id} - {self.sender} - {self.invoice_no} - {self.confirmation_no} - {self.receiver} - {self.payment_info}'
+        return f'{self.id} - {self.invoice_no} - {self.confirmation_no} - {self.payment_info}'
 
     def save(self, *args, **kwargs):
         if not self.invoice_no:

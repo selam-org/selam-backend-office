@@ -6,7 +6,9 @@ import {
   CaretRightOutlined,
   UserOutlined,
   BarChartOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
+import UploadOrder from "./admin/UploadOrder";
 import { Layout, Menu, Button } from "antd";
 import { Link } from "react-router-dom";
 import Commission from "./admin/Commission";
@@ -83,6 +85,15 @@ const Admin = () => {
               ),
               label: "Report",
             },
+            {
+              key: "4",
+              icon: (
+                <Link to="/upload">
+                  <UploadOutlined />
+                </Link>
+              ),
+              label: "Upload Order",
+            },
           ]}
         />
       </Sider>
@@ -108,6 +119,7 @@ const Admin = () => {
             <Route path="/agencies/:id" element={<Commission />} />
             <Route path="/cashiers" element={<Cashiers />} />
             <Route path="/report" element={<Report />} />
+            <Route path="/upload" element={<UploadOrder />} />
           </Routes>
         </Content>
       </Layout>

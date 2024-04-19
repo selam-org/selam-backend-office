@@ -7,13 +7,20 @@ import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import transactions from "./transactions";
 import commission from "./commission";
 import cashier from "./cashier";
-
+import order from "./order";
 const authPersistConfig = {
   key: "auth 2.5",
   version: 1.0,
   storage: storage,
   stateReconciler: autoMergeLevel2,
   whitelist: ["userCred", "logedIn"],
+};
+const orderPersistConfig = {
+  key: "order 1.0",
+  version: 1.0,
+  storage: storage,
+  stateReconciler: autoMergeLevel2,
+  whitelist: ["order", "filters"],
 };
 
 const transactionPersistConfig = {
@@ -68,4 +75,5 @@ export default combineReducers({
   cashier: persistReducer(cashierPersistConfig, cashier),
   commission: persistReducer(commissionPersistConfig, commission),
   transaction: persistReducer(transactionPersistConfig, transactions),
+  order: persistReducer(orderPersistConfig, order),
 });

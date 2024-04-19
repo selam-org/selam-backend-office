@@ -16,12 +16,18 @@ from receiver.models import Receiver
 from payment_info.models import PaymentInfo
 from commission.models import Commission
 from .models import Order
+from django.db.models import Sum
+from .filters import OrderFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    filter_backends = [DjangoFilterBackend]
     pagination_class = None
+    filterset_class = OrderFilter
+
     # permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
@@ -85,16 +91,17 @@ class OrderViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], url_path='create_list')
     def create_list(self, request):
         data = request.data
+        # print(data, 'data'  )
         for item in data:
             sender, receiver, payment_info, order = transform_data_to_model(
                 item)
 
             sender_obj, created = Sender.objects.get_or_create(
                 sender_phone=sender["sender_phone"], defaults=sender)
-            # print(sender_obj, 'sender', created)
+            print(sender_obj, 'sender', created)
             receiver['sender'] = sender_obj
             receiver_obj, receiver_created = Receiver.objects.get_or_create(
-                receiver_first_name=receiver["receiver_first_name"], receiver_last_name=receiver["receiver_last_name"], defaults=receiver)
+                receiver_first_name="5@@@3##", receiver_last_name=receiver["receiver_last_name"], defaults=receiver)
             payment_info["receiver"] = receiver_obj
             payment_info_obj, payment_info_created = PaymentInfo.objects.get_or_create(
                 bank_name=payment_info["bank_name"], receiver=receiver_obj, defaults=payment_info)
@@ -105,6 +112,24 @@ class OrderViewSet(viewsets.ModelViewSet):
             #     defaults=order)
             # print(receiver_obj, sender, payment_info, order_obj)
             order_obj = Order.objects.create(**order)
-
+            print(order_obj, 'order')
+            print(receiver_obj, 'receiver')
 
         return Response({'message': 'Order created successfully'}, status=status.HTTP_201_CREATED)
+
+    @action(detail=False, methods=['get'], url_path='summary')
+    def summary_with_date(self, request):
+        start_date = request.query_params.get('start_date')
+        end_date = request.query_params.get('end_date')
+
+        if not start_date or not end_date:
+            return Response({'message': 'start_date and end_date are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        orders = Order.objects.filter(date__range=[start_date, end_date])
+
+        order_sum = orders.aggregate(
+            fee_sum=Sum('fee'),
+            net_amount_receiver_sum=Sum('net_amount_receiver')
+        )
+
+        return Response(order_sum, status=status.HTTP_200_OK)

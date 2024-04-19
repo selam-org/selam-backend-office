@@ -4,7 +4,7 @@ import LoggedInCashierInfo from "./LoggedInCashierInfo";
 import { logoutApi } from "../../../store/auth";
 import { useDispatch } from "react-redux";
 import "../../../pages/styles/Transactions.css";
-
+import Reports from "./../Reports";
 const TransactionsHeader = () => {
   const dispatch = useDispatch();
 
@@ -19,7 +19,10 @@ const TransactionsHeader = () => {
           <span className="transaction-nav-item">Transactions</span> |
           <span className="transaction-nav-item">Services</span> |
           <span className="transaction-nav-item">Reports</span>|
-          <span className="transaction-nav-item">Transactions</span> |
+          <span className="transaction-nav-item">
+            <Reports />
+          </span>
+          |<span className="transaction-nav-item">Transactions</span> |
           <span className="transaction-nav-item">Tools</span> |
           <span className="transaction-nav-item">Payments</span>|
           <button

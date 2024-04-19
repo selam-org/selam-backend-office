@@ -102,13 +102,33 @@ DATABASES = {
     # 'default': dj_database_url.config(default="postgres://selam_office_user:1Uvzw8BFGs5cVZ92dgq09cj7vjrHswdI@dpg-cm65eemd3nmc73ap4q20-a.oregon-postgres.render.com/selam_office")
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('POSTGRES_HOST'),
+        'NAME': 'selam_db',
+        'USER': 'postgres',
+        'PASSWORD': 'Abdi1234',
+        'HOST': "database-1.cpq84g88gmo8.us-east-2.rds.amazonaws.com",
         'PORT': 5432,
     }
 }
+
+# DATABASES = {
+#     # 'default': dj_database_url.config(default="postgres://selam_office_user:1Uvzw8BFGs5cVZ92dgq09cj7vjrHswdI@dpg-cm65eemd3nmc73ap4q20-a.oregon-postgres.render.com/selam_office")
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('POSTGRES_NAME'),
+#         'USER': os.environ.get('POSTGRES_USER'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'HOST': os.environ.get('POSTGRES_HOST'),
+#         'PORT': 5432,
+#     }
+# }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation

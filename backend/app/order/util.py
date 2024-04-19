@@ -15,11 +15,12 @@ def transform_data_to_model(data):
         "sender_birth_date": datetime.strptime(data["Birthday Sender"], date_format),
         "sender_mobile_phone": "",
         "sender_account": data["Id Sender"],
-        "sender_ssn": data["Sender SSN"],
+        "sender_ssn": data["Sender SSN"] if "Sender SSN" in data else "32",
+        # "sender_ssn":  "32",
         "id_type": data["Number Id Sender"],
         "sender_state_identification": data["Sender Country Identification"],
         "sender_country_identification": data["Sender Country Identification"],
-        "sender_zip": data["Sender Zip"],
+        "sender_zip": data["Sender Zip"] if "Sender Zip" in data else "32",
     }
     receiver = {
         "receiver_last_name": data["Receiver"].split(' ')[-1],
