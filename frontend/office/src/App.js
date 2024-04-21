@@ -12,15 +12,15 @@ function App() {
 
   return (
     <>
-      <UserReportLayoutOne />
-      {/* {!isLogedin ? (
+      {/* <UserReportLayoutOne /> */}
+      {!isLogedin ? (
         <Login />
       ) : loggedinUser.user_type === "admin" ? (
-        <Cashier />
+        <Admin />
+        // <Cashier />
       ) : (
-        // <Admin />
         <Cashier />
-      )} */}
+      )}
     </>
   );
 }

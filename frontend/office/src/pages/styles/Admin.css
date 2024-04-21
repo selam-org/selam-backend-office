@@ -23,3 +23,7 @@
 .modal-input {
   margin: 10px 0px;
 }
+
+.ant-popover-arrow {
+  display: none !important;
+}

@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class SenderViewSet(viewsets.ModelViewSet):
-    queryset = Sender.objects.all()
+    queryset = Sender.objects.all().prefetch_related('client')
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_class = OrderFilter
     search_fields = []

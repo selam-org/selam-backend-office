@@ -1,13 +1,15 @@
-import { Row, Col, Table } from "antd";
+import { Row, Col, Table, Popover } from "antd";
 import FormInput from "../form/FormInput";
 import FormDropdown from "../form/FormDropdown";
-import { useDispatch, useSelector } from "react-redux";
+import ReceiversTable from "./ReceiversTable";
+import { useSelector } from "react-redux";
 import { getTransactions } from "../../../store/transactions";
 import { Link } from "react-router-dom";
 import Footer from "../Footer";
 
 const TransactionResult = () => {
   const sender = useSelector(getTransactions);
+
   const pageSizeOptions = [
     {
       title: "10",
@@ -35,7 +37,18 @@ const TransactionResult = () => {
                     key={item.id}
                     to={`/orders/${item.id}`}
                   >
-                    <li>{item.sender_account}</li>
+                    <Popover
+                      content={
+                        <ReceiversTable
+                          clients={item.client}
+                          orderId={item.id}
+                        />
+                      }
+                      placement="bottom"
+                      // trigger="click"
+                    >
+                      <li>{item.sender_account}</li>
+                    </Popover>
                   </Link>
                 ),
               },
